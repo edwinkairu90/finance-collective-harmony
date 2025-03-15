@@ -75,7 +75,7 @@ export const QuarterlyMetrics = () => {
       
       {/* Top metrics cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card>
+        <Card className="bg-[#00a9ae]">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
               <CalendarIcon className="h-4 w-4" />
@@ -94,9 +94,9 @@ export const QuarterlyMetrics = () => {
           </CardContent>
         </Card>
         
-        <Card>
+        <Card className="bg-[#3ac3d6] text-white">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+            <CardTitle className="text-sm font-medium text-white flex items-center gap-2">
               <TrendingUpIcon className="h-4 w-4" />
               Gross Margin
             </CardTitle>
@@ -104,16 +104,16 @@ export const QuarterlyMetrics = () => {
           <CardContent>
             <div className="flex items-center justify-between">
               <div className="text-2xl font-bold">{latestMargin.gross}%</div>
-              <div className="flex items-center text-emerald-500 text-sm">
+              <div className="flex items-center text-green-200 text-sm">
                 <ArrowUpIcon className="mr-1 h-4 w-4" />
                 1.0%
               </div>
             </div>
-            <div className="text-xs text-muted-foreground mt-1">vs previous quarter</div>
+            <div className="text-xs text-blue-100 mt-1">vs previous quarter</div>
           </CardContent>
         </Card>
         
-        <Card>
+        <Card className="bg-[#00a9ae]">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
               <Users className="h-4 w-4" />
@@ -132,9 +132,9 @@ export const QuarterlyMetrics = () => {
           </CardContent>
         </Card>
         
-        <Card>
+        <Card className="bg-[#3ac3d6] text-white">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+            <CardTitle className="text-sm font-medium text-white flex items-center gap-2">
               <TrendingUpIcon className="h-4 w-4" />
               Operating Cash Flow
             </CardTitle>
@@ -142,12 +142,12 @@ export const QuarterlyMetrics = () => {
           <CardContent>
             <div className="flex items-center justify-between">
               <div className="text-2xl font-bold">${(latestCashFlow.operatingCF / 1000000).toFixed(1)}M</div>
-              <div className="flex items-center text-emerald-500 text-sm">
+              <div className="flex items-center text-green-200 text-sm">
                 <ArrowUpIcon className="mr-1 h-4 w-4" />
                 {cashFlowQoQChange.toFixed(1)}%
               </div>
             </div>
-            <div className="text-xs text-muted-foreground mt-1">vs previous quarter</div>
+            <div className="text-xs text-blue-100 mt-1">vs previous quarter</div>
           </CardContent>
         </Card>
       </div>
