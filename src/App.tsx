@@ -12,6 +12,7 @@ import BudgetPlanning from "./pages/BudgetPlanning/index";
 import Collaboration from "./pages/Collaboration";
 import Approvals from "./pages/Approvals";
 import ActualsVsBudget from "./pages/ActualsVsBudget";
+import FinancialStatements from "./pages/FinancialStatements";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
             <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="budget" element={<BudgetPlanning />} />
+            <Route path="financial-statements" element={<FinancialStatements />} />
             <Route path="collaboration" element={<Collaboration />} />
             <Route path="approvals" element={<Approvals />} />
             <Route path="actuals" element={<ActualsVsBudget />} />

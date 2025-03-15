@@ -13,7 +13,7 @@ import {
   SidebarTrigger
 } from "@/components/ui/sidebar";
 import { Link } from "react-router-dom";
-import { BarChart, ChartPie, ClipboardCheck, Compass, Home, Settings, Users } from "lucide-react";
+import { BarChart, ChartPie, ClipboardCheck, Compass, FileText, Home, Settings, Users } from "lucide-react";
 
 export function AppSidebar() {
   return (
@@ -42,6 +42,14 @@ export function AppSidebar() {
                   <Link to="/budget">
                     <ChartPie className="h-4 w-4 mr-2" />
                     <span>Budget Planning</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link to="/financial-statements">
+                    <FileText className="h-4 w-4 mr-2" />
+                    <span>Financial Statements</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
