@@ -8,7 +8,7 @@ import { quarterlyData, revenueChartData } from "./QuarterlyData";
 export const RevenueTab = () => {
   return (
     <div className="space-y-4">
-      <div className="h-64">
+      <div className="h-56">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={revenueChartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -16,7 +16,7 @@ export const RevenueTab = () => {
             <YAxis label={{ value: 'Revenue ($M)', angle: -90, position: 'insideLeft' }} />
             <Tooltip formatter={(value) => [`$${value}M`, undefined]} />
             <Legend />
-            <Bar dataKey="Actual" fill="#3ac3d6" />
+            <Bar dataKey="Actual" fill="#047ca4" />
             <Bar dataKey="Target" fill="#0d8baf" />
           </BarChart>
         </ResponsiveContainer>
