@@ -41,7 +41,7 @@ export const KPISummary = ({
           <div className="text-xs text-muted-foreground mt-1">vs previous forecast</div>
         </CardContent>
       </Card>
-      <Card className="bg-[#0EA5E9] text-white">
+      <Card className="bg-[#3ac3d6] text-white">
         <CardHeader className="pb-2">
           <CardTitle className="text-sm font-medium text-white">YTD Expenses</CardTitle>
         </CardHeader>
@@ -72,7 +72,7 @@ export const KPISummary = ({
           <div className="text-xs text-muted-foreground mt-1">vs previous quarter</div>
         </CardContent>
       </Card>
-      <Card className="bg-[#0EA5E9] text-white">
+      <Card className="bg-[#3ac3d6] text-white">
         <CardHeader className="pb-2">
           <CardTitle className="text-sm font-medium text-white">Overall Budget Variance</CardTitle>
         </CardHeader>
