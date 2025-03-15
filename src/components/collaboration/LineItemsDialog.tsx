@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,9 +8,10 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Plus, Pencil, Save, X, Trash } from "lucide-react";
+import { Plus, Pencil, Save, X, Trash, Send, MessageSquare } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { LineItem, BudgetRequestData } from "../../types/collaboration";
+import { CommentThread } from "../comments/CommentThread";
 
 // Category options for dropdown
 const categories = [
@@ -55,6 +55,15 @@ export const LineItemsDialog: React.FC<LineItemsDialogProps> = ({
     amount: 0,
     category: categories[0],
   });
+  const [comment, setComment] = useState("");
+  const [showCommentThread, setShowCommentThread] = useState(false);
+
+  // Current user data - would come from authentication in a real app
+  const currentUser = {
+    name: "Casey Kim",
+    avatar: "",
+    department: "Finance"
+  };
 
   // Update editedLineItems when selectedDepartment changes
   React.useEffect(() => {
@@ -195,6 +204,20 @@ export const LineItemsDialog: React.FC<LineItemsDialogProps> = ({
         description: "The line item has been removed from the budget request.",
       });
     }
+  };
+
+  const handleAddComment = () => {
+    if (comment.trim()) {
+      toast({
+        title: "Comment Added",
+        description: "Your comment has been added to the budget request.",
+      });
+      setComment("");
+    }
+  };
+
+  const toggleCommentThread = () => {
+    setShowCommentThread(prev => !prev);
   };
 
   return (
@@ -398,15 +421,58 @@ export const LineItemsDialog: React.FC<LineItemsDialogProps> = ({
             </div>
 
             <div>
-              <h3 className="font-medium mb-2">Comments</h3>
-              <Textarea placeholder="Add a comment about this budget request..." className="min-h-[100px]" />
+              <div className="flex justify-between items-center mb-2">
+                <h3 className="font-medium">Comments</h3>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={toggleCommentThread}
+                  className="flex items-center gap-1"
+                >
+                  <MessageSquare className="h-4 w-4" />
+                  {showCommentThread ? "Hide All Comments" : "Show All Comments"}
+                </Button>
+              </div>
+              
+              {showCommentThread ? (
+                <CommentThread 
+                  entityId={selectedDepartment?.id || ""}
+                  entityType="budget-request"
+                  entityTitle={`${selectedDepartment?.department} Budget Request`}
+                  className="border rounded-md"
+                />
+              ) : (
+                <div className="space-y-3">
+                  <div className="flex gap-3">
+                    <Avatar className="h-8 w-8">
+                      <AvatarFallback>{currentUser.name.substring(0, 2).toUpperCase()}</AvatarFallback>
+                    </Avatar>
+                    <Textarea 
+                      placeholder="Add a comment about this budget request..." 
+                      className="min-h-[100px] flex-1"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                    />
+                  </div>
+                  <div className="flex justify-end">
+                    <Button 
+                      onClick={handleAddComment}
+                      disabled={!comment.trim()}
+                      className="flex items-center gap-1"
+                    >
+                      <Send className="h-4 w-4" />
+                      Submit Comment
+                    </Button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </ScrollArea>
 
-        <DialogFooter>
-          <Button variant="outline">Add Comment</Button>
-          <Button>Request Changes</Button>
+        <DialogFooter className="flex justify-between sm:justify-between space-x-2">
+          <Button variant="outline" onClick={() => setIsOpen(false)}>Close</Button>
+          <Button variant="default">Request Changes</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
