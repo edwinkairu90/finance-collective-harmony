@@ -9,7 +9,8 @@ import { ScenarioCreator } from "./ScenarioCreator";
 import { ScenarioItem } from "@/types/planning";
 import { sampleScenarios } from "@/data/planningData";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { Download, BarChart3 } from "lucide-react";
+import { Download, BarChart3, PenLine, Save, Plus, X } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 export const ScenarioPlanner: React.FC = () => {
   const { toast } = useToast();
@@ -17,6 +18,9 @@ export const ScenarioPlanner: React.FC = () => {
   const [activeTab, setActiveTab] = useState("existing");
   const [selectedScenario, setSelectedScenario] = useState<ScenarioItem | null>(null);
   const [showImpactAnalysis, setShowImpactAnalysis] = useState(false);
+  const [editingAssumptions, setEditingAssumptions] = useState(false);
+  const [editedAssumptions, setEditedAssumptions] = useState<string[]>([]);
+  const [newAssumption, setNewAssumption] = useState("");
 
   const handleCreateScenario = (scenario: ScenarioItem) => {
     setScenarios([...scenarios, scenario]);
@@ -62,6 +66,69 @@ export const ScenarioPlanner: React.FC = () => {
       return;
     }
     setShowImpactAnalysis(!showImpactAnalysis);
+  };
+
+  const handleStartEditAssumptions = () => {
+    if (!selectedScenario) {
+      toast({
+        title: "No Scenario Selected",
+        description: "Please select a scenario to edit assumptions.",
+        variant: "destructive",
+      });
+      return;
+    }
+    setEditedAssumptions([...selectedScenario.assumptions]);
+    setEditingAssumptions(true);
+  };
+
+  const handleSaveAssumptions = () => {
+    if (!selectedScenario) return;
+    
+    // Filter out empty assumptions
+    const filteredAssumptions = editedAssumptions.filter(a => a.trim() !== "");
+    
+    // Create updated scenario with new assumptions
+    const updatedScenario = {
+      ...selectedScenario,
+      assumptions: filteredAssumptions
+    };
+    
+    // Update the selected scenario
+    setSelectedScenario(updatedScenario);
+    
+    // Update the scenario in the list
+    const updatedScenarios = scenarios.map(s => 
+      s.id === updatedScenario.id ? updatedScenario : s
+    );
+    setScenarios(updatedScenarios);
+    
+    setEditingAssumptions(false);
+    
+    toast({
+      title: "Assumptions Updated",
+      description: "Your changes to key assumptions have been saved.",
+    });
+  };
+
+  const handleCancelEditAssumptions = () => {
+    setEditingAssumptions(false);
+  };
+
+  const handleAssumptionChange = (index: number, value: string) => {
+    const newAssumptions = [...editedAssumptions];
+    newAssumptions[index] = value;
+    setEditedAssumptions(newAssumptions);
+  };
+
+  const handleRemoveAssumption = (index: number) => {
+    const newAssumptions = editedAssumptions.filter((_, i) => i !== index);
+    setEditedAssumptions(newAssumptions);
+  };
+
+  const handleAddAssumption = () => {
+    if (newAssumption.trim() === "") return;
+    setEditedAssumptions([...editedAssumptions, newAssumption]);
+    setNewAssumption("");
   };
 
   // Transform department data for the chart
@@ -111,6 +178,15 @@ export const ScenarioPlanner: React.FC = () => {
                 >
                   <Download className="h-4 w-4" />
                   Export
+                </Button>
+                <Button 
+                  variant="outline" 
+                  onClick={handleStartEditAssumptions}
+                  className="flex items-center gap-1"
+                  disabled={editingAssumptions}
+                >
+                  <PenLine className="h-4 w-4" />
+                  Edit Assumptions
                 </Button>
               </>
             )}
@@ -166,12 +242,62 @@ export const ScenarioPlanner: React.FC = () => {
                   </div>
                 </div>
                 <div className="mt-4">
-                  <h3 className="text-md font-medium mb-2">Key Assumptions</h3>
-                  <ul className="list-disc pl-5 space-y-1">
-                    {selectedScenario.assumptions.map((assumption, index) => (
-                      <li key={index} className="text-sm text-muted-foreground">{assumption}</li>
-                    ))}
-                  </ul>
+                  <div className="flex justify-between items-center mb-2">
+                    <h3 className="text-md font-medium">Key Assumptions</h3>
+                    {editingAssumptions && (
+                      <div className="flex gap-2">
+                        <Button size="sm" variant="outline" onClick={handleSaveAssumptions}>
+                          <Save className="h-4 w-4 mr-1" /> Save
+                        </Button>
+                        <Button size="sm" variant="outline" onClick={handleCancelEditAssumptions}>
+                          <X className="h-4 w-4 mr-1" /> Cancel
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {editingAssumptions ? (
+                    <div className="space-y-2">
+                      {editedAssumptions.map((assumption, index) => (
+                        <div key={index} className="flex items-center gap-2">
+                          <Input
+                            value={assumption}
+                            onChange={(e) => handleAssumptionChange(index, e.target.value)}
+                            className="flex-grow"
+                          />
+                          <Button 
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => handleRemoveAssumption(index)}
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      ))}
+                      <div className="flex items-center gap-2 mt-2">
+                        <Input
+                          value={newAssumption}
+                          onChange={(e) => setNewAssumption(e.target.value)}
+                          placeholder="Add a new assumption"
+                          className="flex-grow"
+                        />
+                        <Button 
+                          size="sm"
+                          variant="outline"
+                          onClick={handleAddAssumption}
+                          disabled={newAssumption.trim() === ""}
+                        >
+                          <Plus className="h-4 w-4 mr-1" /> Add
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <ul className="list-disc pl-5 space-y-1">
+                      {selectedScenario.assumptions.map((assumption, index) => (
+                        <li key={index} className="text-sm text-muted-foreground">{assumption}</li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -200,3 +326,4 @@ export const ScenarioPlanner: React.FC = () => {
     </Card>
   );
 };
+
