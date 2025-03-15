@@ -10,6 +10,8 @@ interface KPISummaryProps {
   opexGrowth: number;
   totalVariance: number;
   variancePercentage: number;
+  marginPercentage: number;
+  marginChange: number;
 }
 
 export const KPISummary = ({
@@ -18,10 +20,12 @@ export const KPISummary = ({
   totalOpex,
   opexGrowth,
   totalVariance,
-  variancePercentage
+  variancePercentage,
+  marginPercentage,
+  marginChange
 }: KPISummaryProps) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       <Card>
         <CardHeader className="pb-2">
           <CardTitle className="text-sm font-medium text-muted-foreground">Annual Revenue Forecast</CardTitle>
@@ -51,6 +55,21 @@ export const KPISummary = ({
           </div>
           <Progress value={58} className="h-2 mt-2" />
           <div className="text-xs text-muted-foreground mt-1">58% of annual budget</div>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-sm font-medium text-muted-foreground">Margin</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-between">
+            <div className="text-2xl font-bold">{marginPercentage.toFixed(1)}%</div>
+            <div className={`flex items-center ${marginChange > 0 ? 'text-emerald-500' : 'text-red-500'} text-sm`}>
+              {marginChange > 0 ? <ArrowUpIcon className="mr-1 h-4 w-4" /> : <ArrowDownIcon className="mr-1 h-4 w-4" />}
+              {Math.abs(marginChange).toFixed(1)}%
+            </div>
+          </div>
+          <div className="text-xs text-muted-foreground mt-1">vs previous quarter</div>
         </CardContent>
       </Card>
       <Card>

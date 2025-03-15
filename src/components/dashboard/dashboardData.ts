@@ -42,3 +42,8 @@ export const getTotalBudget = () => bvaData.reduce((acc, item) => acc + item.bud
 export const getTotalActual = () => bvaData.reduce((acc, item) => acc + item.actual, 0);
 export const getTotalVariance = () => getTotalActual() - getTotalBudget();
 export const getVariancePercentage = () => (getTotalVariance() / getTotalBudget()) * 100;
+
+// Margin calculations
+export const getAnnualRevenue = () => 76500000; // $76.5M as mentioned in the dashboard
+export const getMarginPercentage = () => ((getAnnualRevenue() - getTotalOpex()) / getAnnualRevenue()) * 100;
+export const getMarginChange = () => 1.7; // Positive 1.7% change from previous quarter (mock data)

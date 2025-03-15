@@ -15,7 +15,9 @@ import {
   getTotalBudget, 
   getTotalActual, 
   getTotalVariance, 
-  getVariancePercentage 
+  getVariancePercentage,
+  getMarginPercentage,
+  getMarginChange
 } from "@/components/dashboard/dashboardData";
 
 const Dashboard = () => {
@@ -27,6 +29,8 @@ const Dashboard = () => {
   const totalActual = getTotalActual();
   const totalVariance = getTotalVariance();
   const variancePercentage = getVariancePercentage();
+  const marginPercentage = getMarginPercentage();
+  const marginChange = getMarginChange();
 
   const showNotification = () => {
     toast({
@@ -53,6 +57,8 @@ const Dashboard = () => {
         opexGrowth={3.5}
         totalVariance={totalVariance}
         variancePercentage={variancePercentage}
+        marginPercentage={marginPercentage}
+        marginChange={marginChange}
       />
 
       {/* Quarterly Metrics Section */}
