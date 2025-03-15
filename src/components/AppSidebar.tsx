@@ -13,14 +13,14 @@ import {
   SidebarTrigger
 } from "@/components/ui/sidebar";
 import { Link } from "react-router-dom";
-import { BarChart, ChartPie, ClipboardCheck, DollarSign, Home, Settings, Users } from "lucide-react";
+import { BarChart, ChartPie, ClipboardCheck, Compass, Home, Settings, Users } from "lucide-react";
 
 export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader className="px-4 py-4">
         <div className="flex items-center gap-2">
-          <DollarSign className="h-6 w-6 text-sidebar-primary" />
+          <Compass className="h-6 w-6 text-sidebar-primary" />
           <span className="text-lg font-bold">Kompass</span>
         </div>
       </SidebarHeader>

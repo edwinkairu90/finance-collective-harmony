@@ -1,6 +1,5 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowDownIcon, ArrowUpIcon, BarChart, ChartPie, ChevronUpIcon, ClipboardCheck, DollarSign, Users } from "lucide-react";
+import { ArrowDownIcon, ArrowUpIcon, BarChart, ChartPie, ChevronUpIcon, ClipboardCheck, Compass, Users } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
