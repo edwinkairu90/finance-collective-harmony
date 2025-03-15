@@ -4,7 +4,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { QuarterlyMetrics } from "@/components/QuarterlyMetrics";
 import { KPISummary } from "@/components/dashboard/KPISummary";
-import { QuickLinks } from "@/components/dashboard/QuickLinks";
 import { RevenueChart } from "@/components/dashboard/RevenueChart";
 import { OpexSummary } from "@/components/dashboard/OpexSummary";
 import { BVASummary } from "@/components/dashboard/BVASummary";
@@ -12,7 +11,6 @@ import {
   revenueData, 
   opexData, 
   bvaData, 
-  quickLinks, 
   getTotalOpex, 
   getTotalBudget, 
   getTotalActual, 
@@ -59,9 +57,6 @@ const Dashboard = () => {
 
       {/* Quarterly Metrics Section */}
       <QuarterlyMetrics />
-
-      {/* Quick links */}
-      <QuickLinks links={quickLinks} />
 
       {/* Revenue Projection vs Actuals */}
       <RevenueChart data={revenueData} />

@@ -1,6 +1,4 @@
 
-import { ChartPie, Users, ClipboardCheck, BarChart } from "lucide-react";
-
 // Mock data for revenue projections vs actuals
 export const revenueData = [
   { month: 'Jan', projected: 4200, actual: 4100 },
@@ -36,13 +34,6 @@ export const bvaData = [
   { department: 'Operations', budget: 1400000, actual: 1450000, variance: 50000 },
   { department: 'Finance', budget: 600000, actual: 580000, variance: -20000 },
   { department: 'HR', budget: 500000, actual: 490000, variance: -10000 },
-];
-
-export const quickLinks = [
-  { icon: ChartPie, label: "Budget Planning", path: "/budget", color: "bg-blue-100 text-blue-600" },
-  { icon: Users, label: "Data Collection", path: "/data-collection", color: "bg-purple-100 text-purple-600" },
-  { icon: ClipboardCheck, label: "Approvals", path: "/approvals", color: "bg-amber-100 text-amber-600" },
-  { icon: BarChart, label: "Actuals vs Budget", path: "/actuals", color: "bg-emerald-100 text-emerald-600" },
 ];
 
 // Calculate totals
