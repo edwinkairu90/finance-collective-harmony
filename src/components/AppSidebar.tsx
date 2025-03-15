@@ -21,7 +21,7 @@ export function AppSidebar() {
       <SidebarHeader className="px-4 py-4">
         <div className="flex items-center gap-2">
           <DollarSign className="h-6 w-6 text-sidebar-primary" />
-          <span className="text-lg font-bold">FinancePro</span>
+          <span className="text-lg font-bold">Kompass</span>
         </div>
       </SidebarHeader>
       <SidebarContent>
@@ -90,7 +90,7 @@ export function AppSidebar() {
       </SidebarContent>
       <SidebarFooter className="px-4 py-4">
         <div className="text-xs text-muted-foreground">
-          &copy; 2023 FinancePro Inc.
+          &copy; 2023 Kompass Inc.
         </div>
       </SidebarFooter>
     </Sidebar>
