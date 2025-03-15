@@ -26,7 +26,7 @@ export const KPISummary = ({
 }: KPISummaryProps) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <Card className="bg-[#D3E4FD]">
+      <Card className="bg-[#00a9ae]">
         <CardHeader className="pb-2">
           <CardTitle className="text-sm font-medium text-muted-foreground">Annual Revenue Forecast</CardTitle>
         </CardHeader>
@@ -57,7 +57,7 @@ export const KPISummary = ({
           <div className="text-xs text-blue-100 mt-1">58% of annual budget</div>
         </CardContent>
       </Card>
-      <Card className="bg-[#D3E4FD]">
+      <Card className="bg-[#00a9ae]">
         <CardHeader className="pb-2">
           <CardTitle className="text-sm font-medium text-muted-foreground">Margin</CardTitle>
         </CardHeader>
