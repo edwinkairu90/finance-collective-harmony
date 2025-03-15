@@ -8,10 +8,12 @@ import { DepartmentBudgets } from "./DepartmentBudgets";
 import { BudgetCategories } from "./BudgetCategories";
 import { PlanningTools } from "./PlanningTools";
 import { CommentThread } from "@/components/comments/CommentThread";
+import { ScenarioPlanner } from "@/components/planning/ScenarioPlanner";
 
 const BudgetPlanning = () => {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("overview");
+  const [showScenarioPlanner, setShowScenarioPlanner] = useState(false);
 
   const handleSave = () => {
     toast({
@@ -27,15 +29,31 @@ const BudgetPlanning = () => {
     });
   };
 
+  const toggleScenarioPlanner = () => {
+    setShowScenarioPlanner(!showScenarioPlanner);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold tracking-tight">Budget Planning</h1>
         <div className="flex space-x-2">
+          <Button 
+            variant="outline" 
+            onClick={toggleScenarioPlanner}
+          >
+            {showScenarioPlanner ? "Hide Scenarios" : "Scenario Planning"}
+          </Button>
           <Button variant="outline" onClick={handleSave}>Save Draft</Button>
           <Button onClick={handleSubmitForApproval}>Submit for Approval</Button>
         </div>
       </div>
+
+      {showScenarioPlanner && (
+        <div className="mb-6">
+          <ScenarioPlanner />
+        </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
