@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
+import { ArrowDownIcon, ArrowUpIcon, TrendingUpIcon, TrendingDownIcon } from "lucide-react";
+import { quarterlyData } from "@/components/quarterly/QuarterlyData";
 
 export const QuarterlyComparison = () => {
   const [statementType, setStatementType] = useState("revenue");
@@ -47,6 +48,34 @@ export const QuarterlyComparison = () => {
     ],
   };
 
+  // Get quarters and growth trend
+  const getComparisonRows = () => {
+    const data = comparisonData[statementType];
+    const quarters = data.map(item => item.quarter);
+    
+    return quarters.map((quarter, index) => {
+      if (index === 0) return null; // Skip first quarter as we need previous quarter for comparison
+      
+      const currentData = data[index];
+      const previousData = data[index - 1];
+      const changePercent = currentData.change;
+      
+      // Calculate growth trend
+      const previousChange = index > 1 ? data[index - 1].change : null;
+      const growthTrend = previousChange !== null ? 
+        (changePercent > previousChange ? 'increasing' : 
+         changePercent < previousChange ? 'decreasing' : 'stable') : 'stable';
+      
+      return {
+        quarter,
+        currentAmount: currentData.amount,
+        previousAmount: previousData.amount,
+        changePercent,
+        growthTrend
+      };
+    }).filter(Boolean);
+  };
+
   const metrics = {
     revenue: "Revenue",
     grossProfit: "Gross Profit",
@@ -59,7 +88,7 @@ export const QuarterlyComparison = () => {
     <Card>
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-semibold">Quarter-over-Quarter Comparison</h2>
+          <h2 className="text-xl font-semibold">Quarter-over-Quarter Growth Analysis</h2>
           <Select value={statementType} onValueChange={setStatementType}>
             <SelectTrigger className="w-[200px]">
               <SelectValue placeholder="Select metric" />
@@ -77,33 +106,50 @@ export const QuarterlyComparison = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Quarter</TableHead>
-              <TableHead className="text-right">{metrics[statementType]}</TableHead>
-              <TableHead className="text-right">QoQ Change</TableHead>
-              <TableHead className="text-right">Trend</TableHead>
+              <TableHead>Current Quarter</TableHead>
+              <TableHead>Previous Quarter</TableHead>
+              <TableHead className="text-right">Current</TableHead>
+              <TableHead className="text-right">Previous</TableHead>
+              <TableHead className="text-right">Change</TableHead>
+              <TableHead className="text-right">Growth Trend</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {comparisonData[statementType].map((item, index) => (
-              <TableRow key={`${statementType}-${index}`}>
-                <TableCell>{item.quarter}</TableCell>
-                <TableCell className="text-right">${item.amount.toLocaleString()}</TableCell>
-                <TableCell className="text-right">
-                  {item.change === null ? "-" : `${item.change.toFixed(1)}%`}
+            {getComparisonRows().map((row, index) => (
+              <TableRow key={`comparison-${index}`} className={index % 2 === 0 ? "bg-muted/40" : ""}>
+                <TableCell className="font-medium">{row.quarter}</TableCell>
+                <TableCell>{comparisonData[statementType][index].quarter}</TableCell>
+                <TableCell className="text-right font-medium">${row.currentAmount.toLocaleString()}</TableCell>
+                <TableCell className="text-right">${row.previousAmount.toLocaleString()}</TableCell>
+                <TableCell className={`text-right font-semibold ${row.changePercent > 0 ? "text-green-600" : "text-red-600"}`}>
+                  {row.changePercent > 0 ? "+" : ""}{row.changePercent.toFixed(1)}%
                 </TableCell>
                 <TableCell className="text-right">
-                  {item.change === null ? (
-                    "-"
-                  ) : item.change > 0 ? (
-                    <ArrowUpIcon className="inline h-4 w-4 text-green-600" />
+                  {row.growthTrend === 'increasing' ? (
+                    <div className="flex items-center justify-end gap-1 text-green-600">
+                      <span>Accelerating</span>
+                      <TrendingUpIcon className="h-4 w-4" />
+                    </div>
+                  ) : row.growthTrend === 'decreasing' ? (
+                    <div className="flex items-center justify-end gap-1 text-amber-600">
+                      <span>Decelerating</span>
+                      <TrendingDownIcon className="h-4 w-4" />
+                    </div>
                   ) : (
-                    <ArrowDownIcon className="inline h-4 w-4 text-red-600" />
+                    <div className="flex items-center justify-end gap-1 text-blue-600">
+                      <span>Stable</span>
+                      <ArrowUpIcon className="h-4 w-4" />
+                    </div>
                   )}
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
+        
+        <div className="mt-4 text-sm text-muted-foreground">
+          <p>Growth trends show quarter-over-quarter acceleration or deceleration in growth rates, not just absolute growth.</p>
+        </div>
       </CardContent>
     </Card>
   );
