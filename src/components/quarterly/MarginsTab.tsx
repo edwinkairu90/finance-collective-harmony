@@ -6,7 +6,7 @@ import { quarterlyData, marginChartData } from "./QuarterlyData";
 export const MarginsTab = () => {
   return (
     <div className="space-y-4">
-      <div className="h-80">
+      <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={marginChartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -14,9 +14,9 @@ export const MarginsTab = () => {
             <YAxis label={{ value: 'Margin (%)', angle: -90, position: 'insideLeft' }} />
             <Tooltip formatter={(value) => [`${value}%`, undefined]} />
             <Legend />
-            <Bar dataKey="Gross Margin" fill="#0ea5e9" />
-            <Bar dataKey="Operating Margin" fill="#8884d8" />
-            <Bar dataKey="Net Margin" fill="#82ca9d" />
+            <Bar dataKey="Gross Margin" fill="#3ac3d6" />
+            <Bar dataKey="Operating Margin" fill="#0d8baf" />
+            <Bar dataKey="Net Margin" fill="#0ea5e9" />
           </BarChart>
         </ResponsiveContainer>
       </div>
