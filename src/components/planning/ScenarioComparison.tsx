@@ -7,6 +7,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import { Button } from "@/components/ui/button";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Download, X } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface ScenarioComparisonProps {
   scenarios: ScenarioItem[];
@@ -75,6 +76,13 @@ export const ScenarioComparison: React.FC<ScenarioComparisonProps> = ({
     });
   };
 
+  // Define P&L line items for comparison
+  const plLineItems = [
+    { name: "Revenue", accessor: "revenue" },
+    { name: "Expenses", accessor: "expenses" },
+    { name: "Profit", accessor: "profit", isTotal: true }
+  ];
+
   // Prepare the chart colors
   const scenarioColors = [
     "#0ea5e9", // sky-500
@@ -110,6 +118,49 @@ export const ScenarioComparison: React.FC<ScenarioComparisonProps> = ({
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
+          {/* P&L Comparison Table */}
+          <div>
+            <h3 className="text-md font-medium mb-3">Profit & Loss Statement Comparison</h3>
+            <ScrollArea className="h-auto max-h-[400px]">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[200px]">Line Item</TableHead>
+                    {scenarios.map((scenario) => (
+                      <TableHead key={scenario.id}>{scenario.name}</TableHead>
+                    ))}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {plLineItems.map((item) => (
+                    <TableRow key={item.name} className={item.isTotal ? "font-medium bg-muted/30" : ""}>
+                      <TableCell className={item.isTotal ? "font-medium" : ""}>
+                        {item.name}
+                      </TableCell>
+                      {scenarios.map((scenario) => {
+                        const value = scenario.budgetImpact[item.accessor as keyof typeof scenario.budgetImpact];
+                        return (
+                          <TableCell 
+                            key={`${scenario.id}-${item.accessor}`}
+                            className={
+                              item.isTotal && value >= 0 
+                                ? 'text-green-600 font-medium' 
+                                : item.isTotal && value < 0 
+                                ? 'text-red-600 font-medium' 
+                                : ''
+                            }
+                          >
+                            ${value.toLocaleString()}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </ScrollArea>
+          </div>
+
           {/* Scenario Summary Table */}
           <div>
             <h3 className="text-md font-medium mb-3">Scenario Overview</h3>
