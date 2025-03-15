@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -215,26 +214,28 @@ export const ScenarioPlanner: React.FC = () => {
           />
         )}
 
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="mb-4">
-            <TabsTrigger value="existing">Existing Scenarios</TabsTrigger>
-            <TabsTrigger value="create">Create New Scenario</TabsTrigger>
-          </TabsList>
-          
-          <ScenarioSelection 
-            activeTab={activeTab}
-            scenarios={scenarios}
-            selectedScenario={selectedScenario}
-            selectedScenariosForComparison={selectedScenariosForComparison}
-            showComparisonView={showComparisonView}
-            onSelect={setSelectedScenario}
-            onToggleComparisonSelection={handleToggleScenarioSelection}
-            onClearComparisonSelection={handleClearComparisonSelection}
-            onCompareScenarios={handleCompareScenarios}
-            onCreateScenario={handleCreateScenario}
-            isScenarioSelected={isScenarioSelected}
-          />
-        </Tabs>
+        {!showComparisonView && (
+          <Tabs value={activeTab} onValueChange={setActiveTab}>
+            <TabsList className="mb-4">
+              <TabsTrigger value="existing">Existing Scenarios</TabsTrigger>
+              <TabsTrigger value="create">Create New Scenario</TabsTrigger>
+            </TabsList>
+            
+            <ScenarioSelection 
+              activeTab={activeTab}
+              scenarios={scenarios}
+              selectedScenario={selectedScenario}
+              selectedScenariosForComparison={selectedScenariosForComparison}
+              showComparisonView={showComparisonView}
+              onSelect={setSelectedScenario}
+              onToggleComparisonSelection={handleToggleScenarioSelection}
+              onClearComparisonSelection={handleClearComparisonSelection}
+              onCompareScenarios={handleCompareScenarios}
+              onCreateScenario={handleCreateScenario}
+              isScenarioSelected={isScenarioSelected}
+            />
+          </Tabs>
+        )}
       </CardContent>
     </Card>
   );
