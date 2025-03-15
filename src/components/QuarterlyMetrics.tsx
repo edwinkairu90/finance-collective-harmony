@@ -76,17 +76,17 @@ export const QuarterlyMetrics = () => {
       {/* Top metrics cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card className="bg-[#00a9ae]">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-              <CalendarIcon className="h-4 w-4" />
+          <CardHeader className="pb-1 pt-3">
+            <CardTitle className="text-xs font-medium text-muted-foreground flex items-center gap-1">
+              <CalendarIcon className="h-3 w-3" />
               Q1 2024 Revenue
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pb-3">
             <div className="flex items-center justify-between">
-              <div className="text-2xl font-bold">${(latestRevenue.actual / 1000000).toFixed(1)}M</div>
-              <div className="flex items-center text-emerald-500 text-sm">
-                <ArrowUpIcon className="mr-1 h-4 w-4" />
+              <div className="text-xl font-bold">${(latestRevenue.actual / 1000000).toFixed(1)}M</div>
+              <div className="flex items-center text-emerald-500 text-xs">
+                <ArrowUpIcon className="mr-1 h-3 w-3" />
                 {revenueQoQChange.toFixed(1)}%
               </div>
             </div>
@@ -95,17 +95,17 @@ export const QuarterlyMetrics = () => {
         </Card>
         
         <Card className="bg-[#3ac3d6] text-white">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-white flex items-center gap-2">
-              <TrendingUpIcon className="h-4 w-4" />
+          <CardHeader className="pb-1 pt-3">
+            <CardTitle className="text-xs font-medium text-white flex items-center gap-1">
+              <TrendingUpIcon className="h-3 w-3" />
               Gross Margin
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pb-3">
             <div className="flex items-center justify-between">
-              <div className="text-2xl font-bold">{latestMargin.gross}%</div>
-              <div className="flex items-center text-green-200 text-sm">
-                <ArrowUpIcon className="mr-1 h-4 w-4" />
+              <div className="text-xl font-bold">{latestMargin.gross}%</div>
+              <div className="flex items-center text-green-200 text-xs">
+                <ArrowUpIcon className="mr-1 h-3 w-3" />
                 1.0%
               </div>
             </div>
@@ -114,17 +114,17 @@ export const QuarterlyMetrics = () => {
         </Card>
         
         <Card className="bg-[#00a9ae]">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-              <Users className="h-4 w-4" />
+          <CardHeader className="pb-1 pt-3">
+            <CardTitle className="text-xs font-medium text-muted-foreground flex items-center gap-1">
+              <Users className="h-3 w-3" />
               Headcount
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pb-3">
             <div className="flex items-center justify-between">
-              <div className="text-2xl font-bold">{latestHeadcount.total}</div>
-              <div className="flex items-center text-emerald-500 text-sm">
-                <ArrowUpIcon className="mr-1 h-4 w-4" />
+              <div className="text-xl font-bold">{latestHeadcount.total}</div>
+              <div className="flex items-center text-emerald-500 text-xs">
+                <ArrowUpIcon className="mr-1 h-3 w-3" />
                 {headcountQoQChange.toFixed(1)}%
               </div>
             </div>
@@ -133,17 +133,17 @@ export const QuarterlyMetrics = () => {
         </Card>
         
         <Card className="bg-[#3ac3d6] text-white">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-white flex items-center gap-2">
-              <TrendingUpIcon className="h-4 w-4" />
+          <CardHeader className="pb-1 pt-3">
+            <CardTitle className="text-xs font-medium text-white flex items-center gap-1">
+              <TrendingUpIcon className="h-3 w-3" />
               Operating Cash Flow
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pb-3">
             <div className="flex items-center justify-between">
-              <div className="text-2xl font-bold">${(latestCashFlow.operatingCF / 1000000).toFixed(1)}M</div>
-              <div className="flex items-center text-green-200 text-sm">
-                <ArrowUpIcon className="mr-1 h-4 w-4" />
+              <div className="text-xl font-bold">${(latestCashFlow.operatingCF / 1000000).toFixed(1)}M</div>
+              <div className="flex items-center text-green-200 text-xs">
+                <ArrowUpIcon className="mr-1 h-3 w-3" />
                 {cashFlowQoQChange.toFixed(1)}%
               </div>
             </div>
