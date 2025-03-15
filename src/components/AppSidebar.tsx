@@ -47,9 +47,9 @@ export function AppSidebar() {
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <Link to="/data-collection">
+                  <Link to="/collaboration">
                     <Users className="h-4 w-4 mr-2" />
-                    <span>Data Collection</span>
+                    <span>Collaboration</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

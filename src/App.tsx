@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,7 +9,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
 import BudgetPlanning from "./pages/BudgetPlanning/index";
-import DataCollection from "./pages/DataCollection";
+import Collaboration from "./pages/Collaboration";
 import Approvals from "./pages/Approvals";
 import ActualsVsBudget from "./pages/ActualsVsBudget";
 
@@ -25,7 +26,7 @@ const App = () => (
             <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="budget" element={<BudgetPlanning />} />
-            <Route path="data-collection" element={<DataCollection />} />
+            <Route path="collaboration" element={<Collaboration />} />
             <Route path="approvals" element={<Approvals />} />
             <Route path="actuals" element={<ActualsVsBudget />} />
           </Route>
