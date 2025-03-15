@@ -14,7 +14,7 @@ const FinancialStatements = () => {
       <div>
         <h2 className="text-3xl font-bold tracking-tight">Financial Statements</h2>
         <p className="text-muted-foreground">
-          View and analyze financial statements for your organization
+          View and analyze quarterly financial statements for your organization
         </p>
       </div>
 
@@ -22,7 +22,7 @@ const FinancialStatements = () => {
         <CardHeader>
           <CardTitle>Financial Reports</CardTitle>
           <CardDescription>
-            Generate and view statement reports for your current fiscal period
+            Generate and view quarterly statement reports for your organization
           </CardDescription>
         </CardHeader>
         <CardContent>
