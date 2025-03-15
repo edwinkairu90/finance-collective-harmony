@@ -1,0 +1,75 @@
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+
+interface KPISummaryProps {
+  annualRevenue: string;
+  revenueGrowth: number;
+  totalOpex: number;
+  opexGrowth: number;
+  totalVariance: number;
+  variancePercentage: number;
+}
+
+export const KPISummary = ({
+  annualRevenue,
+  revenueGrowth,
+  totalOpex,
+  opexGrowth,
+  totalVariance,
+  variancePercentage
+}: KPISummaryProps) => {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-sm font-medium text-muted-foreground">Annual Revenue Forecast</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-between">
+            <div className="text-2xl font-bold">{annualRevenue}</div>
+            <div className="flex items-center text-emerald-500 text-sm">
+              <ArrowUpIcon className="mr-1 h-4 w-4" />
+              {revenueGrowth}%
+            </div>
+          </div>
+          <div className="text-xs text-muted-foreground mt-1">vs previous forecast</div>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-sm font-medium text-muted-foreground">YTD Expenses</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-between">
+            <div className="text-2xl font-bold">${(totalOpex / 1000000).toFixed(1)}M</div>
+            <div className="flex items-center text-red-500 text-sm">
+              <ArrowUpIcon className="mr-1 h-4 w-4" />
+              {opexGrowth}%
+            </div>
+          </div>
+          <Progress value={58} className="h-2 mt-2" />
+          <div className="text-xs text-muted-foreground mt-1">58% of annual budget</div>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-sm font-medium text-muted-foreground">Overall Budget Variance</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-between">
+            <div className="text-2xl font-bold">${(totalVariance / 1000000).toFixed(1)}M</div>
+            <div className={`flex items-center ${variancePercentage < 0 ? 'text-green-500' : 'text-red-500'} text-sm`}>
+              {variancePercentage < 0 ? <ArrowDownIcon className="mr-1 h-4 w-4" /> : <ArrowUpIcon className="mr-1 h-4 w-4" />}
+              {Math.abs(variancePercentage).toFixed(1)}%
+            </div>
+          </div>
+          <div className="text-xs text-muted-foreground mt-1">
+            {variancePercentage < 0 ? 'Under budget' : 'Over budget'}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
