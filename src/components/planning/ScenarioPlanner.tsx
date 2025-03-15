@@ -1,15 +1,13 @@
+
 import React, { useState } from "react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
-import { ScenarioList } from "./ScenarioList";
-import { ScenarioCreator } from "./ScenarioCreator";
 import { ScenarioItem } from "@/types/planning";
 import { sampleScenarios } from "@/data/planningData";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { Download, BarChart3, PenLine, Save, Plus, X, Columns, GitCompare } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { ScenarioToolbar } from "./ScenarioToolbar";
+import { ScenarioSelection } from "./ScenarioSelection";
+import { ScenarioImpactAnalysis } from "./ScenarioImpactAnalysis";
 import { ScenarioComparison } from "./ScenarioComparison";
 
 export const ScenarioPlanner: React.FC = () => {
@@ -169,25 +167,8 @@ export const ScenarioPlanner: React.FC = () => {
     setNewAssumption("");
   };
 
-  // Transform department data for the chart
-  const getDepartmentImpactData = () => {
-    if (!selectedScenario) return [];
-    
-    return selectedScenario.departments.map(dept => ({
-      name: dept.name,
-      impact: dept.budgetChange
-    }));
-  };
-
-  // Get financial impact data for the chart
-  const getFinancialImpactData = () => {
-    if (!selectedScenario) return [];
-    
-    return [
-      { name: 'Revenue', value: selectedScenario.budgetImpact.revenue },
-      { name: 'Expenses', value: selectedScenario.budgetImpact.expenses },
-      { name: 'Profit', value: selectedScenario.budgetImpact.profit }
-    ];
+  const handleClearComparisonSelection = () => {
+    setSelectedScenariosForComparison([]);
   };
 
   return (
@@ -198,46 +179,16 @@ export const ScenarioPlanner: React.FC = () => {
             <CardTitle>Scenario Planning</CardTitle>
             <CardDescription>Create and manage budget scenarios for strategic planning</CardDescription>
           </div>
-          <div className="flex gap-2">
-            {selectedScenario && (
-              <>
-                <Button 
-                  variant="outline" 
-                  onClick={toggleImpactAnalysis}
-                  className="flex items-center gap-1"
-                >
-                  <BarChart3 className="h-4 w-4" />
-                  {showImpactAnalysis ? "Hide Impact" : "Show Impact"}
-                </Button>
-                <Button 
-                  variant="outline" 
-                  onClick={handleExportScenario}
-                  className="flex items-center gap-1"
-                >
-                  <Download className="h-4 w-4" />
-                  Export
-                </Button>
-                <Button 
-                  variant="outline" 
-                  onClick={handleStartEditAssumptions}
-                  className="flex items-center gap-1"
-                  disabled={editingAssumptions}
-                >
-                  <PenLine className="h-4 w-4" />
-                  Edit Assumptions
-                </Button>
-              </>
-            )}
-            <Button 
-              variant={selectedScenariosForComparison.length > 0 ? "default" : "outline"}
-              onClick={handleCompareScenarios}
-              className="flex items-center gap-1"
-              disabled={selectedScenariosForComparison.length < 2}
-            >
-              <GitCompare className="h-4 w-4" />
-              Compare ({selectedScenariosForComparison.length})
-            </Button>
-          </div>
+          <ScenarioToolbar 
+            selectedScenario={selectedScenario}
+            showImpactAnalysis={showImpactAnalysis}
+            selectedScenariosForComparison={selectedScenariosForComparison}
+            editingAssumptions={editingAssumptions}
+            onToggleImpactAnalysis={toggleImpactAnalysis}
+            onExportScenario={handleExportScenario}
+            onStartEditAssumptions={handleStartEditAssumptions}
+            onCompareScenarios={handleCompareScenarios}
+          />
         </div>
       </CardHeader>
       <CardContent>
@@ -250,106 +201,18 @@ export const ScenarioPlanner: React.FC = () => {
         )}
 
         {selectedScenario && showImpactAnalysis && (
-          <div className="mb-6 space-y-4">
-            <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg">Impact Analysis: {selectedScenario.name}</CardTitle>
-                <CardDescription>{selectedScenario.description}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <h3 className="text-md font-medium mb-2">Departmental Budget Impact</h3>
-                    <div className="h-64">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={getDepartmentImpactData()} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="name" />
-                          <YAxis />
-                          <Tooltip formatter={(value) => [`$${value.toLocaleString()}`, 'Budget Impact']} />
-                          <Legend />
-                          <Bar dataKey="impact" name="Budget Impact" fill="#0ea5e9" />
-                        </BarChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-md font-medium mb-2">Financial Impact</h3>
-                    <div className="h-64">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={getFinancialImpactData()} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="name" />
-                          <YAxis />
-                          <Tooltip formatter={(value) => [`$${value.toLocaleString()}`, 'Amount']} />
-                          <Legend />
-                          <Bar dataKey="value" name="Amount" fill="#0ea5e9" />
-                        </BarChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-4">
-                  <div className="flex justify-between items-center mb-2">
-                    <h3 className="text-md font-medium">Key Assumptions</h3>
-                    {editingAssumptions && (
-                      <div className="flex gap-2">
-                        <Button size="sm" variant="outline" onClick={handleSaveAssumptions}>
-                          <Save className="h-4 w-4 mr-1" /> Save
-                        </Button>
-                        <Button size="sm" variant="outline" onClick={handleCancelEditAssumptions}>
-                          <X className="h-4 w-4 mr-1" /> Cancel
-                        </Button>
-                      </div>
-                    )}
-                  </div>
-                  
-                  {editingAssumptions ? (
-                    <div className="space-y-2">
-                      {editedAssumptions.map((assumption, index) => (
-                        <div key={index} className="flex items-center gap-2">
-                          <Input
-                            value={assumption}
-                            onChange={(e) => handleAssumptionChange(index, e.target.value)}
-                            className="flex-grow"
-                          />
-                          <Button 
-                            size="sm"
-                            variant="ghost"
-                            onClick={() => handleRemoveAssumption(index)}
-                          >
-                            <X className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      ))}
-                      <div className="flex items-center gap-2 mt-2">
-                        <Input
-                          value={newAssumption}
-                          onChange={(e) => setNewAssumption(e.target.value)}
-                          placeholder="Add a new assumption"
-                          className="flex-grow"
-                        />
-                        <Button 
-                          size="sm"
-                          variant="outline"
-                          onClick={handleAddAssumption}
-                          disabled={newAssumption.trim() === ""}
-                        >
-                          <Plus className="h-4 w-4 mr-1" /> Add
-                        </Button>
-                      </div>
-                    </div>
-                  ) : (
-                    <ul className="list-disc pl-5 space-y-1">
-                      {selectedScenario.assumptions.map((assumption, index) => (
-                        <li key={index} className="text-sm text-muted-foreground">{assumption}</li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          <ScenarioImpactAnalysis 
+            scenario={selectedScenario}
+            editingAssumptions={editingAssumptions}
+            editedAssumptions={editedAssumptions}
+            newAssumption={newAssumption}
+            onAssumptionChange={handleAssumptionChange}
+            onRemoveAssumption={handleRemoveAssumption}
+            onNewAssumptionChange={setNewAssumption}
+            onAddAssumption={handleAddAssumption}
+            onSaveAssumptions={handleSaveAssumptions}
+            onCancelEditAssumptions={handleCancelEditAssumptions}
+          />
         )}
 
         <Tabs value={activeTab} onValueChange={setActiveTab}>
@@ -358,44 +221,19 @@ export const ScenarioPlanner: React.FC = () => {
             <TabsTrigger value="create">Create New Scenario</TabsTrigger>
           </TabsList>
           
-          <TabsContent value="existing">
-            {!showComparisonView && selectedScenariosForComparison.length > 0 && (
-              <div className="mb-4 flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">
-                  {selectedScenariosForComparison.length} scenario{selectedScenariosForComparison.length !== 1 ? 's' : ''} selected for comparison
-                </div>
-                <div className="flex gap-2">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={() => setSelectedScenariosForComparison([])}
-                  >
-                    Clear Selection
-                  </Button>
-                  <Button 
-                    size="sm" 
-                    onClick={handleCompareScenarios}
-                    disabled={selectedScenariosForComparison.length < 2}
-                  >
-                    <GitCompare className="h-4 w-4 mr-1" />
-                    Compare
-                  </Button>
-                </div>
-              </div>
-            )}
-            <ScenarioList 
-              scenarios={scenarios} 
-              onSelect={setSelectedScenario} 
-              selectedScenario={selectedScenario}
-              selectableForComparison
-              onToggleComparisonSelection={handleToggleScenarioSelection}
-              selectedForComparison={isScenarioSelected}
-            />
-          </TabsContent>
-          
-          <TabsContent value="create">
-            <ScenarioCreator onCreateScenario={handleCreateScenario} />
-          </TabsContent>
+          <ScenarioSelection 
+            activeTab={activeTab}
+            scenarios={scenarios}
+            selectedScenario={selectedScenario}
+            selectedScenariosForComparison={selectedScenariosForComparison}
+            showComparisonView={showComparisonView}
+            onSelect={setSelectedScenario}
+            onToggleComparisonSelection={handleToggleScenarioSelection}
+            onClearComparisonSelection={handleClearComparisonSelection}
+            onCompareScenarios={handleCompareScenarios}
+            onCreateScenario={handleCreateScenario}
+            isScenarioSelected={isScenarioSelected}
+          />
         </Tabs>
       </CardContent>
     </Card>
