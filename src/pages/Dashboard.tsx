@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowDownIcon, ArrowUpIcon, BarChart, ChartPie, ChevronUpIcon, ClipboardCheck, Compass, Users } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
@@ -24,6 +23,7 @@ import {
   ChartTooltip,
   ChartTooltipContent
 } from "@/components/ui/chart";
+import { QuarterlyMetrics } from "@/components/QuarterlyMetrics";
 
 const Dashboard = () => {
   const { toast } = useToast();
@@ -150,6 +150,9 @@ const Dashboard = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Quarterly Metrics Section */}
+      <QuarterlyMetrics />
 
       {/* Quick links */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
