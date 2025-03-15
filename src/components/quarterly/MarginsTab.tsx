@@ -14,7 +14,7 @@ export const MarginsTab = () => {
             <YAxis label={{ value: 'Margin (%)', angle: -90, position: 'insideLeft' }} />
             <Tooltip formatter={(value) => [`${value}%`, undefined]} />
             <Legend />
-            <Bar dataKey="Gross Margin" fill="#047ca4" />
+            <Bar dataKey="Gross Margin" fill="#daccc3" />
             <Bar dataKey="Operating Margin" fill="#0d8baf" />
             <Bar dataKey="Net Margin" fill="#0ea5e9" />
           </BarChart>

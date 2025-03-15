@@ -16,7 +16,7 @@ export const RevenueTab = () => {
             <YAxis label={{ value: 'Revenue ($M)', angle: -90, position: 'insideLeft' }} />
             <Tooltip formatter={(value) => [`$${value}M`, undefined]} />
             <Legend />
-            <Bar dataKey="Actual" fill="#047ca4" />
+            <Bar dataKey="Actual" fill="#daccc3" />
             <Bar dataKey="Target" fill="#0d8baf" />
           </BarChart>
         </ResponsiveContainer>
