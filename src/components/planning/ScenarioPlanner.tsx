@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -9,8 +8,9 @@ import { ScenarioCreator } from "./ScenarioCreator";
 import { ScenarioItem } from "@/types/planning";
 import { sampleScenarios } from "@/data/planningData";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { Download, BarChart3, PenLine, Save, Plus, X } from "lucide-react";
+import { Download, BarChart3, PenLine, Save, Plus, X, Columns, GitCompare } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { ScenarioComparison } from "./ScenarioComparison";
 
 export const ScenarioPlanner: React.FC = () => {
   const { toast } = useToast();
@@ -21,7 +21,9 @@ export const ScenarioPlanner: React.FC = () => {
   const [editingAssumptions, setEditingAssumptions] = useState(false);
   const [editedAssumptions, setEditedAssumptions] = useState<string[]>([]);
   const [newAssumption, setNewAssumption] = useState("");
-
+  const [selectedScenariosForComparison, setSelectedScenariosForComparison] = useState<ScenarioItem[]>([]);
+  const [showComparisonView, setShowComparisonView] = useState(false);
+  
   const handleCreateScenario = (scenario: ScenarioItem) => {
     setScenarios([...scenarios, scenario]);
     
@@ -31,13 +33,6 @@ export const ScenarioPlanner: React.FC = () => {
     });
     
     setActiveTab("existing");
-  };
-
-  const handleCompareScenarios = () => {
-    toast({
-      title: "Compare Feature",
-      description: "Scenario comparison feature is coming soon.",
-    });
   };
 
   const handleExportScenario = () => {
@@ -112,6 +107,49 @@ export const ScenarioPlanner: React.FC = () => {
 
   const handleCancelEditAssumptions = () => {
     setEditingAssumptions(false);
+  };
+
+  const handleCompareScenarios = () => {
+    if (selectedScenariosForComparison.length < 2) {
+      toast({
+        title: "Selection Required",
+        description: "Please select at least two scenarios to compare.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    setShowComparisonView(true);
+  };
+  
+  const handleToggleScenarioSelection = (scenario: ScenarioItem) => {
+    setSelectedScenariosForComparison(prev => {
+      // Check if scenario is already selected
+      const isAlreadySelected = prev.some(s => s.id === scenario.id);
+      
+      if (isAlreadySelected) {
+        // Remove from selection
+        return prev.filter(s => s.id !== scenario.id);
+      } else {
+        // Add to selection
+        return [...prev, scenario];
+      }
+    });
+  };
+  
+  const handleCloseComparison = () => {
+    setShowComparisonView(false);
+  };
+  
+  const handleExportComparison = () => {
+    toast({
+      title: "Comparison Exported",
+      description: `Comparison of ${selectedScenariosForComparison.length} scenarios has been exported.`,
+    });
+  };
+
+  const isScenarioSelected = (scenario: ScenarioItem) => {
+    return selectedScenariosForComparison.some(s => s.id === scenario.id);
   };
 
   const handleAssumptionChange = (index: number, value: string) => {
@@ -191,16 +229,26 @@ export const ScenarioPlanner: React.FC = () => {
               </>
             )}
             <Button 
-              variant="outline" 
+              variant={selectedScenariosForComparison.length > 0 ? "default" : "outline"}
               onClick={handleCompareScenarios}
-              disabled={scenarios.length < 2}
+              className="flex items-center gap-1"
+              disabled={selectedScenariosForComparison.length < 2}
             >
-              Compare Scenarios
+              <GitCompare className="h-4 w-4" />
+              Compare ({selectedScenariosForComparison.length})
             </Button>
           </div>
         </div>
       </CardHeader>
       <CardContent>
+        {showComparisonView && (
+          <ScenarioComparison 
+            scenarios={selectedScenariosForComparison}
+            onClose={handleCloseComparison}
+            onExport={handleExportComparison}
+          />
+        )}
+
         {selectedScenario && showImpactAnalysis && (
           <div className="mb-6 space-y-4">
             <Card>
@@ -311,10 +359,37 @@ export const ScenarioPlanner: React.FC = () => {
           </TabsList>
           
           <TabsContent value="existing">
+            {!showComparisonView && selectedScenariosForComparison.length > 0 && (
+              <div className="mb-4 flex items-center justify-between">
+                <div className="text-sm text-muted-foreground">
+                  {selectedScenariosForComparison.length} scenario{selectedScenariosForComparison.length !== 1 ? 's' : ''} selected for comparison
+                </div>
+                <div className="flex gap-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => setSelectedScenariosForComparison([])}
+                  >
+                    Clear Selection
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    onClick={handleCompareScenarios}
+                    disabled={selectedScenariosForComparison.length < 2}
+                  >
+                    <GitCompare className="h-4 w-4 mr-1" />
+                    Compare
+                  </Button>
+                </div>
+              </div>
+            )}
             <ScenarioList 
               scenarios={scenarios} 
               onSelect={setSelectedScenario} 
               selectedScenario={selectedScenario}
+              selectableForComparison
+              onToggleComparisonSelection={handleToggleScenarioSelection}
+              selectedForComparison={isScenarioSelected}
             />
           </TabsContent>
           
@@ -326,4 +401,3 @@ export const ScenarioPlanner: React.FC = () => {
     </Card>
   );
 };
-
