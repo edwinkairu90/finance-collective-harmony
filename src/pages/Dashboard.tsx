@@ -1,31 +1,69 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowDownIcon, ArrowUpIcon, BarChart, ChartPie, ChevronUpIcon, ClipboardCheck, Compass, Users } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart as RechartsBarChart, Bar, Legend } from 'recharts';
+import { 
+  AreaChart, 
+  Area, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  ResponsiveContainer, 
+  BarChart as RechartsBarChart, 
+  Bar, 
+  Legend,
+  LineChart,
+  Line 
+} from 'recharts';
+import { 
+  ChartContainer, 
+  ChartTooltip,
+  ChartTooltipContent
+} from "@/components/ui/chart";
 
 const Dashboard = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  // Mock data for charts
+  // Mock data for revenue projections vs actuals
   const revenueData = [
-    { month: 'Jan', planned: 4000, actual: 4200 },
-    { month: 'Feb', planned: 4500, actual: 4300 },
-    { month: 'Mar', planned: 5000, actual: 5200 },
-    { month: 'Apr', planned: 5500, actual: 5700 },
-    { month: 'May', planned: 6000, actual: 5800 },
-    { month: 'Jun', planned: 6500, actual: 6800 },
+    { month: 'Jan', projected: 4200, actual: 4100 },
+    { month: 'Feb', projected: 4500, actual: 4600 },
+    { month: 'Mar', projected: 5000, actual: 5100 },
+    { month: 'Apr', projected: 5500, actual: 5300 },
+    { month: 'May', projected: 6000, actual: 6200 },
+    { month: 'Jun', projected: 6500, actual: 6300 },
+    { month: 'Jul', projected: 7000, actual: 7200 },
+    { month: 'Aug', projected: 7500, actual: null },
+    { month: 'Sep', projected: 8000, actual: null },
+    { month: 'Oct', projected: 8500, actual: null },
+    { month: 'Nov', projected: 9000, actual: null },
+    { month: 'Dec', projected: 9500, actual: null },
   ];
 
-  const expenseCategories = [
-    { name: 'Salaries', planned: 3000, actual: 3100 },
-    { name: 'Marketing', planned: 1200, actual: 1000 },
-    { name: 'Operations', planned: 800, actual: 850 },
-    { name: 'Tools', planned: 300, actual: 280 },
-    { name: 'Other', planned: 500, actual: 470 },
+  // Mock data for operational expenses
+  const opexData = [
+    { category: 'Personnel', amount: 3600000, percentage: 45 },
+    { category: 'Technology', amount: 1200000, percentage: 15 },
+    { category: 'Marketing', amount: 1000000, percentage: 12.5 },
+    { category: 'Facilities', amount: 800000, percentage: 10 },
+    { category: 'Travel', amount: 600000, percentage: 7.5 },
+    { category: 'R&D', amount: 400000, percentage: 5 },
+    { category: 'Other', amount: 400000, percentage: 5 },
+  ];
+
+  // Mock data for BVA (Budget vs Actual) by department YTD
+  const bvaData = [
+    { department: 'Sales', budget: 1200000, actual: 1150000, variance: -50000 },
+    { department: 'Marketing', budget: 900000, actual: 950000, variance: 50000 },
+    { department: 'Engineering', budget: 2200000, actual: 2100000, variance: -100000 },
+    { department: 'Operations', budget: 1400000, actual: 1450000, variance: 50000 },
+    { department: 'Finance', budget: 600000, actual: 580000, variance: -20000 },
+    { department: 'HR', budget: 500000, actual: 490000, variance: -10000 },
   ];
 
   const quickLinks = [
@@ -43,13 +81,74 @@ const Dashboard = () => {
     });
   };
 
+  // Calculate total Opex
+  const totalOpex = opexData.reduce((acc, item) => acc + item.amount, 0);
+  
+  // Calculate BVA totals
+  const totalBudget = bvaData.reduce((acc, item) => acc + item.budget, 0);
+  const totalActual = bvaData.reduce((acc, item) => acc + item.actual, 0);
+  const totalVariance = totalActual - totalBudget;
+  const variancePercentage = (totalVariance / totalBudget) * 100;
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold tracking-tight">Financial Dashboard</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Executive Dashboard</h1>
         <Button onClick={showNotification}>
           Show Sample Notification
         </Button>
+      </div>
+
+      {/* KPI Summary Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">Annual Revenue Forecast</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between">
+              <div className="text-2xl font-bold">$76.5M</div>
+              <div className="flex items-center text-emerald-500 text-sm">
+                <ArrowUpIcon className="mr-1 h-4 w-4" />
+                8.2%
+              </div>
+            </div>
+            <div className="text-xs text-muted-foreground mt-1">vs previous forecast</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">YTD Expenses</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between">
+              <div className="text-2xl font-bold">${(totalOpex / 1000000).toFixed(1)}M</div>
+              <div className="flex items-center text-red-500 text-sm">
+                <ArrowUpIcon className="mr-1 h-4 w-4" />
+                3.5%
+              </div>
+            </div>
+            <Progress value={58} className="h-2 mt-2" />
+            <div className="text-xs text-muted-foreground mt-1">58% of annual budget</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">Overall Budget Variance</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between">
+              <div className="text-2xl font-bold">${(totalVariance / 1000000).toFixed(1)}M</div>
+              <div className={`flex items-center ${variancePercentage < 0 ? 'text-green-500' : 'text-red-500'} text-sm`}>
+                {variancePercentage < 0 ? <ArrowDownIcon className="mr-1 h-4 w-4" /> : <ArrowUpIcon className="mr-1 h-4 w-4" />}
+                {Math.abs(variancePercentage).toFixed(1)}%
+              </div>
+            </div>
+            <div className="text-xs text-muted-foreground mt-1">
+              {variancePercentage < 0 ? 'Under budget' : 'Over budget'}
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Quick links */}
@@ -70,101 +169,125 @@ const Dashboard = () => {
         ))}
       </div>
 
-      {/* Key metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Total Budget</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center justify-between">
-              <div className="text-2xl font-bold">$1,248,000</div>
-              <div className="flex items-center text-finance-positive text-sm">
-                <ArrowUpIcon className="mr-1 h-4 w-4" />
-                12.5%
-              </div>
-            </div>
-            <div className="text-xs text-muted-foreground mt-1">vs last year</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Spend to Date</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center justify-between">
-              <div className="text-2xl font-bold">$724,500</div>
-              <div className="flex items-center text-finance-positive text-sm">
-                <ChevronUpIcon className="mr-1 h-4 w-4" />
-                4.3%
-              </div>
-            </div>
-            <Progress value={58} className="h-2 mt-2" />
-            <div className="text-xs text-muted-foreground mt-1">58% of annual budget</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Pending Approvals</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">7</div>
-            <div className="flex items-center text-finance-negative text-sm mt-1">
-              <ArrowUpIcon className="mr-1 h-4 w-4" />
-              3 more than usual
-            </div>
-            <Button variant="link" className="p-0 h-auto mt-2 text-sm" onClick={() => navigate('/approvals')}>
-              View pending approvals
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Revenue vs Plan Chart */}
+      {/* Revenue Projection vs Actuals */}
       <Card>
         <CardHeader>
-          <CardTitle>Revenue vs Plan</CardTitle>
-          <CardDescription>Compare actual revenue against planned figures</CardDescription>
+          <CardTitle>Revenue Projection vs Actuals</CardTitle>
+          <CardDescription>FY 2025 monthly revenue performance against projections</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={revenueData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+              <LineChart data={revenueData} margin={{ top: 20, right: 30, left: 20, bottom: 10 }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" />
                 <YAxis />
-                <Tooltip formatter={(value) => [`$${value}`, undefined]} />
+                <Tooltip 
+                  formatter={(value) => value ? [`$${value.toLocaleString()}K`, ''] : ['Projected', '']} 
+                  labelFormatter={(label) => `${label} 2025`}
+                />
                 <Legend />
-                <Area type="monotone" dataKey="planned" stroke="#0ea5e9" fill="#0ea5e980" name="Planned" />
-                <Area type="monotone" dataKey="actual" stroke="#10b981" fill="#10b98180" name="Actual" />
-              </AreaChart>
+                <Line 
+                  type="monotone" 
+                  dataKey="projected" 
+                  stroke="#8884d8" 
+                  name="Projected Revenue" 
+                  strokeWidth={2} 
+                  dot={{ r: 3 }} 
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="actual" 
+                  stroke="#82ca9d" 
+                  name="Actual Revenue" 
+                  strokeWidth={2} 
+                  dot={{ r: 4 }} 
+                />
+              </LineChart>
             </ResponsiveContainer>
           </div>
         </CardContent>
       </Card>
 
-      {/* Expense by Category Chart */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Expenses by Category</CardTitle>
-          <CardDescription>Plan vs actual by department</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <RechartsBarChart data={expenseCategories} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip formatter={(value) => [`$${value}`, undefined]} />
-                <Legend />
-                <Bar dataKey="planned" name="Planned" fill="#0ea5e9" />
-                <Bar dataKey="actual" name="Actual" fill="#10b981" />
-              </RechartsBarChart>
-            </ResponsiveContainer>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Opex Summary and BVA Summary in two columns */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Opex Summary */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Operational Expenses</CardTitle>
+            <CardDescription>2025 YTD expense breakdown by category</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="h-80">
+              <ResponsiveContainer width="100%" height="100%">
+                <RechartsBarChart 
+                  data={opexData} 
+                  layout="vertical"
+                  margin={{ top: 5, right: 30, left: 70, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" 
+                    tickFormatter={(value) => `$${(value/1000000).toFixed(1)}M`} 
+                  />
+                  <YAxis type="category" dataKey="category" />
+                  <Tooltip 
+                    formatter={(value) => [`$${value.toLocaleString()}`, '']} 
+                    labelFormatter={(label) => `${label}`}
+                  />
+                  <Bar dataKey="amount" fill="#8884d8" radius={[0, 4, 4, 0]} />
+                </RechartsBarChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="text-sm text-muted-foreground text-right mt-2">
+              Total Opex: ${(totalOpex/1000000).toFixed(1)}M
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* BVA Summary */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Budget vs. Actual YTD</CardTitle>
+            <CardDescription>Department-level performance against budget</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="h-80">
+              <ResponsiveContainer width="100%" height="100%">
+                <RechartsBarChart 
+                  data={bvaData}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="department" />
+                  <YAxis tickFormatter={(value) => `$${(value/1000000).toFixed(1)}M`} />
+                  <Tooltip 
+                    formatter={(value) => [`$${value.toLocaleString()}`, '']}
+                  />
+                  <Legend />
+                  <Bar dataKey="budget" fill="#8884d8" name="Budget" />
+                  <Bar dataKey="actual" fill="#82ca9d" name="Actual" />
+                </RechartsBarChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="text-sm mt-2 grid grid-cols-3 gap-4">
+              <div>
+                <div className="text-muted-foreground">Total Budget</div>
+                <div className="font-medium">${(totalBudget/1000000).toFixed(1)}M</div>
+              </div>
+              <div>
+                <div className="text-muted-foreground">Total Actual</div>
+                <div className="font-medium">${(totalActual/1000000).toFixed(1)}M</div>
+              </div>
+              <div>
+                <div className="text-muted-foreground">Variance</div>
+                <div className={`font-medium ${totalVariance < 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  ${Math.abs(totalVariance/1000000).toFixed(1)}M {totalVariance < 0 ? 'Under' : 'Over'}
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };
