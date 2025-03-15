@@ -90,7 +90,7 @@ export function AppSidebar() {
       </SidebarContent>
       <SidebarFooter className="px-4 py-4">
         <div className="text-xs text-muted-foreground">
-          &copy; 2023 Kompass Inc.
+          &copy; 2025 Kompass Inc.
         </div>
       </SidebarFooter>
     </Sidebar>

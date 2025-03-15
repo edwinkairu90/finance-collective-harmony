@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -67,7 +66,7 @@ const BudgetPlanning = () => {
         <TabsContent value="overview" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>FY 2023 Budget Allocation</CardTitle>
+              <CardTitle>FY 2025 Budget Allocation</CardTitle>
               <CardDescription>Overview of how your budget is distributed</CardDescription>
             </CardHeader>
             <CardContent>
@@ -182,14 +181,14 @@ const BudgetPlanning = () => {
                   </div>
                   <div className="flex-1 space-y-2">
                     <Label htmlFor="year">Year</Label>
-                    <Select defaultValue="2023">
+                    <Select defaultValue="2025">
                       <SelectTrigger id="year">
                         <SelectValue placeholder="Select year" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="2022">2022</SelectItem>
-                        <SelectItem value="2023">2023</SelectItem>
                         <SelectItem value="2024">2024</SelectItem>
+                        <SelectItem value="2025">2025</SelectItem>
+                        <SelectItem value="2026">2026</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -202,7 +201,7 @@ const BudgetPlanning = () => {
           <Card>
             <CardHeader>
               <CardTitle>Marketing Department Budget</CardTitle>
-              <CardDescription>FY 2023</CardDescription>
+              <CardDescription>FY 2025</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">

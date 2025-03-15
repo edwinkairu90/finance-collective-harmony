@@ -45,7 +45,7 @@ const DataCollection = () => {
         <TabsContent value="status" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Q3 2023 Budget Data Collection</CardTitle>
+              <CardTitle>Q3 2025 Budget Data Collection</CardTitle>
               <CardDescription>Status overview for all departments</CardDescription>
             </CardHeader>
             <CardContent>
@@ -73,7 +73,7 @@ const DataCollection = () => {
                       <span>John Doe</span>
                     </div>
                     <div><Badge className="bg-green-500">Completed</Badge></div>
-                    <div>Aug 15, 2023</div>
+                    <div>Aug 15, 2025</div>
                   </div>
 
                   <div className="grid grid-cols-4 items-center gap-4 border-t pt-4">
@@ -85,7 +85,7 @@ const DataCollection = () => {
                       <span>Jane Lee</span>
                     </div>
                     <div><Badge className="bg-amber-500">In Progress</Badge></div>
-                    <div>Aug 18, 2023</div>
+                    <div>Aug 18, 2025</div>
                   </div>
 
                   <div className="grid grid-cols-4 items-center gap-4 border-t pt-4">
@@ -97,7 +97,7 @@ const DataCollection = () => {
                       <span>Robert Kim</span>
                     </div>
                     <div><Badge className="bg-green-500">Completed</Badge></div>
-                    <div>Aug 12, 2023</div>
+                    <div>Aug 12, 2025</div>
                   </div>
 
                   <div className="grid grid-cols-4 items-center gap-4 border-t pt-4">
@@ -109,7 +109,7 @@ const DataCollection = () => {
                       <span>Sarah Chen</span>
                     </div>
                     <div><Badge className="bg-green-500">Completed</Badge></div>
-                    <div>Aug 10, 2023</div>
+                    <div>Aug 10, 2025</div>
                   </div>
 
                   <div className="grid grid-cols-4 items-center gap-4 border-t pt-4">
@@ -121,7 +121,7 @@ const DataCollection = () => {
                       <span>Mike Peters</span>
                     </div>
                     <div><Badge>Not Started</Badge></div>
-                    <div>Aug 20, 2023</div>
+                    <div>Aug 20, 2025</div>
                   </div>
 
                   <div className="grid grid-cols-4 items-center gap-4 border-t pt-4">
@@ -133,7 +133,7 @@ const DataCollection = () => {
                       <span>Lisa Geller</span>
                     </div>
                     <div><Badge className="bg-amber-500">In Progress</Badge></div>
-                    <div>Aug 18, 2023</div>
+                    <div>Aug 18, 2025</div>
                   </div>
                 </div>
               </div>
@@ -164,10 +164,10 @@ const DataCollection = () => {
                   <div className="space-y-2">
                     <Label htmlFor="period">Period</Label>
                     <select className="w-full p-2 border rounded-md" id="period">
-                      <option value="Q1-2023">Q1 2023</option>
-                      <option value="Q2-2023">Q2 2023</option>
-                      <option value="Q3-2023" selected>Q3 2023</option>
-                      <option value="Q4-2023">Q4 2023</option>
+                      <option value="Q1-2025">Q1 2025</option>
+                      <option value="Q2-2025">Q2 2025</option>
+                      <option value="Q3-2025" selected>Q3 2025</option>
+                      <option value="Q4-2025">Q4 2025</option>
                     </select>
                   </div>
                 </div>
@@ -249,7 +249,7 @@ const DataCollection = () => {
                     </thead>
                     <tbody>
                       <tr className="border-b">
-                        <td className="py-3">Q2 2023</td>
+                        <td className="py-3">Q2 2025</td>
                         <td className="py-3">Marketing</td>
                         <td className="text-right py-3">$245,000</td>
                         <td className="text-right py-3">$198,000</td>
@@ -259,7 +259,7 @@ const DataCollection = () => {
                         </td>
                       </tr>
                       <tr className="border-b">
-                        <td className="py-3">Q2 2023</td>
+                        <td className="py-3">Q2 2025</td>
                         <td className="py-3">Sales</td>
                         <td className="text-right py-3">$380,000</td>
                         <td className="text-right py-3">$320,000</td>
@@ -269,7 +269,7 @@ const DataCollection = () => {
                         </td>
                       </tr>
                       <tr className="border-b">
-                        <td className="py-3">Q1 2023</td>
+                        <td className="py-3">Q1 2025</td>
                         <td className="py-3">Marketing</td>
                         <td className="text-right py-3">$230,000</td>
                         <td className="text-right py-3">$185,000</td>
@@ -279,7 +279,7 @@ const DataCollection = () => {
                         </td>
                       </tr>
                       <tr className="border-b">
-                        <td className="py-3">Q1 2023</td>
+                        <td className="py-3">Q1 2025</td>
                         <td className="py-3">Sales</td>
                         <td className="text-right py-3">$365,000</td>
                         <td className="text-right py-3">$310,000</td>
@@ -289,7 +289,7 @@ const DataCollection = () => {
                         </td>
                       </tr>
                       <tr>
-                        <td className="py-3">Q4 2022</td>
+                        <td className="py-3">Q4 2024</td>
                         <td className="py-3">Engineering</td>
                         <td className="text-right py-3">$0</td>
                         <td className="text-right py-3">$420,000</td>
