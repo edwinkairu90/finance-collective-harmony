@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PLStatement } from "./PLStatement";
 import { BalanceSheet } from "./BalanceSheet";
 import { CashflowStatement } from "./CashflowStatement";
+import { QuarterlyComparison } from "./QuarterlyComparison";
 
 const FinancialStatements = () => {
   const [activeTab, setActiveTab] = useState("pl");
@@ -31,6 +32,7 @@ const FinancialStatements = () => {
               <TabsTrigger value="pl">Profit & Loss</TabsTrigger>
               <TabsTrigger value="balance">Balance Sheet</TabsTrigger>
               <TabsTrigger value="cashflow">Cash Flow</TabsTrigger>
+              <TabsTrigger value="comparison">QoQ Comparison</TabsTrigger>
             </TabsList>
             
             <TabsContent value="pl">
@@ -43,6 +45,10 @@ const FinancialStatements = () => {
             
             <TabsContent value="cashflow">
               <CashflowStatement />
+            </TabsContent>
+            
+            <TabsContent value="comparison">
+              <QuarterlyComparison />
             </TabsContent>
           </Tabs>
         </CardContent>
