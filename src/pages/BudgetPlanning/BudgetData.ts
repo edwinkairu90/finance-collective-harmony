@@ -1,5 +1,4 @@
-
-export const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
+export const COLORS = ['#0ea5e9', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
 
 export const budgetData = [
   { name: 'Salaries & Benefits', value: 650000 },

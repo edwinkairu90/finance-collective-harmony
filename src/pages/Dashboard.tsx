@@ -201,7 +201,7 @@ const Dashboard = () => {
                 <Line 
                   type="monotone" 
                   dataKey="actual" 
-                  stroke="#82ca9d" 
+                  stroke="#0ea5e9" 
                   name="Actual Revenue" 
                   strokeWidth={2} 
                   dot={{ r: 4 }} 
@@ -237,7 +237,7 @@ const Dashboard = () => {
                     formatter={(value) => [`$${value.toLocaleString()}`, '']} 
                     labelFormatter={(label) => `${label}`}
                   />
-                  <Bar dataKey="amount" fill="#8884d8" radius={[0, 4, 4, 0]} />
+                  <Bar dataKey="amount" fill="#0ea5e9" radius={[0, 4, 4, 0]} />
                 </RechartsBarChart>
               </ResponsiveContainer>
             </div>
@@ -268,7 +268,7 @@ const Dashboard = () => {
                   />
                   <Legend />
                   <Bar dataKey="budget" fill="#8884d8" name="Budget" />
-                  <Bar dataKey="actual" fill="#82ca9d" name="Actual" />
+                  <Bar dataKey="actual" fill="#0ea5e9" name="Actual" />
                 </RechartsBarChart>
               </ResponsiveContainer>
             </div>
