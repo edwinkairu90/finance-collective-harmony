@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,7 +7,7 @@ import { AppLayout } from "./components/AppLayout";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
-import BudgetPlanning from "./pages/BudgetPlanning";
+import BudgetPlanning from "./pages/BudgetPlanning/index";
 import DataCollection from "./pages/DataCollection";
 import Approvals from "./pages/Approvals";
 import ActualsVsBudget from "./pages/ActualsVsBudget";
