@@ -47,3 +47,29 @@ export const calculateGrowth = (current: number, previous: number | null): numbe
   if (!previous || previous === 0) return null;
   return ((current - previous) / previous) * 100;
 };
+
+// Determine appropriate color class for growth values
+export const getGrowthColorClass = (
+  growth: number | null, 
+  sectionType: 'operating' | 'investing' | 'financing',
+  item?: string,
+  value?: number
+): string => {
+  if (growth === null) return '';
+  
+  // Special cases for investing outflows where negative growth is positive
+  if (sectionType === 'investing') {
+    // For investing items with "Purchase" in the name, or negative values (outflows)
+    if ((item && item.includes('Purchase')) || (value !== undefined && value < 0)) {
+      return growth <= 0 ? 'text-green-600' : 'text-red-600';
+    }
+  }
+  
+  // Special cases for financing where outflows reduction is positive
+  if (sectionType === 'financing' && item && !item.includes('Proceeds')) {
+    return growth <= 0 ? 'text-green-600' : 'text-red-600';
+  }
+  
+  // Default case: positive growth is good
+  return growth >= 0 ? 'text-green-600' : 'text-red-600';
+};
