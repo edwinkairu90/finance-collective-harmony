@@ -27,7 +27,7 @@ export const BudgetScenarioFinancials: React.FC = () => {
     name: scenario.name,
     value: scenario.financials.opex,
     color: scenario.color,
-    category: "Operating Expenses"
+    category: "Opex"
   }));
   
   const profitData = scenarios.map(scenario => ({
@@ -52,7 +52,7 @@ export const BudgetScenarioFinancials: React.FC = () => {
       "Best Case": scenarios.find(s => s.id === "best-case")?.financials.grossProfit || 0,
     },
     {
-      name: "Operating Expenses",
+      name: "Opex",
       "Base Case": scenarios.find(s => s.id === "base-case")?.financials.opex || 0,
       "Worst Case": scenarios.find(s => s.id === "worst-case")?.financials.opex || 0,
       "Best Case": scenarios.find(s => s.id === "best-case")?.financials.opex || 0,
