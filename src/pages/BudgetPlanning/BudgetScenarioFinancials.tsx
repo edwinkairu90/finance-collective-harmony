@@ -119,7 +119,7 @@ export const BudgetScenarioFinancials: React.FC<BudgetScenarioFinancialsProps> =
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis tickFormatter={(value) => `${value}%`} />
-                <Tooltip formatter={(value) => [`${value.toFixed(1)}%`, '']} />
+                <Tooltip formatter={(value: number) => [`${value.toFixed(1)}%`, '']} />
                 <Legend />
                 <Line 
                   type="monotone" 

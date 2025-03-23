@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -14,6 +13,7 @@ import { getBudgetScenarios, getScenarioById } from "./BudgetScenarioData";
 export const BudgetOverview = () => {
   const [activeScenario, setActiveScenario] = useState<BudgetScenarioType>("base-case");
   const scenario = getScenarioById(activeScenario);
+  const scenarios = getBudgetScenarios();
   
   const chartData = scenario ? scenario.departments.map(dept => ({
     name: dept.name,
@@ -75,7 +75,7 @@ export const BudgetOverview = () => {
         </CardFooter>
       </Card>
       
-      <BudgetScenarioFinancials />
+      <BudgetScenarioFinancials scenarios={scenarios} />
 
       <div className="grid grid-cols-1 gap-4 mt-4">
         <BudgetScenarioComparison />
