@@ -13,5 +13,10 @@ export interface BudgetScenario {
     name: string;
     budget: number;
   }[];
+  financials: {
+    revenue: number;
+    opex: number;
+    profit: number;
+  };
   color: string;
 }

@@ -7,6 +7,7 @@ import { BudgetTimeline } from "./BudgetTimeline";
 import { COLORS, getTotalBudget } from "./BudgetData";
 import { BudgetScenarioSelector } from "./BudgetScenarioSelector";
 import { BudgetScenarioComparison } from "./BudgetScenarioComparison";
+import { BudgetScenarioFinancials } from "./BudgetScenarioFinancials";
 import { BudgetScenarioType } from "@/types/budgetScenarios";
 import { getBudgetScenarios, getScenarioById } from "./BudgetScenarioData";
 
@@ -55,12 +56,25 @@ export const BudgetOverview = () => {
             </ResponsiveContainer>
           </div>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="flex justify-between">
           <div className="text-sm text-muted-foreground">
             Total Budget: ${scenario?.totalBudget.toLocaleString() || 0}
           </div>
+          {scenario && (
+            <div className="text-sm">
+              <div className="flex space-x-4">
+                <div className="text-green-600">Revenue: ${scenario.financials.revenue.toLocaleString()}</div>
+                <div className="text-red-600">Expenses: ${scenario.financials.opex.toLocaleString()}</div>
+                <div className={scenario.financials.profit >= 0 ? "text-green-600" : "text-red-600"}>
+                  Profit: ${scenario.financials.profit.toLocaleString()}
+                </div>
+              </div>
+            </div>
+          )}
         </CardFooter>
       </Card>
+      
+      <BudgetScenarioFinancials />
 
       <div className="grid grid-cols-1 gap-4 mt-4">
         <BudgetScenarioComparison />
