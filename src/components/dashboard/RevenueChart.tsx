@@ -33,7 +33,7 @@ export const RevenueChart = ({ data }: RevenueChartProps) => {
             <span>Target</span>
           </div>
           <div className="flex items-center">
-            <div className="w-3 h-3 rounded-full bg-[#4DC1CB] mr-1"></div>
+            <div className="w-3 h-3 rounded-full bg-[#0EA5E9] mr-1"></div>
             <span>Actual</span>
           </div>
           <div className="flex items-center">
@@ -64,9 +64,9 @@ export const RevenueChart = ({ data }: RevenueChartProps) => {
               <Line 
                 type="monotone" 
                 dataKey="actual" 
-                stroke="#4DC1CB" 
+                stroke="#0EA5E9" 
                 strokeWidth={2}
-                dot={{ r: 4, fill: "#4DC1CB" }} 
+                dot={{ r: 4, fill: "#0EA5E9" }} 
                 activeDot={{ r: 6 }}
               />
               <CartesianGrid stroke="#eee" vertical={false} />
