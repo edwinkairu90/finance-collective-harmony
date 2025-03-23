@@ -1,7 +1,7 @@
 
 import { Department } from "./budget";
 
-export type BudgetScenarioType = "base-case" | "worst-case" | "best-case";
+export type BudgetScenarioType = string;
 
 export interface BudgetScenario {
   id: BudgetScenarioType;
@@ -22,6 +22,7 @@ export interface BudgetScenario {
   color: string;
   factors: ScenarioFactor[];
   assumptions: string[];
+  isDefault?: boolean;
 }
 
 export interface ScenarioFactor {

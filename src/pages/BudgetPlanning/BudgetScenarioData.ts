@@ -1,5 +1,6 @@
 import { BudgetScenario, ScenarioFactor, BudgetScenarioType } from "@/types/budgetScenarios";
 import { budgetData, COLORS, getTotalBudget } from "./BudgetData";
+import { useToast } from "@/components/ui/use-toast";
 
 // Base case is our current budget
 const baseCaseBudget = getTotalBudget();
@@ -15,7 +16,8 @@ const baseProfit = baseRevenue - baseOpex;
 const SCENARIO_COLORS = {
   "base-case": "#1F4D46", // Dark teal/green
   "worst-case": "#4DC1CB", // Medium teal 
-  "best-case": "#F8D25B"  // Yellow
+  "best-case": "#F8D25B",  // Yellow
+  "custom": "#A855F7",     // Purple for custom scenarios
 };
 
 // Common factors affecting budget scenarios
@@ -143,9 +145,10 @@ const initScenarios = () => {
           grossProfit: baseGrossProfit,
           profit: baseProfit
         },
-        color: SCENARIO_COLORS["base-case"], // Updated color
+        color: SCENARIO_COLORS["base-case"],
         factors: scenarioFactors["base-case"],
-        assumptions: scenarioAssumptions["base-case"]
+        assumptions: scenarioAssumptions["base-case"],
+        isDefault: true
       },
       {
         id: "worst-case",
@@ -163,9 +166,10 @@ const initScenarios = () => {
           grossProfit: Math.round(baseRevenue * 0.80 * 0.65), // Lower gross margin in worst case
           profit: Math.round(baseRevenue * 0.80 - baseOpex * 0.90)
         },
-        color: SCENARIO_COLORS["worst-case"], // Updated color
+        color: SCENARIO_COLORS["worst-case"],
         factors: scenarioFactors["worst-case"],
-        assumptions: scenarioAssumptions["worst-case"]
+        assumptions: scenarioAssumptions["worst-case"],
+        isDefault: true
       },
       {
         id: "best-case",
@@ -183,9 +187,10 @@ const initScenarios = () => {
           grossProfit: Math.round(baseRevenue * 1.15 * 0.75), // Better gross margin in best case
           profit: Math.round(baseRevenue * 1.15 - baseOpex * 1.05)
         },
-        color: SCENARIO_COLORS["best-case"], // Updated color
+        color: SCENARIO_COLORS["best-case"],
         factors: scenarioFactors["best-case"],
-        assumptions: scenarioAssumptions["best-case"]
+        assumptions: scenarioAssumptions["best-case"],
+        isDefault: true
       }
     ];
   }
@@ -273,4 +278,87 @@ export const recalculateScenarioFinancials = (
   }
   
   return scenariosData[scenarioIndex];
+};
+
+// Add new scenario
+export const addScenario = (
+  name: string,
+  description: string,
+  budgetPercentage: number
+): BudgetScenario => {
+  initScenarios();
+  
+  // Generate a unique ID
+  const id = `scenario-${Date.now()}`;
+  
+  // Calculate budget values
+  const totalBudget = Math.round(baseCaseBudget * (1 + (budgetPercentage / 100)));
+  
+  // Create new scenario
+  const newScenario: BudgetScenario = {
+    id,
+    name,
+    description,
+    totalBudget,
+    departments: budgetData.map(item => ({
+      id: item.name.toLowerCase().replace(/\s+/g, '-'),
+      name: item.name,
+      budget: Math.round(item.value * (1 + (budgetPercentage / 100)))
+    })),
+    financials: {
+      revenue: Math.round(baseRevenue * (1 + (budgetPercentage / 100))),
+      opex: Math.round(baseOpex * (1 + (budgetPercentage / 100) * 0.8)), // Opex usually scales a bit less
+      grossProfit: Math.round(baseRevenue * (1 + (budgetPercentage / 100)) * 0.7),
+      profit: Math.round(baseRevenue * (1 + (budgetPercentage / 100)) - baseOpex * (1 + (budgetPercentage / 100) * 0.8))
+    },
+    color: SCENARIO_COLORS["custom"],
+    factors: [
+      {
+        id: "growth",
+        name: "Growth Impact",
+        impact: budgetPercentage,
+        description: "Impact of strategic initiatives on growth"
+      }
+    ],
+    assumptions: [
+      "This is a custom scenario",
+      "Adjust assumptions to match your strategic initiative"
+    ]
+  };
+  
+  // Add to scenarios
+  scenariosData.push(newScenario);
+  
+  return newScenario;
+};
+
+// Update scenario description
+export const updateScenarioDescription = (
+  scenarioId: BudgetScenarioType, 
+  description: string
+): BudgetScenario | undefined => {
+  initScenarios();
+  const scenarioIndex = scenariosData.findIndex(s => s.id === scenarioId);
+  
+  if (scenarioIndex === -1) return undefined;
+  
+  // Update the description for the specified scenario
+  scenariosData[scenarioIndex].description = description;
+  
+  return scenariosData[scenarioIndex];
+};
+
+// Delete a scenario
+export const deleteScenario = (scenarioId: BudgetScenarioType): boolean => {
+  initScenarios();
+  const scenarioIndex = scenariosData.findIndex(s => s.id === scenarioId);
+  
+  if (scenarioIndex === -1 || scenariosData[scenarioIndex].isDefault) {
+    return false; // Can't delete default scenarios
+  }
+  
+  // Remove the scenario
+  scenariosData.splice(scenarioIndex, 1);
+  
+  return true;
 };
