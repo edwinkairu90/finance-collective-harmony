@@ -30,7 +30,7 @@ export const ScenarioLineItemsRow: React.FC<ScenarioLineItemsRowProps> = ({
   const [expanded, setExpanded] = useState(false);
   
   // Get the appropriate line items
-  const getLineItems = (scenario: ScenarioItem) => {
+  const getLineItems = (scenario: ScenarioItem): LineItem[] => {
     if (!scenario.lineItems) return [];
     
     if (department && scenario.lineItems.departments && scenario.lineItems.departments[department]) {
