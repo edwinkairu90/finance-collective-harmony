@@ -84,24 +84,48 @@ export const ScenarioLineItemsRow: React.FC<ScenarioLineItemsRowProps> = ({
   const baseLineItems = getLineItems(baseScenario);
   const compareLineItems = getLineItems(compareScenario);
   
+  // Determine if this line item should have a breakdown - only allow revenue and cost categories
+  const shouldHaveBreakdown = () => {
+    // Only allow breakdowns for specific categories
+    return category === 'revenue' || category === 'costOfSales' || category === 'expenses';
+  };
+  
   // Create mock product/service breakdown if no line items exist
   const createMockBreakdownIfNeeded = () => {
     // Only create mock data for revenue if that's what we're looking at
-    if (category === 'revenue' && (baseLineItems.length === 0 || compareLineItems.length === 0)) {
-      // Return mock product/service breakdown for revenue
-      if (baseLineItems.length === 0 && baseValue > 0) {
-        return [
-          { name: "Product Sales", amount: baseValue * 0.6 },
-          { name: "Service Revenue", amount: baseValue * 0.3 },
-          { name: "Subscription Income", amount: baseValue * 0.1 }
-        ];
-      }
+    if (category === 'revenue' && baseLineItems.length === 0 && baseValue > 0) {
+      return [
+        { name: "Product Sales", amount: baseValue * 0.6 },
+        { name: "Service Revenue", amount: baseValue * 0.3 },
+        { name: "Subscription Income", amount: baseValue * 0.1 }
+      ];
     }
+    
+    // Mock cost of sales if needed
+    if (category === 'costOfSales' && baseLineItems.length === 0 && baseValue > 0) {
+      return [
+        { name: "Raw Materials", amount: baseValue * 0.5 },
+        { name: "Direct Labor", amount: baseValue * 0.3 },
+        { name: "Manufacturing Overhead", amount: baseValue * 0.2 }
+      ];
+    }
+    
+    // Mock expenses if needed
+    if (category === 'expenses' && baseLineItems.length === 0 && baseValue > 0) {
+      return [
+        { name: "Salaries", amount: baseValue * 0.6 },
+        { name: "Office Expenses", amount: baseValue * 0.25 },
+        { name: "Marketing", amount: baseValue * 0.15 }
+      ];
+    }
+    
     return baseLineItems;
   };
   
   // Enhanced line items - use real data if available, otherwise use mock data
-  const enhancedBaseLineItems = baseLineItems.length > 0 ? baseLineItems : createMockBreakdownIfNeeded();
+  const enhancedBaseLineItems = shouldHaveBreakdown() && baseLineItems.length === 0 
+    ? createMockBreakdownIfNeeded() 
+    : baseLineItems;
   
   // Create enhanced compare line items with matching structure if needed
   const createEnhancedCompareLineItems = () => {
@@ -109,7 +133,7 @@ export const ScenarioLineItemsRow: React.FC<ScenarioLineItemsRowProps> = ({
       return compareLineItems;
     }
     
-    if (category === 'revenue' && compareValue > 0) {
+    if (shouldHaveBreakdown() && enhancedBaseLineItems.length > 0 && compareValue > 0) {
       // Create matching structure but with compare values
       return enhancedBaseLineItems.map(baseItem => {
         const ratio = baseItem.amount / baseValue;
@@ -123,7 +147,9 @@ export const ScenarioLineItemsRow: React.FC<ScenarioLineItemsRowProps> = ({
     return [];
   };
   
-  const enhancedCompareLineItems = createEnhancedCompareLineItems();
+  const enhancedCompareLineItems = shouldHaveBreakdown() 
+    ? createEnhancedCompareLineItems()
+    : compareLineItems;
   
   // Create a merged list of all unique line items from both scenarios
   const allItemNames = new Set([
@@ -149,12 +175,10 @@ export const ScenarioLineItemsRow: React.FC<ScenarioLineItemsRowProps> = ({
     };
   });
   
-  const hasBreakdown = mergedLineItems.length > 0;
+  // Only show breakdown button if we have items to show AND this category supports breakdown
+  const hasBreakdown = shouldHaveBreakdown() && mergedLineItems.length > 0;
   
   const toggleExpanded = () => {
-    console.log("Toggling expansion:", !expanded);
-    console.log("Line items count:", mergedLineItems.length);
-    console.log("Line items for " + title + ":", mergedLineItems);
     setExpanded(!expanded);
   };
   
@@ -189,8 +213,8 @@ export const ScenarioLineItemsRow: React.FC<ScenarioLineItemsRowProps> = ({
         </TableCell>
       </TableRow>
       
-      {/* Show product/service breakdown when expanded */}
-      {expanded && mergedLineItems.map((item, index) => (
+      {/* Show product/service breakdown when expanded and it's allowed */}
+      {expanded && hasBreakdown && mergedLineItems.map((item, index) => (
         <TableRow key={`${title}-item-${item.name}-${index}`} className="bg-muted/10 text-sm">
           <TableCell style={{ paddingLeft: `${indentLevel * 1.5 + 3}rem` }}>
             {item.name}
