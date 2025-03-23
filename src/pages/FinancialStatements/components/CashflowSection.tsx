@@ -70,7 +70,7 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({
           {/* Yearly total column for monthly view */}
           {yearlyTotal && (
             <TableCell className="text-right font-medium">
-              ${getItemValue(quarters[0], item, sectionType).toLocaleString() * 12}
+              ${getItemValue(quarters[0], item, sectionType).toLocaleString()}
             </TableCell>
           )}
         </TableRow>

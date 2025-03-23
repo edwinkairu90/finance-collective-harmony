@@ -6,6 +6,10 @@ export type {
   BalanceSheetData
 } from "../types/balanceSheetTypes";
 
+// Import the types and balanceSheetByQuarter for use within this file
+import { BalanceSheetQuarterData } from "../types/balanceSheetTypes";
+import { balanceSheetByQuarter } from "./balanceSheetSampleData";
+
 // Re-export sample data
 export { balanceSheetByQuarter } from "./balanceSheetSampleData";
 
