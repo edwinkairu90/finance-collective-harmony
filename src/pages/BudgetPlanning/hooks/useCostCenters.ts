@@ -1,7 +1,15 @@
 
 import { useState, useEffect } from 'react';
 import { CostCenter, Department } from '@/types/budget';
-import { departments } from '../BudgetData';
+import { departments as rawDepartments } from '../BudgetData';
+
+// Convert raw departments to full Department type with budget and costCenters
+const departments: Department[] = rawDepartments.map(dept => ({
+  id: dept.id,
+  name: dept.name,
+  budget: dept.id === "marketing" ? 250000 : dept.id === "sales" ? 350000 : 150000,
+  costCenters: []
+}));
 
 // Mock data for cost centers
 const initialCostCenters: CostCenter[] = [
@@ -67,6 +75,12 @@ export const useCostCenters = () => {
   const filteredCostCenters = costCenters.filter(
     cc => cc.departmentId === selectedDepartmentId
   );
+
+  // Create a version of departments with their associated cost centers
+  const departmentsWithCostCenters: Department[] = departments.map(dept => ({
+    ...dept,
+    costCenters: costCenters.filter(cc => cc.departmentId === dept.id)
+  }));
 
   // Get all cost centers
   const allCostCenters = costCenters;
@@ -170,8 +184,8 @@ export const useCostCenters = () => {
 
   return {
     selectedDepartmentId,
-    departments,
-    selectedDepartment,
+    departments: departmentsWithCostCenters,
+    selectedDepartment: departmentsWithCostCenters.find(dept => dept.id === selectedDepartmentId),
     filteredCostCenters,
     allCostCenters,
     editingCostCenterId,
