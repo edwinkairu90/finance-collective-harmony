@@ -44,15 +44,28 @@ export const CostCenterForm = ({
         />
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="new-budget">Budget</Label>
-        <Input
-          id="new-budget"
-          type="number"
-          value={newCostCenter.budget}
-          onChange={(e) => onUpdateField('budget', e.target.value)}
-          placeholder="0"
-        />
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="new-previous">Previous Actual</Label>
+          <Input
+            id="new-previous"
+            type="number"
+            value={newCostCenter.previousActual || 0}
+            onChange={(e) => onUpdateField('previousActual', e.target.value)}
+            placeholder="0"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="new-budget">Current Budget</Label>
+          <Input
+            id="new-budget"
+            type="number"
+            value={newCostCenter.budget}
+            onChange={(e) => onUpdateField('budget', e.target.value)}
+            placeholder="0"
+          />
+        </div>
       </div>
 
       <div className="flex space-x-2 justify-end">

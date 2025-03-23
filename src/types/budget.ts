@@ -4,6 +4,7 @@ export interface CostCenter {
   name: string;
   description: string;
   budget: number;
+  previousActual?: number;
   departmentId: string;
 }
 

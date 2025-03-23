@@ -3,6 +3,7 @@ import React from "react";
 import { CostCenter, Department } from "@/types/budget";
 import { CostCenterItem } from "./CostCenterItem";
 import { CostCenterForm } from "./CostCenterForm";
+import { CostCenterTable } from "./CostCenterTable";
 
 interface CostCenterListProps {
   selectedDepartment: Department | undefined;
@@ -37,22 +38,32 @@ export const CostCenterList = ({
 
   return (
     <div className="space-y-4">
-      {selectedDepartment.costCenters.map(costCenter => (
-        <div 
-          key={costCenter.id} 
-          className="border rounded-lg p-4 transition-colors hover:bg-muted/30"
-        >
-          <CostCenterItem
-            costCenter={costCenter}
-            isEditing={editingCostCenterId === costCenter.id}
-            onStartEditing={() => onStartEditingCostCenter(costCenter.id)}
-            onCancelEditing={onCancelEditing}
-            onSaveChanges={onSaveCostCenterChanges}
-            onDelete={() => onDeleteCostCenter(costCenter.id)}
-            onUpdateField={(field, value) => onUpdateCostCenterField(costCenter.id, field, value)}
-          />
+      {editingCostCenterId ? (
+        // If we're editing a cost center, show the editing form
+        <div className="border rounded-lg p-4 transition-colors bg-muted/30">
+          {selectedDepartment.costCenters
+            .filter(cc => cc.id === editingCostCenterId)
+            .map(costCenter => (
+              <CostCenterItem
+                key={costCenter.id}
+                costCenter={costCenter}
+                isEditing={true}
+                onStartEditing={() => {}}
+                onCancelEditing={onCancelEditing}
+                onSaveChanges={onSaveCostCenterChanges}
+                onDelete={() => onDeleteCostCenter(costCenter.id)}
+                onUpdateField={(field, value) => onUpdateCostCenterField(costCenter.id, field, value)}
+              />
+            ))}
         </div>
-      ))}
+      ) : (
+        // If we're not editing, show the table
+        <CostCenterTable 
+          costCenters={selectedDepartment.costCenters}
+          onStartEditing={onStartEditingCostCenter}
+          onDelete={onDeleteCostCenter}
+        />
+      )}
 
       {isAddingCostCenter && (
         <CostCenterForm
@@ -61,12 +72,6 @@ export const CostCenterList = ({
           onAddCostCenter={onAddNewCostCenter}
           onCancel={onCancelAddingCostCenter}
         />
-      )}
-
-      {selectedDepartment.costCenters.length === 0 && !isAddingCostCenter && (
-        <div className="text-center py-8 text-muted-foreground">
-          <p>No cost centers found. Click "Add Cost Center" to create one.</p>
-        </div>
       )}
     </div>
   );
