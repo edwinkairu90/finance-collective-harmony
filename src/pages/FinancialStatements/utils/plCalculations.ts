@@ -22,6 +22,7 @@ export const calculateQuarterlyTotals = (quarters: QuarterData[]): QuarterlyTota
   return quarters.map(quarter => {
     const totalRevenue = quarter.revenue.reduce((sum, item) => sum + item.amount, 0);
     const totalExpenses = quarter.expenses.reduce((sum, item) => sum + item.amount, 0);
+    
     return {
       title: quarter.title,
       totalRevenue,
@@ -31,24 +32,24 @@ export const calculateQuarterlyTotals = (quarters: QuarterData[]): QuarterlyTota
   });
 };
 
-// Calculate P&L subtotals (Gross Profit, EBITDA, EBIT)
+// Calculate P&L subtotals (gross profit, EBITDA, EBIT)
 export const calculatePLSubtotals = (quarters: QuarterData[]): PLSubtotals[] => {
   return quarters.map(quarter => {
+    // Calculate Cost of Sales (all items containing "Cost of Goods" or "COGS")
+    const costOfSales = quarter.expenses
+      .filter(expense => expense.item.includes('Cost of Goods') || expense.item.includes('COGS'))
+      .reduce((sum, item) => sum + item.amount, 0);
+    
     // Calculate total revenue
     const totalRevenue = quarter.revenue.reduce((sum, item) => sum + item.amount, 0);
-    
-    // Calculate Cost of Sales (COGS)
-    const costOfSales = quarter.expenses
-      .filter(item => item.item.includes('Cost of Goods') || item.item.includes('COGS'))
-      .reduce((sum, item) => sum + item.amount, 0);
     
     // Calculate Gross Profit
     const grossProfit = totalRevenue - costOfSales;
     
-    // Calculate Operating Expenses (excluding D&A)
+    // Calculate Operating Expenses (expenses excluding Cost of Goods, COGS, Depreciation, and Amortization)
     const operatingExpenses = quarter.expenses
-      .filter(item => !item.item.includes('Cost of Goods') && !item.item.includes('COGS') && 
-                    !item.item.includes('Depreciation') && !item.item.includes('Amortization'))
+      .filter(expense => !expense.item.includes('Cost of Goods') && !expense.item.includes('COGS') && 
+                        !expense.item.includes('Depreciation') && !expense.item.includes('Amortization'))
       .reduce((sum, item) => sum + item.amount, 0);
     
     // Calculate EBITDA
@@ -56,7 +57,7 @@ export const calculatePLSubtotals = (quarters: QuarterData[]): PLSubtotals[] => 
     
     // Calculate Depreciation & Amortization
     const depreciationAmortization = quarter.expenses
-      .filter(item => item.item.includes('Depreciation') || item.item.includes('Amortization'))
+      .filter(expense => expense.item.includes('Depreciation') || expense.item.includes('Amortization'))
       .reduce((sum, item) => sum + item.amount, 0);
     
     // Calculate EBIT

@@ -3,8 +3,14 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Download, FileText } from "lucide-react";
-import { getLastFourQuarters } from "./data/plStatementData";
-import { calculateQuarterlyTotals, calculatePLSubtotals } from "./utils/plCalculations";
+import { 
+  getLastFourQuarters, 
+  getMonthsForYear,
+  calculateQuarterlyTotals, 
+  calculatePLSubtotals,
+  calculateMonthlyTotals,
+  calculateAnnualTotal
+} from "./data/plStatementData";
 import { PLTable } from "./components/PLTable";
 import { PeriodSelector, PeriodType } from "./components/PeriodSelector";
 
@@ -17,14 +23,23 @@ export const PLStatement = () => {
   const [selectedYear, setSelectedYear] = useState<number>(2024);
   
   // Get data based on selected period type
-  // In a real app, this would use APIs to fetch the appropriate data
-  const quarters = getLastFourQuarters();
+  let quarters = getLastFourQuarters();
+  let monthsData = getMonthsForYear(selectedYear);
   
-  // Calculate quarterly totals
-  const quarterlyTotals = calculateQuarterlyTotals(quarters);
+  // Calculate appropriate totals based on period type
+  let totals;
+  let subtotals;
+  let yearlyTotal;
   
-  // Calculate P&L subtotals (gross profit, EBITDA, EBIT)
-  const plSubtotals = calculatePLSubtotals(quarters);
+  if (periodType === 'monthly') {
+    totals = calculateMonthlyTotals(monthsData);
+    subtotals = monthsData.map(month => calculatePLSubtotals([month])[0]);
+    yearlyTotal = calculateAnnualTotal(monthsData);
+  } else {
+    // For quarterly and annual, we'll continue using the existing data
+    totals = calculateQuarterlyTotals(quarters);
+    subtotals = calculatePLSubtotals(quarters);
+  }
   
   // Handle period type change
   const handlePeriodTypeChange = (newPeriodType: PeriodType) => {
@@ -78,12 +93,22 @@ export const PLStatement = () => {
           </div>
           
           <div className="overflow-x-auto mt-6">
-            <PLTable 
-              quarters={quarters} 
-              quarterlyTotals={quarterlyTotals} 
-              plSubtotals={plSubtotals}
-              periodType={periodType}
-            />
+            {periodType === 'monthly' ? (
+              <PLTable 
+                quarters={monthsData}
+                quarterlyTotals={totals}
+                plSubtotals={subtotals}
+                periodType={periodType}
+                yearlyTotal={yearlyTotal}
+              />
+            ) : (
+              <PLTable 
+                quarters={quarters}
+                quarterlyTotals={totals}
+                plSubtotals={subtotals}
+                periodType={periodType}
+              />
+            )}
           </div>
           
           <div className="mt-6 text-sm text-muted-foreground border-t pt-4">
