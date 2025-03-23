@@ -5,12 +5,14 @@ import { CashflowQuarterData } from "../data/cashflowData";
 import { getAllCashflowItems } from "../utils/cashflowCalculations";
 import { CashflowSection } from "./CashflowSection";
 import { NetCashflowRow } from "./NetCashflowRow";
+import { PeriodType } from "./PeriodSelector";
 
 interface CashflowTableProps {
   quarters: CashflowQuarterData[];
+  periodType: PeriodType;
 }
 
-export const CashflowTable: React.FC<CashflowTableProps> = ({ quarters }) => {
+export const CashflowTable: React.FC<CashflowTableProps> = ({ quarters, periodType }) => {
   const { operatingItems, investingItems, financingItems } = getAllCashflowItems(quarters);
   
   return (

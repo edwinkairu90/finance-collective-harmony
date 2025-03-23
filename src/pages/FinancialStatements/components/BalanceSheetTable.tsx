@@ -5,12 +5,14 @@ import { BalanceSheetQuarterData } from "../types/balanceSheetTypes";
 import { getAllBalanceSheetItems } from "../utils/balanceSheetCalculations";
 import { BalanceSheetSection } from "./BalanceSheetSection";
 import { BalanceSheetTotalRow } from "./BalanceSheetTotalRow";
+import { PeriodType } from "./PeriodSelector";
 
 interface BalanceSheetTableProps {
   quarters: BalanceSheetQuarterData[];
+  periodType: PeriodType;
 }
 
-export const BalanceSheetTable: React.FC<BalanceSheetTableProps> = ({ quarters }) => {
+export const BalanceSheetTable: React.FC<BalanceSheetTableProps> = ({ quarters, periodType }) => {
   const { 
     currentAssets, 
     nonCurrentAssets, 
