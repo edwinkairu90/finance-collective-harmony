@@ -1,6 +1,6 @@
 
 import { Department } from "@/types/budget";
-import { departments } from "./BudgetData";
+import { departments } from "../BudgetData";
 
 export const departmentsWithCostCenters: Department[] = departments.map(dept => ({
   id: dept.id,
