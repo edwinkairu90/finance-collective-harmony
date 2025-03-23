@@ -62,7 +62,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-montserrat">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold tracking-tight">Executive Dashboard</h1>
         <Button onClick={showNotification}>
@@ -72,31 +72,31 @@ const Dashboard = () => {
 
       {/* KPI Cards - Top Row */}
       <div className="grid grid-cols-4 gap-4">
-        <Card className="bg-blue-100">
+        <Card>
           <CardContent className="p-6">
-            <div className="text-3xl font-bold">$280M</div>
-            <div className="text-sm text-gray-600">FY24 Revenue YTD</div>
+            <div className="text-3xl font-bold text-finance-highlight">$280M</div>
+            <div className="text-sm text-muted-foreground">FY24 Revenue YTD</div>
           </CardContent>
         </Card>
         
-        <Card className="bg-teal-800 text-white">
+        <Card>
           <CardContent className="p-6">
-            <div className="text-3xl font-bold">34.6%</div>
-            <div className="text-sm">QTR YoY Growth %</div>
+            <div className="text-3xl font-bold text-finance-highlight">34.6%</div>
+            <div className="text-sm text-muted-foreground">QTR YoY Growth %</div>
           </CardContent>
         </Card>
         
-        <Card className="bg-blue-100">
+        <Card>
           <CardContent className="p-6">
-            <div className="text-3xl font-bold">$14M</div>
-            <div className="text-sm text-gray-600">FY24 OPEX YTD</div>
+            <div className="text-3xl font-bold text-finance-highlight">$14M</div>
+            <div className="text-sm text-muted-foreground">FY24 OPEX YTD</div>
           </CardContent>
         </Card>
         
-        <Card className="bg-teal-800 text-white">
+        <Card>
           <CardContent className="p-6">
-            <div className="text-3xl font-bold">4.8%</div>
-            <div className="text-sm">FY24 OPEX % of Revenue</div>
+            <div className="text-3xl font-bold text-finance-highlight">4.8%</div>
+            <div className="text-sm text-muted-foreground">FY24 OPEX % of Revenue</div>
           </CardContent>
         </Card>
       </div>
@@ -115,7 +115,7 @@ const Dashboard = () => {
                 <span>Target</span>
               </div>
               <div className="flex items-center">
-                <div className="w-3 h-3 rounded-full bg-blue-800 mr-1"></div>
+                <div className="w-3 h-3 rounded-full bg-primary mr-1"></div>
                 <span>Actual</span>
               </div>
               <div className="flex items-center">
@@ -147,9 +147,9 @@ const Dashboard = () => {
                   <Line 
                     type="monotone" 
                     dataKey="actual" 
-                    stroke="#1e3a8a" 
+                    stroke="hsl(var(--primary))" 
                     strokeWidth={2}
-                    dot={{ r: 4, fill: "#1e3a8a" }} 
+                    dot={{ r: 4, fill: "hsl(var(--primary))" }} 
                     activeDot={{ r: 6 }}
                   />
                   <CartesianGrid stroke="#eee" vertical={false} />
@@ -175,11 +175,11 @@ const Dashboard = () => {
           <CardContent>
             <div className="flex items-center text-xs mb-2 space-x-4">
               <div className="flex items-center">
-                <div className="w-3 h-3 rounded-full bg-teal-800 mr-1"></div>
+                <div className="w-3 h-3 rounded-full bg-[#4DC1CB] mr-1"></div>
                 <span>Dept A</span>
               </div>
               <div className="flex items-center">
-                <div className="w-3 h-3 rounded-full bg-[#4DC1CB] mr-1"></div>
+                <div className="w-3 h-3 rounded-full bg-primary mr-1"></div>
                 <span>Dept B</span>
               </div>
               <div className="flex items-center">
@@ -214,9 +214,9 @@ const Dashboard = () => {
                     tickFormatter={(value) => `$${value}`}
                   />
                   <Tooltip />
-                  <Bar dataKey="deptA" stackId="a" fill="#0E5B61" /> {/* Dark teal */}
-                  <Bar dataKey="deptB" stackId="a" fill="#4DC1CB" /> {/* Teal */}
-                  <Bar dataKey="deptC" stackId="a" fill="#FDC675" /> {/* Amber */}
+                  <Bar dataKey="deptA" stackId="a" fill="#4DC1CB" /> 
+                  <Bar dataKey="deptB" stackId="a" fill="hsl(var(--primary))" /> 
+                  <Bar dataKey="deptC" stackId="a" fill="#FDC675" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -246,7 +246,7 @@ const Dashboard = () => {
                 {bvaTableData.map((row, index) => (
                   <TableRow 
                     key={index}
-                    className={row.name === "= EBITDA" ? "bg-blue-100" : ""}
+                    className={row.name === "= EBITDA" ? "bg-muted" : ""}
                   >
                     <TableCell className="font-medium">{row.name}</TableCell>
                     <TableCell className="text-right">{row.actuals}</TableCell>
@@ -271,7 +271,7 @@ const Dashboard = () => {
                 <BarChart
                   layout="vertical"
                   data={[
-                    { name: "Plan", value: -75000, fill: "#0E5B61" },
+                    { name: "Plan", value: -75000, fill: "#4DC1CB" },
                     { name: "Timing", value: -25000, fill: "#4DC1CB" },
                     { name: "Permanent", value: -15000, fill: "#989898" },
                     { name: "Total", value: 90000, fill: "#FDC675" },
@@ -301,12 +301,12 @@ const Dashboard = () => {
                   <Bar 
                     dataKey="value" 
                     radius={[0, 4, 4, 0]}
-                    fill="#FDC675" // Default color
+                    fill="#4DC1CB" // Default color
                   >
                     {/* Custom colors for each bar */}
                     {[
-                      <rect key="1" fill="#0E5B61" />, // Dark teal
-                      <rect key="2" fill="#4DC1CB" />, // Teal
+                      <rect key="1" fill="#4DC1CB" />, // Use teal/turquoise color for consistency
+                      <rect key="2" fill="#4DC1CB" />, // Use teal/turquoise color for consistency
                       <rect key="3" fill="#989898" />, // Gray
                       <rect key="4" fill="#FDC675" />, // Amber
                     ]}
