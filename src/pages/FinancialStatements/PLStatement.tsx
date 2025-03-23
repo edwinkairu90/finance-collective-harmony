@@ -1,13 +1,17 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Download, FileText } from "lucide-react";
 import { getLastFourQuarters } from "./data/plStatementData";
 import { calculateQuarterlyTotals, calculatePLSubtotals } from "./utils/plCalculations";
 import { PLTable } from "./components/PLTable";
+import { PeriodSelector, PeriodType } from "./components/PeriodSelector";
 
 export const PLStatement = () => {
+  // State for period selection
+  const [periodType, setPeriodType] = useState<PeriodType>('quarterly');
+  
   // Get quarters data
   const quarters = getLastFourQuarters();
   
@@ -22,15 +26,19 @@ export const PLStatement = () => {
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-lg font-medium">Profit & Loss Statement</h3>
         
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm">
-            <FileText className="h-4 w-4 mr-2" />
-            Print
-          </Button>
-          <Button variant="outline" size="sm">
-            <Download className="h-4 w-4 mr-2" />
-            Export
-          </Button>
+        <div className="flex items-center gap-4">
+          <PeriodSelector value={periodType} onChange={setPeriodType} />
+          
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm">
+              <FileText className="h-4 w-4 mr-2" />
+              Print
+            </Button>
+            <Button variant="outline" size="sm">
+              <Download className="h-4 w-4 mr-2" />
+              Export
+            </Button>
+          </div>
         </div>
       </div>
       
@@ -38,7 +46,11 @@ export const PLStatement = () => {
         <CardContent className="p-6">
           <div className="text-center border-b pb-4">
             <h2 className="text-xl font-semibold mb-1">Complete Profit & Loss Statement</h2>
-            <p className="text-muted-foreground">Fiscal Year 2024 - Quarter 1</p>
+            <p className="text-muted-foreground">
+              {periodType === 'monthly' && 'Monthly View'}
+              {periodType === 'quarterly' && 'Fiscal Year 2024 - Quarter 1'}
+              {periodType === 'annual' && 'Annual View - Fiscal Year 2024'}
+            </p>
             <p className="text-sm text-muted-foreground mt-1">All figures in USD</p>
           </div>
           
@@ -47,6 +59,7 @@ export const PLStatement = () => {
               quarters={quarters} 
               quarterlyTotals={quarterlyTotals} 
               plSubtotals={plSubtotals}
+              periodType={periodType}
             />
           </div>
           

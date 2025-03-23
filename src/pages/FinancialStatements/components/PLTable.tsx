@@ -3,14 +3,16 @@ import React from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { QuarterData, QuarterlyTotals, PLSubtotals } from "../data/plStatementData";
 import { getAllItems, getItemValue } from "../utils/plCalculations";
+import { PeriodType } from "./PeriodSelector";
 
 interface PLTableProps {
   quarters: QuarterData[];
   quarterlyTotals: QuarterlyTotals[];
   plSubtotals: PLSubtotals[];
+  periodType: PeriodType;
 }
 
-export const PLTable: React.FC<PLTableProps> = ({ quarters, quarterlyTotals, plSubtotals }) => {
+export const PLTable: React.FC<PLTableProps> = ({ quarters, quarterlyTotals, plSubtotals, periodType }) => {
   const { revenueItems, expenseItems } = getAllItems(quarters);
   const latestQuarter = 0; // First quarter is the most recent
   
@@ -28,17 +30,48 @@ export const PLTable: React.FC<PLTableProps> = ({ quarters, quarterlyTotals, plS
   const formatVariancePercent = (percent: number) => {
     return `${percent >= 0 ? '+' : ''}${percent.toFixed(1)}%`;
   };
+
+  // Generate table headers based on period type
+  const renderTableHeaders = () => {
+    switch (periodType) {
+      case 'monthly':
+        return (
+          <TableRow className="bg-muted/50">
+            <TableHead className="w-[35%] border-b-2 border-gray-300 font-bold">Line Item</TableHead>
+            <TableHead className="text-right border-b-2 border-gray-300 font-bold">Jan</TableHead>
+            <TableHead className="text-right border-b-2 border-gray-300 font-bold">Feb</TableHead>
+            <TableHead className="text-right border-b-2 border-gray-300 font-bold">Mar</TableHead>
+            <TableHead className="text-right border-b-2 border-gray-300 font-bold">Total</TableHead>
+          </TableRow>
+        );
+      case 'annual':
+        return (
+          <TableRow className="bg-muted/50">
+            <TableHead className="w-[35%] border-b-2 border-gray-300 font-bold">Line Item</TableHead>
+            <TableHead className="text-right border-b-2 border-gray-300 font-bold">2023</TableHead>
+            <TableHead className="text-right border-b-2 border-gray-300 font-bold">2024 (YTD)</TableHead>
+            <TableHead className="text-right border-b-2 border-gray-300 font-bold">Variance</TableHead>
+            <TableHead className="text-right border-b-2 border-gray-300 font-bold">Var %</TableHead>
+          </TableRow>
+        );
+      case 'quarterly':
+      default:
+        return (
+          <TableRow className="bg-muted/50">
+            <TableHead className="w-[35%] border-b-2 border-gray-300 font-bold">Line Item</TableHead>
+            <TableHead className="text-right border-b-2 border-gray-300 font-bold">Actual</TableHead>
+            <TableHead className="text-right border-b-2 border-gray-300 font-bold">Projected</TableHead>
+            <TableHead className="text-right border-b-2 border-gray-300 font-bold">Variance</TableHead>
+            <TableHead className="text-right border-b-2 border-gray-300 font-bold">Var %</TableHead>
+          </TableRow>
+        );
+    }
+  };
   
   return (
     <Table className="border-collapse border-none">
       <TableHeader>
-        <TableRow className="bg-muted/50">
-          <TableHead className="w-[35%] border-b-2 border-gray-300 font-bold">Line Item</TableHead>
-          <TableHead className="text-right border-b-2 border-gray-300 font-bold">Actual</TableHead>
-          <TableHead className="text-right border-b-2 border-gray-300 font-bold">Projected</TableHead>
-          <TableHead className="text-right border-b-2 border-gray-300 font-bold">Variance</TableHead>
-          <TableHead className="text-right border-b-2 border-gray-300 font-bold">Var %</TableHead>
-        </TableRow>
+        {renderTableHeaders()}
       </TableHeader>
       
       <TableBody>

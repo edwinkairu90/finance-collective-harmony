@@ -1,43 +1,58 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Download, FileText } from "lucide-react";
 import { getLastFourQuarters } from "./data/balanceSheetData";
 import { BalanceSheetTable } from "./components/BalanceSheetTable";
+import { PeriodSelector, PeriodType } from "./components/PeriodSelector";
 
 export const BalanceSheet = () => {
+  // State for period selection
+  const [periodType, setPeriodType] = useState<PeriodType>('quarterly');
+  
   // Get quarters data
   const quarters = getLastFourQuarters();
   
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-lg font-medium">Last 4 Quarters Performance</h3>
+        <h3 className="text-lg font-medium">Balance Sheet</h3>
         
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm">
-            <FileText className="h-4 w-4 mr-2" />
-            Print
-          </Button>
-          <Button variant="outline" size="sm">
-            <Download className="h-4 w-4 mr-2" />
-            Export
-          </Button>
+        <div className="flex items-center gap-4">
+          <PeriodSelector value={periodType} onChange={setPeriodType} />
+          
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm">
+              <FileText className="h-4 w-4 mr-2" />
+              Print
+            </Button>
+            <Button variant="outline" size="sm">
+              <Download className="h-4 w-4 mr-2" />
+              Export
+            </Button>
+          </div>
         </div>
       </div>
       
       <Card>
         <CardContent className="p-6">
-          <h2 className="text-xl font-semibold text-center mb-4">Quarterly Balance Sheet Comparison</h2>
-          <p className="text-center text-muted-foreground mb-6">Last 4 quarters comparison</p>
+          <div className="text-center border-b pb-4">
+            <h2 className="text-xl font-semibold mb-1">Balance Sheet</h2>
+            <p className="text-muted-foreground">
+              {periodType === 'monthly' && 'Monthly View - March 2024'}
+              {periodType === 'quarterly' && 'Quarterly View - Last 4 Quarters'}
+              {periodType === 'annual' && 'Annual View - 2023 vs 2024 YTD'}
+            </p>
+            <p className="text-sm text-muted-foreground mt-1">All figures in USD</p>
+          </div>
           
-          <div className="overflow-x-auto">
-            <BalanceSheetTable quarters={quarters} />
+          <div className="overflow-x-auto mt-6">
+            <BalanceSheetTable quarters={quarters} periodType={periodType} />
           </div>
           
           <div className="mt-4 text-sm text-muted-foreground">
-            <p>Growth percentages show quarter-over-quarter changes. For liabilities, negative growth (reduction) is shown in green.</p>
+            <p>Growth percentages show {periodType === 'monthly' ? 'month-over-month' : periodType === 'quarterly' ? 'quarter-over-quarter' : 'year-over-year'} changes. For liabilities, negative growth (reduction) is shown in green.</p>
           </div>
         </CardContent>
       </Card>
