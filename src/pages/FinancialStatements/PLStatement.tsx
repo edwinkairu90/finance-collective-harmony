@@ -20,7 +20,7 @@ export const PLStatement = () => {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-lg font-medium">Complete P&L Statement</h3>
+        <h3 className="text-lg font-medium">Profit & Loss Statement</h3>
         
         <div className="flex gap-2">
           <Button variant="outline" size="sm">
@@ -36,10 +36,13 @@ export const PLStatement = () => {
       
       <Card>
         <CardContent className="p-6">
-          <h2 className="text-xl font-semibold text-center mb-4">Complete Profit & Loss Statement</h2>
-          <p className="text-center text-muted-foreground mb-6">Actuals vs Projected with Variance Analysis</p>
+          <div className="text-center border-b pb-4">
+            <h2 className="text-xl font-semibold mb-1">Complete Profit & Loss Statement</h2>
+            <p className="text-muted-foreground">Fiscal Year 2024 - Quarter 1</p>
+            <p className="text-sm text-muted-foreground mt-1">All figures in USD</p>
+          </div>
           
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto mt-6">
             <PLTable 
               quarters={quarters} 
               quarterlyTotals={quarterlyTotals} 
@@ -47,8 +50,14 @@ export const PLStatement = () => {
             />
           </div>
           
-          <div className="mt-4 text-sm text-muted-foreground">
-            <p>Variance percentage shows the change between actual and projected figures. Negative variance for expenses indicates a favorable outcome.</p>
+          <div className="mt-6 text-sm text-muted-foreground border-t pt-4">
+            <p className="font-medium mb-2">Notes:</p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>Variance percentage shows the change between actual and projected figures.</li>
+              <li>Negative variance for expenses indicates a favorable outcome (under budget).</li>
+              <li>EBITDA = Earnings Before Interest, Taxes, Depreciation, and Amortization</li>
+              <li>EBIT = Earnings Before Interest and Taxes</li>
+            </ul>
           </div>
         </CardContent>
       </Card>
