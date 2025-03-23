@@ -1,15 +1,14 @@
 
 import React, { useState } from "react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { departmentsWithCostCenters } from "./data/departmentData";
 import { CostCenter, Department } from "@/types/budget";
 import { useToast } from "@/components/ui/use-toast";
-import { Building, Pencil, Plus, Save, Trash, X } from "lucide-react";
+import { Plus } from "lucide-react";
+import { DepartmentSelector } from "./components/DepartmentSelector";
+import { CostCenterList } from "./components/CostCenterList";
+import { CostCenterHeader } from "./components/CostCenterHeader";
 
 export const CostCenters = () => {
   const { toast } = useToast();
@@ -181,22 +180,11 @@ export const CostCenters = () => {
         <CardContent>
           <div className="space-y-4">
             <div className="flex space-x-4 items-end">
-              <div className="flex-1 space-y-2">
-                <Label htmlFor="department-select">Department</Label>
-                <Select
-                  value={selectedDepartmentId}
-                  onValueChange={handleSelectDepartment}
-                >
-                  <SelectTrigger id="department-select">
-                    <SelectValue placeholder="Select department" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {departments.map(dept => (
-                      <SelectItem key={dept.id} value={dept.id}>{dept.name}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <DepartmentSelector 
+                departments={departments}
+                selectedDepartmentId={selectedDepartmentId}
+                onSelectDepartment={handleSelectDepartment}
+              />
               {selectedDepartment && (
                 <Button 
                   onClick={startAddingCostCenter} 
@@ -213,146 +201,26 @@ export const CostCenters = () => {
       {selectedDepartment && (
         <Card>
           <CardHeader>
-            <div className="flex justify-between items-center">
-              <div>
-                <CardTitle className="flex items-center gap-2">
-                  <Building className="h-5 w-5" /> 
-                  {selectedDepartment.name} Cost Centers
-                </CardTitle>
-                <CardDescription>
-                  Total Budget: ${selectedDepartment.budget.toLocaleString()}
-                </CardDescription>
-              </div>
-            </div>
+            <CostCenterHeader 
+              selectedDepartment={selectedDepartment}
+              onAddCostCenter={startAddingCostCenter}
+            />
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {selectedDepartment.costCenters.map(costCenter => (
-                <div 
-                  key={costCenter.id} 
-                  className="border rounded-lg p-4 transition-colors hover:bg-muted/30"
-                >
-                  {editingCostCenterId === costCenter.id ? (
-                    <div className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor={`name-${costCenter.id}`}>Name</Label>
-                        <Input 
-                          id={`name-${costCenter.id}`}
-                          value={costCenter.name}
-                          onChange={(e) => updateCostCenterField(costCenter.id, 'name', e.target.value)}
-                        />
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor={`description-${costCenter.id}`}>Description</Label>
-                        <Textarea
-                          id={`description-${costCenter.id}`}
-                          value={costCenter.description}
-                          onChange={(e) => updateCostCenterField(costCenter.id, 'description', e.target.value)}
-                        />
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor={`budget-${costCenter.id}`}>Budget</Label>
-                        <Input
-                          id={`budget-${costCenter.id}`}
-                          type="number"
-                          value={costCenter.budget}
-                          onChange={(e) => updateCostCenterField(costCenter.id, 'budget', e.target.value)}
-                        />
-                      </div>
-
-                      <div className="flex space-x-2 justify-end">
-                        <Button variant="outline" size="sm" onClick={cancelEditing}>
-                          <X className="h-4 w-4 mr-1" /> Cancel
-                        </Button>
-                        <Button size="sm" onClick={saveCostCenterChanges}>
-                          <Save className="h-4 w-4 mr-1" /> Save
-                        </Button>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="space-y-2">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h3 className="font-medium text-lg">{costCenter.name}</h3>
-                          <p className="text-sm text-muted-foreground">{costCenter.description}</p>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <span className="font-medium">${costCenter.budget.toLocaleString()}</span>
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
-                            onClick={() => startEditingCostCenter(costCenter.id)}
-                          >
-                            <Pencil className="h-4 w-4" />
-                          </Button>
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
-                            onClick={() => deleteCostCenter(costCenter.id)}
-                          >
-                            <Trash className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-
-              {isAddingCostCenter && (
-                <div className="border rounded-lg p-4 border-dashed space-y-4">
-                  <h3 className="font-medium">New Cost Center</h3>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="new-name">Name</Label>
-                    <Input 
-                      id="new-name"
-                      value={newCostCenter.name}
-                      onChange={(e) => updateNewCostCenterField('name', e.target.value)}
-                      placeholder="Enter cost center name"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="new-description">Description</Label>
-                    <Textarea
-                      id="new-description"
-                      value={newCostCenter.description}
-                      onChange={(e) => updateNewCostCenterField('description', e.target.value)}
-                      placeholder="Enter a brief description"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="new-budget">Budget</Label>
-                    <Input
-                      id="new-budget"
-                      type="number"
-                      value={newCostCenter.budget}
-                      onChange={(e) => updateNewCostCenterField('budget', e.target.value)}
-                      placeholder="0"
-                    />
-                  </div>
-
-                  <div className="flex space-x-2 justify-end">
-                    <Button variant="outline" size="sm" onClick={cancelAddingCostCenter}>
-                      <X className="h-4 w-4 mr-1" /> Cancel
-                    </Button>
-                    <Button size="sm" onClick={addNewCostCenter}>
-                      <Save className="h-4 w-4 mr-1" /> Add
-                    </Button>
-                  </div>
-                </div>
-              )}
-
-              {selectedDepartment.costCenters.length === 0 && !isAddingCostCenter && (
-                <div className="text-center py-8 text-muted-foreground">
-                  <p>No cost centers found. Click "Add Cost Center" to create one.</p>
-                </div>
-              )}
-            </div>
+            <CostCenterList
+              selectedDepartment={selectedDepartment}
+              editingCostCenterId={editingCostCenterId}
+              isAddingCostCenter={isAddingCostCenter}
+              newCostCenter={newCostCenter}
+              onStartEditingCostCenter={startEditingCostCenter}
+              onCancelEditing={cancelEditing}
+              onSaveCostCenterChanges={saveCostCenterChanges}
+              onDeleteCostCenter={deleteCostCenter}
+              onUpdateCostCenterField={updateCostCenterField}
+              onUpdateNewCostCenterField={updateNewCostCenterField}
+              onAddNewCostCenter={addNewCostCenter}
+              onCancelAddingCostCenter={cancelAddingCostCenter}
+            />
           </CardContent>
         </Card>
       )}
