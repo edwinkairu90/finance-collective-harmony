@@ -4,36 +4,24 @@ import { Button } from "@/components/ui/button";
 import { TabsContent } from "@/components/ui/tabs";
 import { ScenarioList } from "./ScenarioList";
 import { ScenarioCreator } from "./ScenarioCreator";
-import { ScenarioItem } from "@/types/planning";
 import { GitCompare } from "lucide-react";
+import { useScenarioContext } from "./context/ScenarioContext";
 
-interface ScenarioSelectionProps {
-  activeTab: string;
-  scenarios: ScenarioItem[];
-  selectedScenario: ScenarioItem | null;
-  selectedScenariosForComparison: ScenarioItem[];
-  showComparisonView: boolean;
-  onSelect: (scenario: ScenarioItem) => void;
-  onToggleComparisonSelection: (scenario: ScenarioItem) => void;
-  onClearComparisonSelection: () => void;
-  onCompareScenarios: () => void;
-  onCreateScenario: (scenario: ScenarioItem) => void;
-  isScenarioSelected: (scenario: ScenarioItem) => boolean;
-}
+export const ScenarioSelection: React.FC = () => {
+  const {
+    activeTab,
+    scenarios,
+    selectedScenario,
+    selectedScenariosForComparison,
+    showComparisonView,
+    setSelectedScenario,
+    toggleScenarioSelection,
+    clearComparisonSelection,
+    handleCompareScenarios,
+    handleCreateScenario,
+    isScenarioSelected
+  } = useScenarioContext();
 
-export const ScenarioSelection: React.FC<ScenarioSelectionProps> = ({
-  activeTab,
-  scenarios,
-  selectedScenario,
-  selectedScenariosForComparison,
-  showComparisonView,
-  onSelect,
-  onToggleComparisonSelection,
-  onClearComparisonSelection,
-  onCompareScenarios,
-  onCreateScenario,
-  isScenarioSelected
-}) => {
   return (
     <>
       <TabsContent value="existing">
@@ -46,13 +34,13 @@ export const ScenarioSelection: React.FC<ScenarioSelectionProps> = ({
               <Button 
                 variant="outline" 
                 size="sm" 
-                onClick={onClearComparisonSelection}
+                onClick={clearComparisonSelection}
               >
                 Clear Selection
               </Button>
               <Button 
                 size="sm" 
-                onClick={onCompareScenarios}
+                onClick={handleCompareScenarios}
                 disabled={selectedScenariosForComparison.length < 2}
               >
                 <GitCompare className="h-4 w-4 mr-1" />
@@ -63,16 +51,16 @@ export const ScenarioSelection: React.FC<ScenarioSelectionProps> = ({
         )}
         <ScenarioList 
           scenarios={scenarios} 
-          onSelect={onSelect} 
+          onSelect={setSelectedScenario} 
           selectedScenario={selectedScenario}
           selectableForComparison
-          onToggleComparisonSelection={onToggleComparisonSelection}
+          onToggleComparisonSelection={toggleScenarioSelection}
           selectedForComparison={isScenarioSelected}
         />
       </TabsContent>
       
       <TabsContent value="create">
-        <ScenarioCreator onCreateScenario={onCreateScenario} />
+        <ScenarioCreator onCreateScenario={handleCreateScenario} />
       </TabsContent>
     </>
   );

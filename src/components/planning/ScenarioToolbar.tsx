@@ -1,37 +1,28 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { ScenarioItem } from "@/types/planning";
 import { BarChart3, Download, PenLine, GitCompare } from "lucide-react";
+import { useScenarioContext } from "./context/ScenarioContext";
 
-interface ScenarioToolbarProps {
-  selectedScenario: ScenarioItem | null;
-  showImpactAnalysis: boolean;
-  selectedScenariosForComparison: ScenarioItem[];
-  editingAssumptions: boolean;
-  onToggleImpactAnalysis: () => void;
-  onExportScenario: () => void;
-  onStartEditAssumptions: () => void;
-  onCompareScenarios: () => void;
-}
+export const ScenarioToolbar: React.FC = () => {
+  const {
+    selectedScenario,
+    showImpactAnalysis,
+    selectedScenariosForComparison,
+    editingAssumptions,
+    toggleImpactAnalysis,
+    handleExportScenario,
+    handleStartEditAssumptions,
+    handleCompareScenarios
+  } = useScenarioContext();
 
-export const ScenarioToolbar: React.FC<ScenarioToolbarProps> = ({
-  selectedScenario,
-  showImpactAnalysis,
-  selectedScenariosForComparison,
-  editingAssumptions,
-  onToggleImpactAnalysis,
-  onExportScenario,
-  onStartEditAssumptions,
-  onCompareScenarios
-}) => {
   return (
     <div className="flex gap-2">
       {selectedScenario && (
         <>
           <Button 
             variant="outline" 
-            onClick={onToggleImpactAnalysis}
+            onClick={toggleImpactAnalysis}
             className="flex items-center gap-1"
           >
             <BarChart3 className="h-4 w-4" />
@@ -39,7 +30,7 @@ export const ScenarioToolbar: React.FC<ScenarioToolbarProps> = ({
           </Button>
           <Button 
             variant="outline" 
-            onClick={onExportScenario}
+            onClick={handleExportScenario}
             className="flex items-center gap-1"
           >
             <Download className="h-4 w-4" />
@@ -47,7 +38,7 @@ export const ScenarioToolbar: React.FC<ScenarioToolbarProps> = ({
           </Button>
           <Button 
             variant="outline" 
-            onClick={onStartEditAssumptions}
+            onClick={handleStartEditAssumptions}
             className="flex items-center gap-1"
             disabled={editingAssumptions}
           >
@@ -58,7 +49,7 @@ export const ScenarioToolbar: React.FC<ScenarioToolbarProps> = ({
       )}
       <Button 
         variant={selectedScenariosForComparison.length > 0 ? "default" : "outline"}
-        onClick={onCompareScenarios}
+        onClick={handleCompareScenarios}
         className="flex items-center gap-1"
         disabled={selectedScenariosForComparison.length < 2}
       >
