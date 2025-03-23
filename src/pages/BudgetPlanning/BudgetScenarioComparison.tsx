@@ -22,11 +22,11 @@ export const BudgetScenarioComparison: React.FC = () => {
         <CardDescription>How different scenarios impact department budgets</CardDescription>
       </CardHeader>
       <CardContent>
-        <ScrollArea className="h-[350px]">
+        <ScrollArea className="h-[450px]">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[180px]">Department</TableHead>
+                <TableHead className="w-[180px]">Line Item</TableHead>
                 {scenarios.map(scenario => (
                   <TableHead 
                     key={scenario.id}
@@ -40,6 +40,70 @@ export const BudgetScenarioComparison: React.FC = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
+              {/* Financial metrics section */}
+              <TableRow className="bg-muted/30 font-semibold">
+                <TableCell colSpan={scenarios.length + 2} className="py-2">
+                  Financial Metrics
+                </TableCell>
+              </TableRow>
+              
+              {/* Revenue Row */}
+              <TableRow>
+                <TableCell className="font-medium">Revenue</TableCell>
+                {scenarios.map(scenario => (
+                  <TableCell key={`revenue-${scenario.id}`} className="text-right">
+                    ${scenario.financials.revenue.toLocaleString()}
+                  </TableCell>
+                ))}
+                <TableCell className="text-right font-medium">
+                  ${(scenarios.find(s => s.id === "best-case")?.financials.revenue || 0 - 
+                     scenarios.find(s => s.id === "worst-case")?.financials.revenue || 0).toLocaleString()}
+                </TableCell>
+              </TableRow>
+              
+              {/* Cost of Sales (calculated as revenue - gross profit) */}
+              <TableRow>
+                <TableCell className="font-medium">Cost of Sales</TableCell>
+                {scenarios.map(scenario => {
+                  const costOfSales = scenario.financials.revenue - scenario.financials.grossProfit;
+                  return (
+                    <TableCell key={`cos-${scenario.id}`} className="text-right">
+                      ${costOfSales.toLocaleString()}
+                    </TableCell>
+                  );
+                })}
+                <TableCell className="text-right font-medium">
+                  ${(
+                    (scenarios.find(s => s.id === "best-case")?.financials.revenue || 0) - 
+                    (scenarios.find(s => s.id === "best-case")?.financials.grossProfit || 0) - 
+                    ((scenarios.find(s => s.id === "worst-case")?.financials.revenue || 0) - 
+                     (scenarios.find(s => s.id === "worst-case")?.financials.grossProfit || 0))
+                  ).toLocaleString()}
+                </TableCell>
+              </TableRow>
+              
+              {/* Gross Profit Row */}
+              <TableRow className="border-b-2 border-gray-300">
+                <TableCell className="font-medium">Gross Profit</TableCell>
+                {scenarios.map(scenario => (
+                  <TableCell key={`gp-${scenario.id}`} className="text-right">
+                    ${scenario.financials.grossProfit.toLocaleString()}
+                  </TableCell>
+                ))}
+                <TableCell className="text-right font-medium">
+                  ${(scenarios.find(s => s.id === "best-case")?.financials.grossProfit || 0 - 
+                     scenarios.find(s => s.id === "worst-case")?.financials.grossProfit || 0).toLocaleString()}
+                </TableCell>
+              </TableRow>
+              
+              {/* Department budget section header */}
+              <TableRow className="bg-muted/30 font-semibold">
+                <TableCell colSpan={scenarios.length + 2} className="py-2">
+                  Department Budgets
+                </TableCell>
+              </TableRow>
+              
+              {/* Department rows */}
               {allDepartments.map(dept => {
                 const baseCase = scenarios.find(s => s.id === "base-case")?.departments.find(d => d.id === dept.id)?.budget || 0;
                 const bestCase = scenarios.find(s => s.id === "best-case")?.departments.find(d => d.id === dept.id)?.budget || 0;
@@ -76,6 +140,23 @@ export const BudgetScenarioComparison: React.FC = () => {
                 <TableCell className="text-right">
                   ${(scenarios.find(s => s.id === "best-case")?.totalBudget || 0 - 
                      scenarios.find(s => s.id === "worst-case")?.totalBudget || 0).toLocaleString()}
+                </TableCell>
+              </TableRow>
+              
+              {/* Net Profit Row (last row) */}
+              <TableRow className="bg-blue-50">
+                <TableCell className="font-bold">Net Profit</TableCell>
+                {scenarios.map(scenario => (
+                  <TableCell 
+                    key={`profit-${scenario.id}`} 
+                    className={`text-right font-bold ${scenario.financials.profit >= 0 ? 'text-green-600' : 'text-red-600'}`}
+                  >
+                    ${scenario.financials.profit.toLocaleString()}
+                  </TableCell>
+                ))}
+                <TableCell className="text-right font-bold">
+                  ${(scenarios.find(s => s.id === "best-case")?.financials.profit || 0 - 
+                     scenarios.find(s => s.id === "worst-case")?.financials.profit || 0).toLocaleString()}
                 </TableCell>
               </TableRow>
             </TableBody>
