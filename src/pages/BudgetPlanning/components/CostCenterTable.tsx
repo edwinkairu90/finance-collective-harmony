@@ -64,8 +64,8 @@ export const CostCenterTable = ({
                 {difference !== null ? (
                   <span className={difference >= 0 ? "text-green-600" : "text-red-600"}>
                     {difference >= 0 ? 
-                      `+$${difference.toLocaleString()} (Increase)` : 
-                      `-$${Math.abs(difference).toLocaleString()} (Decrease)`}
+                      `+$${difference.toLocaleString()}` : 
+                      `-$${Math.abs(difference).toLocaleString()}`}
                   </span>
                 ) : 'N/A'}
               </TableCell>
