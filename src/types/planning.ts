@@ -9,10 +9,24 @@ export interface DepartmentBudget {
   headcount: number;
 }
 
+export interface DepartmentItem {
+  name: string;
+  budgetChange: number;
+}
+
 export interface ScenarioItem {
   id: string;
   name: string;
   description: string;
+  type?: string; // Added type property
+  timeline?: string; // Added timeline property
+  status?: string; // Added status property
+  createdBy?: string; // Added createdBy property
+  createdAt?: string; // Added createdAt property
+  departments?: DepartmentItem[]; // Added departments array
+  assumptions?: string[]; // Added assumptions array
+  risks?: string[];
+  opportunities?: string[];
   budgetImpact: {
     revenue: number;
     costOfSales?: number;
@@ -28,9 +42,6 @@ export interface ScenarioItem {
     expenses?: LineItem[];
     departments?: Record<string, LineItem[]>;
   };
-  assumptions?: string[];
-  risks?: string[];
-  opportunities?: string[];
 }
 
 export interface BudgetScenario {
@@ -43,4 +54,12 @@ export interface BudgetScenario {
   createdAt: string;
   updatedAt: string;
   isActive: boolean;
+}
+
+export interface ScenarioTemplate {
+  id: string;
+  name: string;
+  type: string;
+  description: string;
+  defaultAssumptions: string[];
 }

@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScenarioItem } from "@/types/planning";
@@ -33,6 +34,8 @@ export const ScenarioImpactAnalysis: React.FC<ScenarioImpactAnalysisProps> = ({
 }) => {
   // Transform department data for the chart
   const getDepartmentImpactData = () => {
+    if (!scenario.departments) return [];
+    
     return scenario.departments.map(dept => ({
       name: dept.name,
       impact: dept.budgetChange
@@ -140,7 +143,7 @@ export const ScenarioImpactAnalysis: React.FC<ScenarioImpactAnalysisProps> = ({
               </div>
             ) : (
               <ul className="list-disc pl-5 space-y-1">
-                {scenario.assumptions.map((assumption, index) => (
+                {scenario.assumptions && scenario.assumptions.map((assumption, index) => (
                   <li key={index} className="text-sm text-muted-foreground">{assumption}</li>
                 ))}
               </ul>

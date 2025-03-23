@@ -1,32 +1,10 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { formatCurrency } from "@/lib/format";
-
-interface LineItem {
-  name: string;
-  amount: number;
-}
-
-interface ScenarioItem {
-  id: string;
-  name: string;
-  description: string;
-  budgetImpact: {
-    revenue: number;
-    expenses: number;
-    profit: number;
-    // Other budget properties as needed
-  };
-  // Add the lineItems property
-  lineItems?: {
-    revenue?: LineItem[];
-    expenses?: LineItem[];
-    costOfSales?: LineItem[];
-    departments?: Record<string, LineItem[]>;
-  };
-}
+import { LineItem, ScenarioItem } from "@/types/planning";
 
 interface ScenarioLineItemsRowProps {
   title: string;
