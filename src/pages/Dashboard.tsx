@@ -134,7 +134,7 @@ const Dashboard = () => {
                   <YAxis 
                     axisLine={false} 
                     tickLine={false}
-                    tickFormatter={(value) => `$${value}`}
+                    tickFormatter={(value) => `$${value}K`}
                   />
                   <Tooltip />
                   <Line 
