@@ -71,24 +71,26 @@ export const BudgetScenarioFinancials: React.FC = () => {
   };
 
   return (
-    <Card className="mt-4">
+    <Card className="mt-4 bg-teal-800 text-white">
       <CardHeader>
         <CardTitle>Financial Comparison</CardTitle>
-        <CardDescription>Revenue, gross profit, expenses and net profit across different scenarios</CardDescription>
+        <CardDescription className="text-gray-200">Revenue, gross profit, expenses and net profit across different scenarios</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={combinedData} margin={{ top: 20, right: 30, left: 50, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff40" />
+              <XAxis dataKey="name" stroke="#ffffff" />
               <YAxis 
                 tickFormatter={formatYAxis} 
                 width={80}
+                stroke="#ffffff"
               />
               <Tooltip 
                 formatter={(value) => [`$${Number(value).toLocaleString()}`, undefined]}
                 labelFormatter={(label) => `${label}`}
+                contentStyle={{ backgroundColor: "#134e4a", color: "#ffffff", border: "none" }}
               />
               <Legend />
               <Bar 

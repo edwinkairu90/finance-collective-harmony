@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -82,16 +81,16 @@ export const PLStatement = () => {
         </div>
       </div>
       
-      <Card>
+      <Card className="bg-blue-100">
         <CardContent className="p-6">
           <div className="text-center border-b pb-4">
-            <h2 className="text-xl font-semibold mb-1">Complete Profit & Loss Statement</h2>
-            <p className="text-muted-foreground">
+            <h2 className="text-xl font-bold mb-1">Complete Profit & Loss Statement</h2>
+            <p className="text-gray-600">
               {periodType === 'monthly' && `Monthly View - ${selectedYear}`}
               {periodType === 'quarterly' && `Quarterly View - ${selectedYear}`}
               {periodType === 'annual' && `Annual View - ${selectedYear}`}
             </p>
-            <p className="text-sm text-muted-foreground mt-1">All figures in USD</p>
+            <p className="text-sm text-gray-600 mt-1">All figures in USD</p>
           </div>
           
           <div className="overflow-x-auto mt-6">
@@ -113,7 +112,7 @@ export const PLStatement = () => {
             )}
           </div>
           
-          <div className="mt-6 text-sm text-muted-foreground border-t pt-4">
+          <div className="mt-6 text-sm text-gray-600 border-t pt-4">
             <p className="font-medium mb-2">Notes:</p>
             <ul className="list-disc pl-5 space-y-1">
               <li>Variance percentage shows the change between actual and projected figures.</li>

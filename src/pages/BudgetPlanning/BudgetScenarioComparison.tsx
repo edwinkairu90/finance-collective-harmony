@@ -16,7 +16,7 @@ export const BudgetScenarioComparison: React.FC = () => {
     .sort((a, b) => b.budget - a.budget);
 
   return (
-    <Card>
+    <Card className="bg-blue-100">
       <CardHeader>
         <CardTitle>Scenario Comparison</CardTitle>
         <CardDescription>How different scenarios impact department budgets</CardDescription>
@@ -66,7 +66,7 @@ export const BudgetScenarioComparison: React.FC = () => {
               })}
               
               {/* Total Row */}
-              <TableRow className="bg-muted/50 font-bold">
+              <TableRow className="bg-teal-800 text-white font-bold">
                 <TableCell>Total Budget</TableCell>
                 {scenarios.map(scenario => (
                   <TableCell key={`total-${scenario.id}`} className="text-right">

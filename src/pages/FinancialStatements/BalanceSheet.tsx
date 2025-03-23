@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -72,16 +71,16 @@ export const BalanceSheet = () => {
         </div>
       </div>
       
-      <Card>
+      <Card className="bg-teal-800 text-white">
         <CardContent className="p-6">
-          <div className="text-center border-b pb-4">
-            <h2 className="text-xl font-semibold mb-1">Balance Sheet</h2>
-            <p className="text-muted-foreground">
+          <div className="text-center border-b border-gray-200/30 pb-4">
+            <h2 className="text-xl font-bold mb-1">Balance Sheet</h2>
+            <p className="text-gray-200">
               {periodType === 'monthly' && `Monthly View - ${selectedYear}`}
               {periodType === 'quarterly' && `Quarterly View - ${selectedYear}`}
               {periodType === 'annual' && `Annual View - ${selectedYear}`}
             </p>
-            <p className="text-sm text-muted-foreground mt-1">All figures in USD</p>
+            <p className="text-sm text-gray-200 mt-1">All figures in USD</p>
           </div>
           
           <div className="overflow-x-auto mt-6">
@@ -99,7 +98,7 @@ export const BalanceSheet = () => {
             )}
           </div>
           
-          <div className="mt-4 text-sm text-muted-foreground">
+          <div className="mt-4 text-sm text-gray-200">
             <p>Growth percentages show {periodType === 'monthly' ? 'month-over-month' : periodType === 'quarterly' ? 'quarter-over-quarter' : 'year-over-year'} changes. For liabilities, negative growth (reduction) is shown in green.</p>
           </div>
         </CardContent>

@@ -26,9 +26,9 @@ export const KPISummary = ({
 }: KPISummaryProps) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <Card className="bg-[#00a9ae]">
+      <Card className="bg-blue-100">
         <CardHeader className="pb-1 pt-3">
-          <CardTitle className="text-xs font-medium text-muted-foreground">Annual Revenue Forecast</CardTitle>
+          <CardTitle className="text-xs font-medium text-gray-600">Annual Revenue Forecast</CardTitle>
         </CardHeader>
         <CardContent className="pb-3">
           <div className="flex items-center justify-between">
@@ -38,12 +38,12 @@ export const KPISummary = ({
               {revenueGrowth}%
             </div>
           </div>
-          <div className="text-xs text-muted-foreground mt-1">vs previous forecast</div>
+          <div className="text-xs text-gray-600 mt-1">vs previous forecast</div>
         </CardContent>
       </Card>
-      <Card className="bg-[#3ac3d6] text-white">
+      <Card className="bg-teal-800 text-white">
         <CardHeader className="pb-1 pt-3">
-          <CardTitle className="text-xs font-medium text-white">YTD Expenses</CardTitle>
+          <CardTitle className="text-xs font-medium text-gray-200">YTD Expenses</CardTitle>
         </CardHeader>
         <CardContent className="pb-3">
           <div className="flex items-center justify-between">
@@ -54,12 +54,12 @@ export const KPISummary = ({
             </div>
           </div>
           <Progress value={58} className="h-1.5 mt-2 bg-blue-200" />
-          <div className="text-xs text-blue-100 mt-1">58% of annual budget</div>
+          <div className="text-xs text-gray-200 mt-1">58% of annual budget</div>
         </CardContent>
       </Card>
-      <Card className="bg-[#00a9ae]">
+      <Card className="bg-blue-100">
         <CardHeader className="pb-1 pt-3">
-          <CardTitle className="text-xs font-medium text-muted-foreground">Margin</CardTitle>
+          <CardTitle className="text-xs font-medium text-gray-600">Margin</CardTitle>
         </CardHeader>
         <CardContent className="pb-3">
           <div className="flex items-center justify-between">
@@ -69,12 +69,12 @@ export const KPISummary = ({
               {Math.abs(marginChange).toFixed(1)}%
             </div>
           </div>
-          <div className="text-xs text-muted-foreground mt-1">vs previous quarter</div>
+          <div className="text-xs text-gray-600 mt-1">vs previous quarter</div>
         </CardContent>
       </Card>
-      <Card className="bg-[#3ac3d6] text-white">
+      <Card className="bg-teal-800 text-white">
         <CardHeader className="pb-1 pt-3">
-          <CardTitle className="text-xs font-medium text-white">Overall Budget Variance</CardTitle>
+          <CardTitle className="text-xs font-medium text-gray-200">Overall Budget Variance</CardTitle>
         </CardHeader>
         <CardContent className="pb-3">
           <div className="flex items-center justify-between">
@@ -84,7 +84,7 @@ export const KPISummary = ({
               {Math.abs(variancePercentage).toFixed(1)}%
             </div>
           </div>
-          <div className="text-xs text-blue-100 mt-1">
+          <div className="text-xs text-gray-200 mt-1">
             {variancePercentage < 0 ? 'Under budget' : 'Over budget'}
           </div>
         </CardContent>
