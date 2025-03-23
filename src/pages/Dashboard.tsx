@@ -21,9 +21,11 @@ import {
   CartesianGrid, 
   Tooltip, 
   Legend, 
-  ResponsiveContainer 
+  ResponsiveContainer,
+  TooltipProps
 } from 'recharts';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { ValueType } from "recharts/types/component/DefaultTooltipContent";
 
 const Dashboard = () => {
   const { toast } = useToast();
@@ -290,7 +292,11 @@ const Dashboard = () => {
                     tickLine={false}
                   />
                   <Tooltip 
-                    formatter={(value) => [`$${Math.abs(value).toLocaleString()}`, '']}
+                    formatter={(value: ValueType) => {
+                      // Fix the type error by handling the potential string type properly
+                      const numValue = typeof value === 'number' ? value : 0;
+                      return [`$${Math.abs(numValue).toLocaleString()}`, ''];
+                    }}
                   />
                   <Bar 
                     dataKey="value" 
