@@ -67,7 +67,7 @@ export const getBudgetScenarios = (): BudgetScenario[] => {
         grossProfit: Math.round(baseRevenue * 1.15 * 0.75), // Better gross margin in best case
         profit: Math.round(baseRevenue * 1.15 - baseOpex * 1.05)
       },
-      color: "#2ecc71" // Green
+      color: "#0EA5E9" // Corporate Ocean Blue (was Bright Green #2ecc71)
     }
   ];
 };
