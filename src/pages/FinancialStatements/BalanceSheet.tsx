@@ -16,11 +16,13 @@ export const BalanceSheet = () => {
   const [selectedYear, setSelectedYear] = useState<number>(2024);
   
   // Get quarters data (this would normally filter by the selected year)
+  // In a real app, we would fetch different data based on periodType (monthly/quarterly/annual)
   const quarters = getLastFourQuarters();
   
   // Handle period type change
   const handlePeriodTypeChange = (newPeriodType: PeriodType) => {
     setPeriodType(newPeriodType);
+    // In a real app, this would trigger different data fetching
   };
   
   // Handle year change

@@ -16,7 +16,8 @@ export const PLStatement = () => {
   const [periodType, setPeriodType] = useState<PeriodType>('quarterly');
   const [selectedYear, setSelectedYear] = useState<number>(2024);
   
-  // Get quarters data (this would normally filter by the selected year)
+  // Get data based on selected period type
+  // In a real app, this would use APIs to fetch the appropriate data
   const quarters = getLastFourQuarters();
   
   // Calculate quarterly totals
@@ -28,6 +29,7 @@ export const PLStatement = () => {
   // Handle period type change
   const handlePeriodTypeChange = (newPeriodType: PeriodType) => {
     setPeriodType(newPeriodType);
+    // In a real app, this would trigger different data fetching
   };
   
   // Handle year change

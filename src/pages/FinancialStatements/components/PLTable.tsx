@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { QuarterData, QuarterlyTotals, PLSubtotals } from "../data/plStatementData";
@@ -37,10 +36,19 @@ export const PLTable: React.FC<PLTableProps> = ({ quarters, quarterlyTotals, plS
       case 'monthly':
         return (
           <TableRow className="bg-muted/50">
-            <TableHead className="w-[35%] border-b-2 border-gray-300 font-bold">Line Item</TableHead>
+            <TableHead className="w-[20%] border-b-2 border-gray-300 font-bold">Line Item</TableHead>
             <TableHead className="text-right border-b-2 border-gray-300 font-bold">Jan</TableHead>
             <TableHead className="text-right border-b-2 border-gray-300 font-bold">Feb</TableHead>
             <TableHead className="text-right border-b-2 border-gray-300 font-bold">Mar</TableHead>
+            <TableHead className="text-right border-b-2 border-gray-300 font-bold">Apr</TableHead>
+            <TableHead className="text-right border-b-2 border-gray-300 font-bold">May</TableHead>
+            <TableHead className="text-right border-b-2 border-gray-300 font-bold">Jun</TableHead>
+            <TableHead className="text-right border-b-2 border-gray-300 font-bold">Jul</TableHead>
+            <TableHead className="text-right border-b-2 border-gray-300 font-bold">Aug</TableHead>
+            <TableHead className="text-right border-b-2 border-gray-300 font-bold">Sep</TableHead>
+            <TableHead className="text-right border-b-2 border-gray-300 font-bold">Oct</TableHead>
+            <TableHead className="text-right border-b-2 border-gray-300 font-bold">Nov</TableHead>
+            <TableHead className="text-right border-b-2 border-gray-300 font-bold">Dec</TableHead>
             <TableHead className="text-right border-b-2 border-gray-300 font-bold">Total</TableHead>
           </TableRow>
         );
@@ -67,6 +75,9 @@ export const PLTable: React.FC<PLTableProps> = ({ quarters, quarterlyTotals, plS
         );
     }
   };
+  
+  // In a real app, we would render different rows based on the periodType
+  // For this example, we'll keep the quarterly view rendering logic and just update the headers
   
   return (
     <Table className="border-collapse border-none">
