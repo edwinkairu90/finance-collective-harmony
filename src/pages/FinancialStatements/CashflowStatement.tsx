@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -71,16 +72,16 @@ export const CashflowStatement = () => {
         </div>
       </div>
       
-      <Card className="bg-blue-100">
+      <Card>
         <CardContent className="p-6">
           <div className="text-center border-b pb-4">
-            <h2 className="text-xl font-bold mb-1">Cash Flow Statement</h2>
-            <p className="text-gray-600">
+            <h2 className="text-xl font-semibold mb-1">Cash Flow Statement</h2>
+            <p className="text-muted-foreground">
               {periodType === 'monthly' && `Monthly View - ${selectedYear}`}
               {periodType === 'quarterly' && `Quarterly View - ${selectedYear}`}
               {periodType === 'annual' && `Annual View - ${selectedYear}`}
             </p>
-            <p className="text-sm text-gray-600 mt-1">All figures in USD</p>
+            <p className="text-sm text-muted-foreground mt-1">All figures in USD</p>
           </div>
           
           <div className="overflow-x-auto mt-6">
@@ -98,7 +99,7 @@ export const CashflowStatement = () => {
             )}
           </div>
           
-          <div className="mt-4 text-sm text-gray-600">
+          <div className="mt-4 text-sm text-muted-foreground">
             <p>Growth percentages show {periodType === 'monthly' ? 'month-over-month' : periodType === 'quarterly' ? 'quarter-over-quarter' : 'year-over-year'} changes. For investing outflows, negative growth (reduction in spending) is shown in green.</p>
           </div>
         </CardContent>

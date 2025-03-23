@@ -16,7 +16,7 @@ export const BudgetScenarioSelector: React.FC<BudgetScenarioSelectorProps> = ({
   onScenarioChange 
 }) => {
   return (
-    <Card className="mb-4 bg-blue-100">
+    <Card className="mb-4">
       <CardHeader className="pb-3">
         <CardTitle>Budget Scenarios</CardTitle>
         <CardDescription>View different budget projections</CardDescription>
@@ -27,7 +27,7 @@ export const BudgetScenarioSelector: React.FC<BudgetScenarioSelectorProps> = ({
           onValueChange={(value) => onScenarioChange(value as BudgetScenarioType)}
           className="flex flex-col space-y-1"
         >
-          <div className="flex items-center space-x-3 rounded-md border p-3 cursor-pointer hover:bg-muted/50 bg-white">
+          <div className="flex items-center space-x-3 rounded-md border p-3 cursor-pointer hover:bg-muted/50">
             <RadioGroupItem value="base-case" id="base-case" />
             <Label htmlFor="base-case" className="flex items-center cursor-pointer">
               <Package className="h-5 w-5 mr-2 text-slate-500" />
@@ -38,7 +38,7 @@ export const BudgetScenarioSelector: React.FC<BudgetScenarioSelectorProps> = ({
             </Label>
           </div>
           
-          <div className="flex items-center space-x-3 rounded-md border p-3 cursor-pointer hover:bg-muted/50 bg-white">
+          <div className="flex items-center space-x-3 rounded-md border p-3 cursor-pointer hover:bg-muted/50">
             <RadioGroupItem value="worst-case" id="worst-case" />
             <Label htmlFor="worst-case" className="flex items-center cursor-pointer">
               <TrendingDown className="h-5 w-5 mr-2 text-red-500" />
@@ -49,7 +49,7 @@ export const BudgetScenarioSelector: React.FC<BudgetScenarioSelectorProps> = ({
             </Label>
           </div>
           
-          <div className="flex items-center space-x-3 rounded-md border p-3 cursor-pointer hover:bg-muted/50 bg-white">
+          <div className="flex items-center space-x-3 rounded-md border p-3 cursor-pointer hover:bg-muted/50">
             <RadioGroupItem value="best-case" id="best-case" />
             <Label htmlFor="best-case" className="flex items-center cursor-pointer">
               <TrendingUp className="h-5 w-5 mr-2 text-green-500" />

@@ -9,7 +9,7 @@ import { departments } from "./BudgetData";
 export const DepartmentBudgets = () => {
   return (
     <>
-      <Card className="bg-blue-100">
+      <Card>
         <CardHeader>
           <CardTitle>Department Budgets</CardTitle>
           <CardDescription>Manage budgets by department</CardDescription>
@@ -56,39 +56,39 @@ export const DepartmentBudgets = () => {
 
 const MarketingBudget = () => {
   return (
-    <Card className="bg-teal-800 text-white mt-4">
+    <Card>
       <CardHeader>
         <CardTitle>Marketing Department Budget</CardTitle>
-        <CardDescription className="text-gray-200">FY 2025</CardDescription>
+        <CardDescription>FY 2025</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="digital-advertising" className="text-gray-200">Digital Advertising</Label>
-              <Input id="digital-advertising" type="number" defaultValue="120000" className="bg-teal-700 border-teal-600 text-white" />
+              <Label htmlFor="digital-advertising">Digital Advertising</Label>
+              <Input id="digital-advertising" type="number" defaultValue="120000" />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="content-creation" className="text-gray-200">Content Creation</Label>
-              <Input id="content-creation" type="number" defaultValue="45000" className="bg-teal-700 border-teal-600 text-white" />
+              <Label htmlFor="content-creation">Content Creation</Label>
+              <Input id="content-creation" type="number" defaultValue="45000" />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="events" className="text-gray-200">Events</Label>
-              <Input id="events" type="number" defaultValue="60000" className="bg-teal-700 border-teal-600 text-white" />
+              <Label htmlFor="events">Events</Label>
+              <Input id="events" type="number" defaultValue="60000" />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="brand-development" className="text-gray-200">Brand Development</Label>
-              <Input id="brand-development" type="number" defaultValue="25000" className="bg-teal-700 border-teal-600 text-white" />
+              <Label htmlFor="brand-development">Brand Development</Label>
+              <Input id="brand-development" type="number" defaultValue="25000" />
             </div>
           </div>
-          <div className="text-right text-sm text-gray-200">
+          <div className="text-right text-sm">
             Total: $250,000
           </div>
         </div>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button variant="outline" className="border-gray-200 text-gray-200 hover:bg-teal-700">Reset</Button>
-        <Button className="bg-blue-100 text-teal-800 hover:bg-blue-200">Save Changes</Button>
+        <Button variant="outline">Reset</Button>
+        <Button>Save Changes</Button>
       </CardFooter>
     </Card>
   );
