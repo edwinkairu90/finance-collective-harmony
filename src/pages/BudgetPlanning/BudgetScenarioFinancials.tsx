@@ -103,7 +103,7 @@ export const BudgetScenarioFinancials: React.FC = () => {
               />
               <Bar 
                 dataKey="Best Case" 
-                fill="#0EA5E9" 
+                fill="#4DC1CB" 
                 name="Best Case" 
               />
             </BarChart>
