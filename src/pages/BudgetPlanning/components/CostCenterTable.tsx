@@ -24,12 +24,12 @@ export const CostCenterTable = ({
     );
   }
 
-  const calculateVariance = (budget: number, actual?: number) => {
+  const calculateDifference = (budget: number, actual?: number) => {
     if (actual === undefined) return null;
     return budget - actual;
   };
 
-  const calculateVariancePercent = (budget: number, actual?: number) => {
+  const calculateDifferencePercent = (budget: number, actual?: number) => {
     if (actual === undefined || actual === 0) return null;
     return ((budget - actual) / actual) * 100;
   };
@@ -42,15 +42,15 @@ export const CostCenterTable = ({
           <TableHead>Description</TableHead>
           <TableHead className="text-right">Previous Actual</TableHead>
           <TableHead className="text-right">Current Budget</TableHead>
-          <TableHead className="text-right">Variance</TableHead>
+          <TableHead className="text-right">Increase/Decrease</TableHead>
           <TableHead className="text-right">% Change</TableHead>
           <TableHead className="text-right">Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {costCenters.map(costCenter => {
-          const variance = calculateVariance(costCenter.budget, costCenter.previousActual);
-          const variancePercent = calculateVariancePercent(costCenter.budget, costCenter.previousActual);
+          const difference = calculateDifference(costCenter.budget, costCenter.previousActual);
+          const differencePercent = calculateDifferencePercent(costCenter.budget, costCenter.previousActual);
           
           return (
             <TableRow key={costCenter.id}>
@@ -61,16 +61,18 @@ export const CostCenterTable = ({
               </TableCell>
               <TableCell className="text-right">${costCenter.budget.toLocaleString()}</TableCell>
               <TableCell className="text-right">
-                {variance !== null ? (
-                  <span className={variance >= 0 ? "text-green-600" : "text-red-600"}>
-                    {variance >= 0 ? "+" : ""}{variance.toLocaleString()}
+                {difference !== null ? (
+                  <span className={difference >= 0 ? "text-green-600" : "text-red-600"}>
+                    {difference >= 0 ? 
+                      `+$${difference.toLocaleString()} (Increase)` : 
+                      `-$${Math.abs(difference).toLocaleString()} (Decrease)`}
                   </span>
                 ) : 'N/A'}
               </TableCell>
               <TableCell className="text-right">
-                {variancePercent !== null ? (
-                  <span className={variancePercent >= 0 ? "text-green-600" : "text-red-600"}>
-                    {variancePercent >= 0 ? "+" : ""}{variancePercent.toFixed(1)}%
+                {differencePercent !== null ? (
+                  <span className={differencePercent >= 0 ? "text-green-600" : "text-red-600"}>
+                    {differencePercent >= 0 ? "+" : ""}{differencePercent.toFixed(1)}%
                   </span>
                 ) : 'N/A'}
               </TableCell>
