@@ -141,8 +141,9 @@ export const ScenarioLineItemsRow: React.FC<ScenarioLineItemsRowProps> = ({
         </TableCell>
       </TableRow>
       
+      {/* Line item breakdown when expanded */}
       {expanded && mergedLineItems.map((item, index) => (
-        <TableRow key={index} className="bg-muted/10 text-sm">
+        <TableRow key={`line-item-${index}`} className="bg-muted/10 text-sm">
           <TableCell style={{ paddingLeft: `${indentLevel * 1.5 + 3}rem` }}>
             {item.name}
           </TableCell>
