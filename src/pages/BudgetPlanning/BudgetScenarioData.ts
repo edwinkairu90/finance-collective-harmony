@@ -1,3 +1,4 @@
+
 import { BudgetScenario, ScenarioFactor, BudgetScenarioType } from "@/types/budgetScenarios";
 import { budgetData, COLORS, getTotalBudget } from "./BudgetData";
 
@@ -10,6 +11,13 @@ const baseOpex = 950000;
 // Calculate gross profit (typically revenue - COGS, but we'll use a simple calculation here)
 const baseGrossProfit = baseRevenue * 0.7; // Assuming 70% gross margin
 const baseProfit = baseRevenue - baseOpex;
+
+// Updated colors based on the screenshot
+const SCENARIO_COLORS = {
+  "base-case": "#1F4D46", // Dark teal/green
+  "worst-case": "#4DC1CB", // Medium teal 
+  "best-case": "#F8D25B"  // Yellow
+};
 
 // Common factors affecting budget scenarios
 const scenarioFactors: Record<string, ScenarioFactor[]> = {
@@ -131,7 +139,7 @@ export const getBudgetScenarios = (): BudgetScenario[] => {
         grossProfit: baseGrossProfit,
         profit: baseProfit
       },
-      color: "#3498db", // Blue
+      color: SCENARIO_COLORS["base-case"], // Updated color
       factors: scenarioFactors["base-case"],
       assumptions: scenarioAssumptions["base-case"]
     },
@@ -151,7 +159,7 @@ export const getBudgetScenarios = (): BudgetScenario[] => {
         grossProfit: Math.round(baseRevenue * 0.80 * 0.65), // Lower gross margin in worst case
         profit: Math.round(baseRevenue * 0.80 - baseOpex * 0.90)
       },
-      color: "#FEC6A1", // Subtle Mustard (was Red)
+      color: SCENARIO_COLORS["worst-case"], // Updated color
       factors: scenarioFactors["worst-case"],
       assumptions: scenarioAssumptions["worst-case"]
     },
@@ -171,7 +179,7 @@ export const getBudgetScenarios = (): BudgetScenario[] => {
         grossProfit: Math.round(baseRevenue * 1.15 * 0.75), // Better gross margin in best case
         profit: Math.round(baseRevenue * 1.15 - baseOpex * 1.05)
       },
-      color: "#4DC1CB", // Corporate Green (teal/turquoise from screenshot)
+      color: SCENARIO_COLORS["best-case"], // Updated color
       factors: scenarioFactors["best-case"],
       assumptions: scenarioAssumptions["best-case"]
     }

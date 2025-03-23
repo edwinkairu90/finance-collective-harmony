@@ -70,6 +70,11 @@ export const BudgetScenarioFinancials: React.FC = () => {
     return `$${value.toLocaleString()}`;
   };
 
+  // Get scenario colors for the bars
+  const baseScenario = scenarios.find(s => s.id === "base-case");
+  const worstScenario = scenarios.find(s => s.id === "worst-case");
+  const bestScenario = scenarios.find(s => s.id === "best-case");
+
   return (
     <Card className="mt-4">
       <CardHeader>
@@ -93,17 +98,17 @@ export const BudgetScenarioFinancials: React.FC = () => {
               <Legend />
               <Bar 
                 dataKey="Base Case" 
-                fill="#3498db" 
+                fill={baseScenario?.color || "#1F4D46"} 
                 name="Base Case" 
               />
               <Bar 
                 dataKey="Worst Case" 
-                fill="#FEC6A1" 
+                fill={worstScenario?.color || "#4DC1CB"} 
                 name="Worst Case" 
               />
               <Bar 
                 dataKey="Best Case" 
-                fill="#4DC1CB" 
+                fill={bestScenario?.color || "#F8D25B"} 
                 name="Best Case" 
               />
             </BarChart>
