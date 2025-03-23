@@ -53,16 +53,8 @@ const Dashboard = () => {
     { name: "Depreciation & Amortization", actuals: "(30M)", forecast: "(28M)", variance: "$2M", variancePercent: "8%" },
   ];
 
-  // Waterfall chart data
-  const waterfallData = [
-    { name: "Gross", value: 275000 },
-    { name: "Payroll", value: -125000 },
-    { name: "Services", value: -75000 },
-    { name: "Net", value: 75000 },
-  ];
-
   return (
-    <div className="space-y-6 font-montserrat">
+    <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold tracking-tight">Executive Dashboard</h1>
         <Button onClick={showNotification}>
@@ -72,31 +64,31 @@ const Dashboard = () => {
 
       {/* KPI Cards - Top Row */}
       <div className="grid grid-cols-4 gap-4">
-        <Card>
+        <Card className="bg-blue-100">
           <CardContent className="p-6">
-            <div className="text-3xl font-bold text-finance-highlight">$280M</div>
-            <div className="text-sm text-muted-foreground">FY24 Revenue YTD</div>
+            <div className="text-3xl font-bold">$280M</div>
+            <div className="text-sm text-gray-600">FY24 Revenue YTD</div>
           </CardContent>
         </Card>
         
-        <Card>
+        <Card className="bg-teal-800 text-white">
           <CardContent className="p-6">
-            <div className="text-3xl font-bold text-finance-highlight">34.6%</div>
-            <div className="text-sm text-muted-foreground">QTR YoY Growth %</div>
+            <div className="text-3xl font-bold">34.6%</div>
+            <div className="text-sm text-gray-200">QTR YoY Growth %</div>
           </CardContent>
         </Card>
         
-        <Card>
+        <Card className="bg-blue-100">
           <CardContent className="p-6">
-            <div className="text-3xl font-bold text-finance-highlight">$14M</div>
-            <div className="text-sm text-muted-foreground">FY24 OPEX YTD</div>
+            <div className="text-3xl font-bold">$14M</div>
+            <div className="text-sm text-gray-600">FY24 OPEX YTD</div>
           </CardContent>
         </Card>
         
-        <Card>
+        <Card className="bg-teal-800 text-white">
           <CardContent className="p-6">
-            <div className="text-3xl font-bold text-finance-highlight">4.8%</div>
-            <div className="text-sm text-muted-foreground">FY24 OPEX % of Revenue</div>
+            <div className="text-3xl font-bold">4.8%</div>
+            <div className="text-sm text-gray-200">FY24 OPEX % of Revenue</div>
           </CardContent>
         </Card>
       </div>
@@ -115,7 +107,7 @@ const Dashboard = () => {
                 <span>Target</span>
               </div>
               <div className="flex items-center">
-                <div className="w-3 h-3 rounded-full bg-primary mr-1"></div>
+                <div className="w-3 h-3 rounded-full bg-[#4DC1CB] mr-1"></div>
                 <span>Actual</span>
               </div>
               <div className="flex items-center">
@@ -134,7 +126,6 @@ const Dashboard = () => {
                   <YAxis 
                     axisLine={false} 
                     tickLine={false}
-                    tickFormatter={(value) => `$${value}K`}
                   />
                   <Tooltip />
                   <Line 
@@ -147,9 +138,9 @@ const Dashboard = () => {
                   <Line 
                     type="monotone" 
                     dataKey="actual" 
-                    stroke="hsl(var(--primary))" 
+                    stroke="#4DC1CB" 
                     strokeWidth={2}
-                    dot={{ r: 4, fill: "hsl(var(--primary))" }} 
+                    dot={{ r: 4, fill: "#4DC1CB" }} 
                     activeDot={{ r: 6 }}
                   />
                   <CartesianGrid stroke="#eee" vertical={false} />
@@ -175,11 +166,11 @@ const Dashboard = () => {
           <CardContent>
             <div className="flex items-center text-xs mb-2 space-x-4">
               <div className="flex items-center">
-                <div className="w-3 h-3 rounded-full bg-[#4DC1CB] mr-1"></div>
+                <div className="w-3 h-3 rounded-full bg-teal-800 mr-1"></div>
                 <span>Dept A</span>
               </div>
               <div className="flex items-center">
-                <div className="w-3 h-3 rounded-full bg-primary mr-1"></div>
+                <div className="w-3 h-3 rounded-full bg-teal-500 mr-1"></div>
                 <span>Dept B</span>
               </div>
               <div className="flex items-center">
@@ -211,12 +202,11 @@ const Dashboard = () => {
                   <YAxis 
                     axisLine={false} 
                     tickLine={false}
-                    tickFormatter={(value) => `$${value}`}
                   />
                   <Tooltip />
-                  <Bar dataKey="deptA" stackId="a" fill="#4DC1CB" /> 
-                  <Bar dataKey="deptB" stackId="a" fill="hsl(var(--primary))" /> 
-                  <Bar dataKey="deptC" stackId="a" fill="#FDC675" />
+                  <Bar dataKey="deptA" stackId="a" fill="#134e4a" /> 
+                  <Bar dataKey="deptB" stackId="a" fill="#14b8a6" /> 
+                  <Bar dataKey="deptC" stackId="a" fill="#fcd34d" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -246,7 +236,7 @@ const Dashboard = () => {
                 {bvaTableData.map((row, index) => (
                   <TableRow 
                     key={index}
-                    className={row.name === "= EBITDA" ? "bg-muted" : ""}
+                    className={row.name === "= EBITDA" ? "bg-blue-100" : ""}
                   >
                     <TableCell className="font-medium">{row.name}</TableCell>
                     <TableCell className="text-right">{row.actuals}</TableCell>
@@ -305,8 +295,8 @@ const Dashboard = () => {
                   >
                     {/* Custom colors for each bar */}
                     {[
-                      <rect key="1" fill="#4DC1CB" />, // Use teal/turquoise color for consistency
-                      <rect key="2" fill="#4DC1CB" />, // Use teal/turquoise color for consistency
+                      <rect key="1" fill="#4DC1CB" />, // Teal color for consistency
+                      <rect key="2" fill="#4DC1CB" />, // Teal color for consistency
                       <rect key="3" fill="#989898" />, // Gray
                       <rect key="4" fill="#FDC675" />, // Amber
                     ]}
