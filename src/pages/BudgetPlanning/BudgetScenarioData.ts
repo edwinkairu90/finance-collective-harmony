@@ -1,4 +1,3 @@
-
 import { BudgetScenario, ScenarioFactor, BudgetScenarioType } from "@/types/budgetScenarios";
 import { budgetData, COLORS, getTotalBudget } from "./BudgetData";
 
@@ -120,75 +119,88 @@ const scenarioAssumptions: Record<string, string[]> = {
   ]
 };
 
+// In a real application, these would be stored in a database
+// For this demo, we'll store them in memory
+let scenariosData: BudgetScenario[] = [];
+
+// Initialize scenarios data on first import
+const initScenarios = () => {
+  if (scenariosData.length === 0) {
+    scenariosData = [
+      {
+        id: "base-case",
+        name: "Base Case",
+        description: "Our expected budget based on current projections",
+        totalBudget: baseCaseBudget,
+        departments: budgetData.map(item => ({
+          id: item.name.toLowerCase().replace(/\s+/g, '-'),
+          name: item.name,
+          budget: item.value
+        })),
+        financials: {
+          revenue: baseRevenue,
+          opex: baseOpex,
+          grossProfit: baseGrossProfit,
+          profit: baseProfit
+        },
+        color: SCENARIO_COLORS["base-case"], // Updated color
+        factors: scenarioFactors["base-case"],
+        assumptions: scenarioAssumptions["base-case"]
+      },
+      {
+        id: "worst-case",
+        name: "Worst Case",
+        description: "Conservative budget with 15% reduction in funding",
+        totalBudget: Math.round(baseCaseBudget * 0.85),
+        departments: budgetData.map(item => ({
+          id: item.name.toLowerCase().replace(/\s+/g, '-'),
+          name: item.name,
+          budget: Math.round(item.value * 0.85)
+        })),
+        financials: {
+          revenue: Math.round(baseRevenue * 0.80), // 20% less revenue
+          opex: Math.round(baseOpex * 0.90),       // 10% less opex
+          grossProfit: Math.round(baseRevenue * 0.80 * 0.65), // Lower gross margin in worst case
+          profit: Math.round(baseRevenue * 0.80 - baseOpex * 0.90)
+        },
+        color: SCENARIO_COLORS["worst-case"], // Updated color
+        factors: scenarioFactors["worst-case"],
+        assumptions: scenarioAssumptions["worst-case"]
+      },
+      {
+        id: "best-case",
+        name: "Best Case",
+        description: "Optimistic budget with 10% increase in funding",
+        totalBudget: Math.round(baseCaseBudget * 1.10),
+        departments: budgetData.map(item => ({
+          id: item.name.toLowerCase().replace(/\s+/g, '-'),
+          name: item.name,
+          budget: Math.round(item.value * 1.10)
+        })),
+        financials: {
+          revenue: Math.round(baseRevenue * 1.15), // 15% more revenue
+          opex: Math.round(baseOpex * 1.05),       // 5% more opex
+          grossProfit: Math.round(baseRevenue * 1.15 * 0.75), // Better gross margin in best case
+          profit: Math.round(baseRevenue * 1.15 - baseOpex * 1.05)
+        },
+        color: SCENARIO_COLORS["best-case"], // Updated color
+        factors: scenarioFactors["best-case"],
+        assumptions: scenarioAssumptions["best-case"]
+      }
+    ];
+  }
+};
+
 // Generate scenario data based on the current budget data
 export const getBudgetScenarios = (): BudgetScenario[] => {
-  return [
-    {
-      id: "base-case",
-      name: "Base Case",
-      description: "Our expected budget based on current projections",
-      totalBudget: baseCaseBudget,
-      departments: budgetData.map(item => ({
-        id: item.name.toLowerCase().replace(/\s+/g, '-'),
-        name: item.name,
-        budget: item.value
-      })),
-      financials: {
-        revenue: baseRevenue,
-        opex: baseOpex,
-        grossProfit: baseGrossProfit,
-        profit: baseProfit
-      },
-      color: SCENARIO_COLORS["base-case"], // Updated color
-      factors: scenarioFactors["base-case"],
-      assumptions: scenarioAssumptions["base-case"]
-    },
-    {
-      id: "worst-case",
-      name: "Worst Case",
-      description: "Conservative budget with 15% reduction in funding",
-      totalBudget: Math.round(baseCaseBudget * 0.85),
-      departments: budgetData.map(item => ({
-        id: item.name.toLowerCase().replace(/\s+/g, '-'),
-        name: item.name,
-        budget: Math.round(item.value * 0.85)
-      })),
-      financials: {
-        revenue: Math.round(baseRevenue * 0.80), // 20% less revenue
-        opex: Math.round(baseOpex * 0.90),       // 10% less opex
-        grossProfit: Math.round(baseRevenue * 0.80 * 0.65), // Lower gross margin in worst case
-        profit: Math.round(baseRevenue * 0.80 - baseOpex * 0.90)
-      },
-      color: SCENARIO_COLORS["worst-case"], // Updated color
-      factors: scenarioFactors["worst-case"],
-      assumptions: scenarioAssumptions["worst-case"]
-    },
-    {
-      id: "best-case",
-      name: "Best Case",
-      description: "Optimistic budget with 10% increase in funding",
-      totalBudget: Math.round(baseCaseBudget * 1.10),
-      departments: budgetData.map(item => ({
-        id: item.name.toLowerCase().replace(/\s+/g, '-'),
-        name: item.name,
-        budget: Math.round(item.value * 1.10)
-      })),
-      financials: {
-        revenue: Math.round(baseRevenue * 1.15), // 15% more revenue
-        opex: Math.round(baseOpex * 1.05),       // 5% more opex
-        grossProfit: Math.round(baseRevenue * 1.15 * 0.75), // Better gross margin in best case
-        profit: Math.round(baseRevenue * 1.15 - baseOpex * 1.05)
-      },
-      color: SCENARIO_COLORS["best-case"], // Updated color
-      factors: scenarioFactors["best-case"],
-      assumptions: scenarioAssumptions["best-case"]
-    }
-  ];
+  initScenarios();
+  return [...scenariosData];
 };
 
 // Get a single scenario by ID
 export const getScenarioById = (id: string): BudgetScenario | undefined => {
-  return getBudgetScenarios().find(scenario => scenario.id === id);
+  initScenarios();
+  return scenariosData.find(scenario => scenario.id === id);
 };
 
 // Update scenario factors
@@ -196,19 +208,15 @@ export const updateScenarioFactors = (
   scenarioId: BudgetScenarioType, 
   updatedFactors: ScenarioFactor[]
 ): BudgetScenario | undefined => {
-  const scenarios = getBudgetScenarios();
-  const scenarioIndex = scenarios.findIndex(s => s.id === scenarioId);
+  initScenarios();
+  const scenarioIndex = scenariosData.findIndex(s => s.id === scenarioId);
   
   if (scenarioIndex === -1) return undefined;
   
-  // In a real app, this would update a database
-  // Since we're using static data, we'll just return the modified scenario
-  const updatedScenario = {
-    ...scenarios[scenarioIndex],
-    factors: updatedFactors
-  };
+  // Update the factors for the specified scenario
+  scenariosData[scenarioIndex].factors = updatedFactors;
   
-  return updatedScenario;
+  return scenariosData[scenarioIndex];
 };
 
 // Update scenario assumptions
@@ -216,17 +224,53 @@ export const updateScenarioAssumptions = (
   scenarioId: BudgetScenarioType, 
   updatedAssumptions: string[]
 ): BudgetScenario | undefined => {
-  const scenarios = getBudgetScenarios();
-  const scenarioIndex = scenarios.findIndex(s => s.id === scenarioId);
+  initScenarios();
+  const scenarioIndex = scenariosData.findIndex(s => s.id === scenarioId);
   
   if (scenarioIndex === -1) return undefined;
   
-  // In a real app, this would update a database
-  // Since we're using static data, we'll just return the modified scenario
-  const updatedScenario = {
-    ...scenarios[scenarioIndex],
-    assumptions: updatedAssumptions
-  };
+  // Update the assumptions for the specified scenario
+  scenariosData[scenarioIndex].assumptions = updatedAssumptions;
   
-  return updatedScenario;
+  return scenariosData[scenarioIndex];
+};
+
+// Recalculate financial impacts based on factors
+export const recalculateScenarioFinancials = (
+  scenarioId: BudgetScenarioType
+): BudgetScenario | undefined => {
+  initScenarios();
+  const scenarioIndex = scenariosData.findIndex(s => s.id === scenarioId);
+  
+  if (scenarioIndex === -1) return undefined;
+  
+  const scenario = scenariosData[scenarioIndex];
+  
+  // Calculate total factor impact (sum of all factor impacts)
+  const totalImpact = scenario.factors.reduce((sum, factor) => sum + factor.impact, 0);
+  
+  // Apply impact to financials
+  // This is a simplified calculation - in a real app this would be more sophisticated
+  const impactMultiplier = 1 + (totalImpact / 100);
+  
+  // Update financial metrics based on the base case
+  if (scenarioId === "worst-case" || scenarioId === "best-case") {
+    const baseCase = scenariosData.find(s => s.id === "base-case");
+    if (baseCase) {
+      scenariosData[scenarioIndex].financials = {
+        revenue: Math.round(baseCase.financials.revenue * impactMultiplier),
+        opex: Math.round(baseCase.financials.opex * (impactMultiplier * 0.8)), // Expenses usually don't scale 1:1 with revenue
+        grossProfit: Math.round(baseCase.financials.revenue * impactMultiplier * 
+          (scenarioId === "worst-case" ? 0.65 : 0.75)), // Different margins for different scenarios
+        profit: 0 // Will be calculated below
+      };
+      
+      // Calculate profit
+      scenariosData[scenarioIndex].financials.profit = 
+        scenariosData[scenarioIndex].financials.revenue - 
+        scenariosData[scenarioIndex].financials.opex;
+    }
+  }
+  
+  return scenariosData[scenarioIndex];
 };
