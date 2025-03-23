@@ -11,6 +11,7 @@ interface AllCostCentersViewProps {
   onChangeCategory?: (costCenterId: string, newCategory: string) => void;
   onStartEditing?: (costCenterId: string) => void;
   onDelete?: (costCenterId: string) => void;
+  onUpdateCostCenterField?: (costCenterId: string, field: keyof CostCenter, value: string | number) => void;
 }
 
 export const AllCostCentersView: React.FC<AllCostCentersViewProps> = ({
@@ -19,23 +20,33 @@ export const AllCostCentersView: React.FC<AllCostCentersViewProps> = ({
   onChangeDepartment,
   onChangeCategory,
   onStartEditing = () => {},
-  onDelete = () => {}
+  onDelete = () => {},
+  onUpdateCostCenterField
 }) => {
+  // Group cost centers by category for P&L style view
+  const groupedByCostCenter = costCenters.sort((a, b) => {
+    // Sort by category name first
+    if (a.name < b.name) return -1;
+    if (a.name > b.name) return 1;
+    return 0;
+  });
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>All Cost Centers</CardTitle>
-        <CardDescription>View all cost centers across all departments</CardDescription>
+        <CardTitle>Cost Center P&L View</CardTitle>
+        <CardDescription>View all cost centers in a P&L format with inline editing capabilities</CardDescription>
       </CardHeader>
       <CardContent>
         <CostCenterTable 
-          costCenters={costCenters}
+          costCenters={groupedByCostCenter}
           departments={departments}
           showAllDepartments={true}
           onStartEditing={onStartEditing}
           onDelete={onDelete}
           onChangeDepartment={onChangeDepartment}
           onChangeCategory={onChangeCategory}
+          onUpdateCostCenterField={onUpdateCostCenterField}
         />
       </CardContent>
     </Card>
