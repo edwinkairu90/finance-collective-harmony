@@ -30,10 +30,11 @@ export const CostCenters = () => {
 
   return (
     <div className="space-y-6">
-      <Tabs defaultValue="all">
+      <Tabs defaultValue="chart-of-accounts">
         <TabsList className="mb-4">
           <TabsTrigger value="departments">By Department</TabsTrigger>
-          <TabsTrigger value="all">P&L View</TabsTrigger>
+          <TabsTrigger value="pl-view">P&L View</TabsTrigger>
+          <TabsTrigger value="chart-of-accounts">Chart of Accounts</TabsTrigger>
         </TabsList>
         
         <TabsContent value="departments" className="space-y-6">
@@ -57,7 +58,19 @@ export const CostCenters = () => {
           />
         </TabsContent>
         
-        <TabsContent value="all">
+        <TabsContent value="pl-view">
+          <AllCostCentersView 
+            costCenters={allCostCenters}
+            departments={departments}
+            onChangeDepartment={changeCostCenterDepartment}
+            onChangeCategory={changeCostCenterCategory}
+            onStartEditing={startEditingCostCenter}
+            onDelete={deleteCostCenter}
+            onUpdateCostCenterField={updateCostCenterField}
+          />
+        </TabsContent>
+
+        <TabsContent value="chart-of-accounts">
           <AllCostCentersView 
             costCenters={allCostCenters}
             departments={departments}

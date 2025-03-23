@@ -2,7 +2,7 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { CostCenter, Department } from "@/types/budget";
-import { CostCenterTable } from "./CostCenterTable";
+import { ChartOfAccountsTable } from "./ChartOfAccountsTable";
 
 interface AllCostCentersViewProps {
   costCenters: CostCenter[];
@@ -23,8 +23,8 @@ export const AllCostCentersView: React.FC<AllCostCentersViewProps> = ({
   onDelete = () => {},
   onUpdateCostCenterField
 }) => {
-  // Group cost centers by category for P&L style view
-  const groupedByCostCenter = costCenters.sort((a, b) => {
+  // Group cost centers by category for Chart of Accounts style view
+  const groupedByCategory = costCenters.sort((a, b) => {
     // Sort by category name first
     if (a.name < b.name) return -1;
     if (a.name > b.name) return 1;
@@ -34,14 +34,13 @@ export const AllCostCentersView: React.FC<AllCostCentersViewProps> = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Cost Center P&L View</CardTitle>
-        <CardDescription>View all cost centers in a P&L format with inline editing capabilities</CardDescription>
+        <CardTitle>Chart of Accounts</CardTitle>
+        <CardDescription>View financial data by GL accounts with actuals vs. forecast comparison</CardDescription>
       </CardHeader>
       <CardContent>
-        <CostCenterTable 
-          costCenters={groupedByCostCenter}
+        <ChartOfAccountsTable 
+          costCenters={groupedByCategory}
           departments={departments}
-          showAllDepartments={true}
           onStartEditing={onStartEditing}
           onDelete={onDelete}
           onChangeDepartment={onChangeDepartment}
