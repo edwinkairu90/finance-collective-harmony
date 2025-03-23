@@ -15,6 +15,7 @@ interface CashflowSectionProps {
   quarters: CashflowQuarterData[];
   sectionType: 'operating' | 'investing' | 'financing';
   showTotal: boolean;
+  yearlyTotal?: ReturnType<typeof calculateCashflowTotals>;
 }
 
 export const CashflowSection: React.FC<CashflowSectionProps> = ({ 
@@ -22,7 +23,8 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({
   items, 
   quarters, 
   sectionType,
-  showTotal 
+  showTotal,
+  yearlyTotal
 }) => {
   const getTotalPropName = (): keyof ReturnType<typeof calculateCashflowTotals> => {
     switch (sectionType) {
@@ -37,7 +39,9 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({
     <>
       {/* Section Header */}
       <TableRow className="bg-muted/30">
-        <TableCell colSpan={5} className="font-semibold">Cash Flow from {title} Activities</TableCell>
+        <TableCell colSpan={quarters.length + (yearlyTotal ? 2 : 1)} className="font-semibold">
+          Cash Flow from {title} Activities
+        </TableCell>
       </TableRow>
       
       {/* Line Items */}
@@ -62,6 +66,13 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({
               </TableCell>
             );
           })}
+          
+          {/* Yearly total column for monthly view */}
+          {yearlyTotal && (
+            <TableCell className="text-right font-medium">
+              ${getItemValue(quarters[0], item, sectionType).toLocaleString() * 12}
+            </TableCell>
+          )}
         </TableRow>
       ))}
       
@@ -88,6 +99,13 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({
               </TableCell>
             );
           })}
+          
+          {/* Yearly total column for monthly view */}
+          {yearlyTotal && (
+            <TableCell className={`text-right font-bold ${yearlyTotal[getTotalPropName()] >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+              ${yearlyTotal[getTotalPropName()].toLocaleString()}
+            </TableCell>
+          )}
         </TableRow>
       )}
     </>

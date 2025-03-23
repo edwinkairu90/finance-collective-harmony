@@ -1,3 +1,4 @@
+
 import { BalanceSheetQuarterData } from "../types/balanceSheetTypes";
 
 // Calculate totals for a balance sheet quarter
@@ -78,4 +79,45 @@ export const getItemValue = (
 export const calculateGrowth = (current: number, previous: number | null): number | null => {
   if (!previous || previous === 0) return null;
   return ((current - previous) / previous) * 100;
+};
+
+// Calculate monthly totals
+export const calculateMonthlyBalanceSheetTotals = (months: BalanceSheetQuarterData[]) => {
+  return months.map(month => calculateBalanceSheetTotals(month));
+};
+
+// Calculate annual total (sum of all months)
+export const calculateAnnualBalanceSheetTotal = (months: BalanceSheetQuarterData[]) => {
+  const result = {
+    totalCurrentAssets: 0,
+    totalNonCurrentAssets: 0,
+    totalAssets: 0,
+    totalCurrentLiabilities: 0,
+    totalNonCurrentLiabilities: 0,
+    totalLiabilities: 0,
+    totalEquity: 0,
+    totalLiabilitiesAndEquity: 0
+  };
+  
+  months.forEach(month => {
+    const totals = calculateBalanceSheetTotals(month);
+    result.totalCurrentAssets += totals.totalCurrentAssets;
+    result.totalNonCurrentAssets += totals.totalNonCurrentAssets;
+    result.totalAssets += totals.totalAssets;
+    result.totalCurrentLiabilities += totals.totalCurrentLiabilities;
+    result.totalNonCurrentLiabilities += totals.totalNonCurrentLiabilities;
+    result.totalLiabilities += totals.totalLiabilities;
+    result.totalEquity += totals.totalEquity;
+    result.totalLiabilitiesAndEquity += totals.totalLiabilitiesAndEquity;
+  });
+  
+  // For balance sheet, we don't simply sum up all months
+  // We use the latest month as the annual figure (typically December)
+  const latestMonth = months[0]; // Assuming months are ordered with latest first
+  if (latestMonth) {
+    const latestTotals = calculateBalanceSheetTotals(latestMonth);
+    return latestTotals;
+  }
+  
+  return result;
 };

@@ -73,3 +73,31 @@ export const getGrowthColorClass = (
   // Default case: positive growth is good
   return growth >= 0 ? 'text-green-600' : 'text-red-600';
 };
+
+// Calculate monthly totals
+export const calculateMonthlyCashflowTotals = (months: CashflowQuarterData[]) => {
+  return months.map(month => calculateCashflowTotals(month));
+};
+
+// Calculate annual total (sum of all months)
+export const calculateAnnualCashflowTotal = (months: CashflowQuarterData[]) => {
+  let totalOperating = 0;
+  let totalInvesting = 0;
+  let totalFinancing = 0;
+  
+  months.forEach(month => {
+    const totals = calculateCashflowTotals(month);
+    totalOperating += totals.totalOperating;
+    totalInvesting += totals.totalInvesting;
+    totalFinancing += totals.totalFinancing;
+  });
+  
+  const netCashflow = totalOperating + totalInvesting + totalFinancing;
+  
+  return {
+    totalOperating,
+    totalInvesting,
+    totalFinancing,
+    netCashflow
+  };
+};

@@ -15,6 +15,7 @@ interface BalanceSheetSectionProps {
   sectionType: 'assets.current' | 'assets.nonCurrent' | 'liabilities.current' | 'liabilities.nonCurrent' | 'equity';
   sectionLabel?: string;
   isLiability?: boolean;
+  yearlyTotal?: ReturnType<typeof calculateBalanceSheetTotals>;
 }
 
 export const BalanceSheetSection: React.FC<BalanceSheetSectionProps> = ({ 
@@ -23,7 +24,8 @@ export const BalanceSheetSection: React.FC<BalanceSheetSectionProps> = ({
   quarters, 
   sectionType,
   sectionLabel,
-  isLiability = false
+  isLiability = false,
+  yearlyTotal
 }) => {
   return (
     <>
@@ -39,6 +41,7 @@ export const BalanceSheetSection: React.FC<BalanceSheetSectionProps> = ({
         {quarters.map((quarter, idx) => (
           <TableCell key={idx}></TableCell>
         ))}
+        {yearlyTotal && <TableCell></TableCell>}
       </TableRow>
       
       {/* Line Items */}
@@ -65,6 +68,13 @@ export const BalanceSheetSection: React.FC<BalanceSheetSectionProps> = ({
               </TableCell>
             );
           })}
+          
+          {/* Yearly total column for monthly view */}
+          {yearlyTotal && (
+            <TableCell className="text-right font-medium">
+              ${getItemValue(quarters[0], item, sectionType).toLocaleString()}
+            </TableCell>
+          )}
         </TableRow>
       ))}
     </>

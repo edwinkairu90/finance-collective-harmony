@@ -6,9 +6,10 @@ import { calculateGrowth, calculateCashflowTotals, getGrowthColorClass } from ".
 
 interface NetCashflowRowProps {
   quarters: CashflowQuarterData[];
+  yearlyTotal?: ReturnType<typeof calculateCashflowTotals>;
 }
 
-export const NetCashflowRow: React.FC<NetCashflowRowProps> = ({ quarters }) => {
+export const NetCashflowRow: React.FC<NetCashflowRowProps> = ({ quarters, yearlyTotal }) => {
   return (
     <TableRow className="font-bold bg-muted/50">
       <TableCell>Net Increase/(Decrease) in Cash</TableCell>
@@ -30,6 +31,13 @@ export const NetCashflowRow: React.FC<NetCashflowRowProps> = ({ quarters }) => {
           </TableCell>
         );
       })}
+      
+      {/* Yearly total column for monthly view */}
+      {yearlyTotal && (
+        <TableCell className={`text-right font-bold ${yearlyTotal.netCashflow >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+          ${yearlyTotal.netCashflow.toLocaleString()}
+        </TableCell>
+      )}
     </TableRow>
   );
 };

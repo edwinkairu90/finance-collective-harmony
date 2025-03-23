@@ -1,145 +1,156 @@
 
-// Type for a Cash Flow item
 export interface CashflowItem {
   item: string;
   amount: number;
 }
 
-// Type for quarterly cash flow data
 export interface CashflowQuarterData {
   title: string;
-  endDate: string;
+  date: string;
   operating: CashflowItem[];
   investing: CashflowItem[];
   financing: CashflowItem[];
 }
 
-// Type for cash flow data by quarter
 export interface CashflowData {
   [key: string]: CashflowQuarterData;
 }
 
-// Sample quarterly Cash Flow data
-export const cashflowByQuarter: CashflowData = {
-  "q1-2024": {
-    title: "Q1 2024",
-    endDate: "March 31, 2024",
+// Sample cash flow data by quarter
+const cashflowByQuarter: CashflowData = {
+  'q1-2024': {
+    title: 'Q1 2024',
+    date: 'Jan-Mar 2024',
     operating: [
-      { item: "Net Income", amount: 820000 },
-      { item: "Depreciation and Amortization", amount: 125000 },
-      { item: "Increase in Accounts Receivable", amount: -65000 },
-      { item: "Decrease in Inventory", amount: 42000 },
-      { item: "Increase in Accounts Payable", amount: 35000 },
-      { item: "Decrease in Accrued Expenses", amount: -18000 },
+      { item: 'Net Income', amount: 325000 },
+      { item: 'Depreciation and Amortization', amount: 85000 },
+      { item: 'Changes in Working Capital', amount: -42000 },
+      { item: 'Accounts Receivable', amount: -56000 },
+      { item: 'Inventory', amount: -28000 },
+      { item: 'Accounts Payable', amount: 34000 }
     ],
     investing: [
-      { item: "Purchase of Property and Equipment", amount: -250000 },
-      { item: "Purchase of Investments", amount: -180000 },
-      { item: "Sale of Investments", amount: 95000 },
+      { item: 'Purchase of Property and Equipment', amount: -120000 },
+      { item: 'Sale of Equipment', amount: 15000 },
+      { item: 'Purchase of Investments', amount: -85000 },
+      { item: 'Sale of Investments', amount: 25000 }
     ],
     financing: [
-      { item: "Proceeds from Issuance of Debt", amount: 300000 },
-      { item: "Repayment of Debt", amount: -150000 },
-      { item: "Dividends Paid", amount: -120000 },
-      { item: "Repurchase of Common Stock", amount: -75000 },
+      { item: 'Proceeds from Long-term Debt', amount: 150000 },
+      { item: 'Repayment of Long-term Debt', amount: -85000 },
+      { item: 'Dividend Payments', amount: -95000 },
+      { item: 'Stock Repurchase', amount: -75000 }
     ]
   },
-  "q4-2023": {
-    title: "Q4 2023",
-    endDate: "December 31, 2023",
+  'q4-2023': {
+    title: 'Q4 2023',
+    date: 'Oct-Dec 2023',
     operating: [
-      { item: "Net Income", amount: 780000 },
-      { item: "Depreciation and Amortization", amount: 120000 },
-      { item: "Increase in Accounts Receivable", amount: -60000 },
-      { item: "Decrease in Inventory", amount: 38000 },
-      { item: "Increase in Accounts Payable", amount: 32000 },
-      { item: "Decrease in Accrued Expenses", amount: -16000 },
+      { item: 'Net Income', amount: 305000 },
+      { item: 'Depreciation and Amortization', amount: 82000 },
+      { item: 'Changes in Working Capital', amount: -36000 },
+      { item: 'Accounts Receivable', amount: -48000 },
+      { item: 'Inventory', amount: -24000 },
+      { item: 'Accounts Payable', amount: 30000 }
     ],
     investing: [
-      { item: "Purchase of Property and Equipment", amount: -230000 },
-      { item: "Purchase of Investments", amount: -170000 },
-      { item: "Sale of Investments", amount: 85000 },
+      { item: 'Purchase of Property and Equipment', amount: -110000 },
+      { item: 'Sale of Equipment', amount: 12000 },
+      { item: 'Purchase of Investments', amount: -75000 },
+      { item: 'Sale of Investments', amount: 20000 }
     ],
     financing: [
-      { item: "Proceeds from Issuance of Debt", amount: 280000 },
-      { item: "Repayment of Debt", amount: -140000 },
-      { item: "Dividends Paid", amount: -110000 },
-      { item: "Repurchase of Common Stock", amount: -70000 },
+      { item: 'Proceeds from Long-term Debt', amount: 125000 },
+      { item: 'Repayment of Long-term Debt', amount: -75000 },
+      { item: 'Dividend Payments', amount: -90000 },
+      { item: 'Stock Repurchase', amount: -65000 }
     ]
   },
-  "q3-2023": {
-    title: "Q3 2023",
-    endDate: "September 30, 2023",
+  'q3-2023': {
+    title: 'Q3 2023',
+    date: 'Jul-Sep 2023',
     operating: [
-      { item: "Net Income", amount: 740000 },
-      { item: "Depreciation and Amortization", amount: 115000 },
-      { item: "Increase in Accounts Receivable", amount: -55000 },
-      { item: "Decrease in Inventory", amount: 35000 },
-      { item: "Increase in Accounts Payable", amount: 30000 },
-      { item: "Decrease in Accrued Expenses", amount: -14000 },
+      { item: 'Net Income', amount: 295000 },
+      { item: 'Depreciation and Amortization', amount: 80000 },
+      { item: 'Changes in Working Capital', amount: -35000 },
+      { item: 'Accounts Receivable', amount: -50000 },
+      { item: 'Inventory', amount: -26000 },
+      { item: 'Accounts Payable', amount: 28000 }
     ],
     investing: [
-      { item: "Purchase of Property and Equipment", amount: -220000 },
-      { item: "Purchase of Investments", amount: -160000 },
-      { item: "Sale of Investments", amount: 80000 },
+      { item: 'Purchase of Property and Equipment', amount: -105000 },
+      { item: 'Sale of Equipment', amount: 10000 },
+      { item: 'Purchase of Investments', amount: -72000 },
+      { item: 'Sale of Investments', amount: 18000 }
     ],
     financing: [
-      { item: "Proceeds from Issuance of Debt", amount: 260000 },
-      { item: "Repayment of Debt", amount: -130000 },
-      { item: "Dividends Paid", amount: -100000 },
-      { item: "Repurchase of Common Stock", amount: -65000 },
+      { item: 'Proceeds from Long-term Debt', amount: 120000 },
+      { item: 'Repayment of Long-term Debt', amount: -72000 },
+      { item: 'Dividend Payments', amount: -85000 },
+      { item: 'Stock Repurchase', amount: -62000 }
     ]
   },
-  "q2-2023": {
-    title: "Q2 2023",
-    endDate: "June 30, 2023",
+  'q2-2023': {
+    title: 'Q2 2023',
+    date: 'Apr-Jun 2023',
     operating: [
-      { item: "Net Income", amount: 700000 },
-      { item: "Depreciation and Amortization", amount: 110000 },
-      { item: "Increase in Accounts Receivable", amount: -50000 },
-      { item: "Decrease in Inventory", amount: 32000 },
-      { item: "Increase in Accounts Payable", amount: 28000 },
-      { item: "Decrease in Accrued Expenses", amount: -12000 },
+      { item: 'Net Income', amount: 285000 },
+      { item: 'Depreciation and Amortization', amount: 78000 },
+      { item: 'Changes in Working Capital', amount: -30000 },
+      { item: 'Accounts Receivable', amount: -45000 },
+      { item: 'Inventory', amount: -22000 },
+      { item: 'Accounts Payable', amount: 25000 }
     ],
     investing: [
-      { item: "Purchase of Property and Equipment", amount: -210000 },
-      { item: "Purchase of Investments", amount: -150000 },
-      { item: "Sale of Investments", amount: 75000 },
+      { item: 'Purchase of Property and Equipment', amount: -100000 },
+      { item: 'Sale of Equipment', amount: 8000 },
+      { item: 'Purchase of Investments', amount: -68000 },
+      { item: 'Sale of Investments', amount: 15000 }
     ],
     financing: [
-      { item: "Proceeds from Issuance of Debt", amount: 240000 },
-      { item: "Repayment of Debt", amount: -120000 },
-      { item: "Dividends Paid", amount: -90000 },
-      { item: "Repurchase of Common Stock", amount: -60000 },
-    ]
-  },
-  "q1-2023": {
-    title: "Q1 2023",
-    endDate: "March 31, 2023",
-    operating: [
-      { item: "Net Income", amount: 660000 },
-      { item: "Depreciation and Amortization", amount: 105000 },
-      { item: "Increase in Accounts Receivable", amount: -45000 },
-      { item: "Decrease in Inventory", amount: 30000 },
-      { item: "Increase in Accounts Payable", amount: 25000 },
-      { item: "Decrease in Accrued Expenses", amount: -10000 },
-    ],
-    investing: [
-      { item: "Purchase of Property and Equipment", amount: -200000 },
-      { item: "Purchase of Investments", amount: -140000 },
-      { item: "Sale of Investments", amount: 70000 },
-    ],
-    financing: [
-      { item: "Proceeds from Issuance of Debt", amount: 220000 },
-      { item: "Repayment of Debt", amount: -110000 },
-      { item: "Dividends Paid", amount: -80000 },
-      { item: "Repurchase of Common Stock", amount: -55000 },
+      { item: 'Proceeds from Long-term Debt', amount: 110000 },
+      { item: 'Repayment of Long-term Debt', amount: -68000 },
+      { item: 'Dividend Payments', amount: -80000 },
+      { item: 'Stock Repurchase', amount: -58000 }
     ]
   }
 };
 
-// Get last 4 quarters data
+// Helper function to get last 4 quarters of data
 export const getLastFourQuarters = (): CashflowQuarterData[] => {
   const lastFourQuarters = ["q1-2024", "q4-2023", "q3-2023", "q2-2023"];
   return lastFourQuarters.map(q => cashflowByQuarter[q]);
+};
+
+// Generate dummy data for monthly view
+export const getMonthsForYear = (year: number): CashflowQuarterData[] => {
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+  
+  // Get sample data structure from Q1 2024
+  const sampleData = cashflowByQuarter['q1-2024'];
+  
+  // Return array of monthly data with slightly varying numbers
+  return months.map((month, index) => {
+    const variationFactor = 0.90 + (index * 0.02); // Gradual growth throughout the year
+    
+    return {
+      title: month,
+      date: `${month} ${year}`,
+      operating: sampleData.operating.map(item => ({
+        item: item.item,
+        amount: Math.round(item.amount * variationFactor * (0.9 + Math.random() * 0.2))
+      })),
+      investing: sampleData.investing.map(item => ({
+        item: item.item,
+        amount: Math.round(item.amount * variationFactor * (0.9 + Math.random() * 0.2))
+      })),
+      financing: sampleData.financing.map(item => ({
+        item: item.item,
+        amount: Math.round(item.amount * variationFactor * (0.9 + Math.random() * 0.2))
+      }))
+    };
+  }).reverse(); // Latest month first
 };

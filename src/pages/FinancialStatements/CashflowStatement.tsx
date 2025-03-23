@@ -3,9 +3,16 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Download, FileText } from "lucide-react";
-import { getLastFourQuarters } from "./data/cashflowData";
+import { 
+  getLastFourQuarters,
+  getMonthsForYear 
+} from "./data/cashflowData";
 import { CashflowTable } from "./components/CashflowTable";
 import { PeriodSelector, PeriodType } from "./components/PeriodSelector";
+import {
+  calculateMonthlyCashflowTotals,
+  calculateAnnualCashflowTotal
+} from "./utils/cashflowCalculations";
 
 export const CashflowStatement = () => {
   // Available years for selection
@@ -15,9 +22,16 @@ export const CashflowStatement = () => {
   const [periodType, setPeriodType] = useState<PeriodType>('quarterly');
   const [selectedYear, setSelectedYear] = useState<number>(2024);
   
-  // Get quarters data (this would normally filter by the selected year)
-  // In a real app, we would fetch different data based on periodType (monthly/quarterly/annual)
-  const quarters = getLastFourQuarters();
+  // Get data based on selected period type
+  let quarters = getLastFourQuarters();
+  let monthsData = getMonthsForYear(selectedYear);
+  
+  // Calculate appropriate totals based on period type
+  let yearlyTotal;
+  
+  if (periodType === 'monthly') {
+    yearlyTotal = calculateAnnualCashflowTotal(monthsData);
+  }
   
   // Handle period type change
   const handlePeriodTypeChange = (newPeriodType: PeriodType) => {
@@ -71,7 +85,18 @@ export const CashflowStatement = () => {
           </div>
           
           <div className="overflow-x-auto mt-6">
-            <CashflowTable quarters={quarters} periodType={periodType} />
+            {periodType === 'monthly' ? (
+              <CashflowTable 
+                quarters={monthsData}
+                periodType={periodType}
+                yearlyTotal={yearlyTotal}
+              />
+            ) : (
+              <CashflowTable 
+                quarters={quarters}
+                periodType={periodType}
+              />
+            )}
           </div>
           
           <div className="mt-4 text-sm text-muted-foreground">

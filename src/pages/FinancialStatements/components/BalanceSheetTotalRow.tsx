@@ -12,6 +12,7 @@ interface BalanceSheetTotalRowProps {
              'totalEquity' | 'totalLiabilitiesAndEquity';
   isBold?: boolean;
   isLiability?: boolean;
+  yearlyTotal?: ReturnType<typeof calculateBalanceSheetTotals>;
 }
 
 export const BalanceSheetTotalRow: React.FC<BalanceSheetTotalRowProps> = ({ 
@@ -19,7 +20,8 @@ export const BalanceSheetTotalRow: React.FC<BalanceSheetTotalRowProps> = ({
   quarters, 
   totalType,
   isBold = false,
-  isLiability = false
+  isLiability = false,
+  yearlyTotal
 }) => {
   return (
     <TableRow className={isBold ? "font-bold bg-muted/50" : "font-medium"}>
@@ -44,6 +46,13 @@ export const BalanceSheetTotalRow: React.FC<BalanceSheetTotalRowProps> = ({
           </TableCell>
         );
       })}
+      
+      {/* Yearly total column for monthly view */}
+      {yearlyTotal && (
+        <TableCell className="text-right font-bold">
+          ${yearlyTotal[totalType].toLocaleString()}
+        </TableCell>
+      )}
     </TableRow>
   );
 };
