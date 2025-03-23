@@ -1,5 +1,4 @@
-
-import { BalanceSheetData, BalanceSheetQuarterData } from "../data/balanceSheetData";
+import { BalanceSheetQuarterData } from "../types/balanceSheetTypes";
 
 // Calculate totals for a balance sheet quarter
 export const calculateBalanceSheetTotals = (data: BalanceSheetQuarterData) => {

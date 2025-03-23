@@ -1,7 +1,7 @@
 
 import React from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { BalanceSheetQuarterData } from "../data/balanceSheetData";
+import { BalanceSheetQuarterData } from "../types/balanceSheetTypes";
 import { 
   getItemValue, 
   calculateGrowth, 

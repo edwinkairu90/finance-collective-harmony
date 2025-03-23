@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { BalanceSheetQuarterData } from "../data/balanceSheetData";
+import { BalanceSheetQuarterData } from "../types/balanceSheetTypes";
 import { getAllBalanceSheetItems } from "../utils/balanceSheetCalculations";
 import { BalanceSheetSection } from "./BalanceSheetSection";
 import { BalanceSheetTotalRow } from "./BalanceSheetTotalRow";
