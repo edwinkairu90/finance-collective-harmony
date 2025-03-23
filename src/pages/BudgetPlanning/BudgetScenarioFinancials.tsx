@@ -1,10 +1,15 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from "recharts";
 import { BudgetScenario } from "@/types/budgetScenarios";
 import { formatCurrency } from "@/lib/utils";
+import { 
+  ChartContainer, 
+  ChartTooltip, 
+  ChartTooltipContent 
+} from "@/components/ui/chart";
 
 interface BudgetScenarioFinancialsProps {
   scenarios: BudgetScenario[];
@@ -12,6 +17,18 @@ interface BudgetScenarioFinancialsProps {
 
 export const BudgetScenarioFinancials: React.FC<BudgetScenarioFinancialsProps> = ({ scenarios }) => {
   // Format data for different charts
+  
+  // New approach: Format data for comparing all metrics side by side
+  const allMetricsData = scenarios.map(scenario => ({
+    name: scenario.name,
+    Revenue: scenario.financials.revenue,
+    "Gross Profit": scenario.financials.grossProfit,
+    OPEX: scenario.financials.opex,
+    "Net Profit": scenario.financials.profit,
+    color: scenario.color
+  }));
+  
+  // Original individual metric data formats
   const revenueChartData = scenarios.map(scenario => ({
     name: scenario.name,
     Revenue: scenario.financials.revenue,
@@ -45,13 +62,56 @@ export const BudgetScenarioFinancials: React.FC<BudgetScenarioFinancialsProps> =
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Tabs defaultValue="revenue" className="space-y-4">
+        <Tabs defaultValue="all-metrics" className="space-y-4">
           <TabsList>
+            <TabsTrigger value="all-metrics">All Metrics</TabsTrigger>
             <TabsTrigger value="revenue">Revenue</TabsTrigger>
             <TabsTrigger value="opex">OPEX</TabsTrigger>
             <TabsTrigger value="profit">Profit</TabsTrigger>
             <TabsTrigger value="margins">Margins</TabsTrigger>
           </TabsList>
+
+          <TabsContent value="all-metrics">
+            <ResponsiveContainer width="100%" height={400}>
+              <BarChart 
+                data={allMetricsData} 
+                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                layout="vertical"
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis type="number" tickFormatter={(value) => `$${value / 1000}k`} />
+                <YAxis type="category" dataKey="name" width={100} />
+                <Tooltip 
+                  formatter={(value) => [`$${formatCurrency(value as number)}`, undefined]} 
+                />
+                <Legend />
+                <Bar 
+                  dataKey="Revenue" 
+                  name="Revenue" 
+                  fill="#1F4D46" // Dark teal (Base case color)
+                  stackId="a"
+                />
+                <Bar 
+                  dataKey="Gross Profit" 
+                  name="Gross Profit" 
+                  fill="#4DC1CB" // Medium teal (Worst case color)
+                  stackId="b"
+                />
+                <Bar 
+                  dataKey="OPEX" 
+                  name="OPEX" 
+                  fill="#F8D25B" // Yellow (Best case color)
+                  stackId="c"
+                />
+                <Bar 
+                  dataKey="Net Profit" 
+                  name="Net Profit" 
+                  fill="#A855F7" // Purple (Custom color)
+                  stackId="d"
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          </TabsContent>
 
           <TabsContent value="revenue">
             <ResponsiveContainer width="100%" height={300}>
@@ -143,3 +203,4 @@ export const BudgetScenarioFinancials: React.FC<BudgetScenarioFinancialsProps> =
     </Card>
   );
 };
+
