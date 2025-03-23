@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { getBudgetScenarios } from "./BudgetScenarioData";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { formatCurrency } from "@/lib/utils";
 
 export const BudgetScenarioComparison: React.FC = () => {
   const scenarios = getBudgetScenarios();
@@ -37,12 +38,13 @@ export const BudgetScenarioComparison: React.FC = () => {
                   </TableHead>
                 ))}
                 <TableHead className="text-right">Variance</TableHead>
+                <TableHead className="text-right">% Variance</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {/* Financial metrics section */}
               <TableRow className="bg-muted/30 font-semibold">
-                <TableCell colSpan={scenarios.length + 2} className="py-2">
+                <TableCell colSpan={scenarios.length + 3} className="py-2">
                   Financial Metrics
                 </TableCell>
               </TableRow>
@@ -52,12 +54,21 @@ export const BudgetScenarioComparison: React.FC = () => {
                 <TableCell className="font-medium">Revenue</TableCell>
                 {scenarios.map(scenario => (
                   <TableCell key={`revenue-${scenario.id}`} className="text-right">
-                    ${scenario.financials.revenue.toLocaleString()}
+                    ${formatCurrency(scenario.financials.revenue)}
                   </TableCell>
                 ))}
                 <TableCell className="text-right font-medium">
-                  ${(scenarios.find(s => s.id === "best-case")?.financials.revenue || 0 - 
-                     scenarios.find(s => s.id === "worst-case")?.financials.revenue || 0).toLocaleString()}
+                  ${formatCurrency(
+                    (scenarios.find(s => s.id === "best-case")?.financials.revenue || 0) - 
+                    (scenarios.find(s => s.id === "worst-case")?.financials.revenue || 0)
+                  )}
+                </TableCell>
+                <TableCell className="text-right font-medium">
+                  {((
+                    ((scenarios.find(s => s.id === "best-case")?.financials.revenue || 0) - 
+                     (scenarios.find(s => s.id === "worst-case")?.financials.revenue || 0)) /
+                    (scenarios.find(s => s.id === "base-case")?.financials.revenue || 1) * 100
+                  ).toFixed(1))}%
                 </TableCell>
               </TableRow>
               
@@ -68,17 +79,29 @@ export const BudgetScenarioComparison: React.FC = () => {
                   const costOfSales = scenario.financials.revenue - scenario.financials.grossProfit;
                   return (
                     <TableCell key={`cos-${scenario.id}`} className="text-right">
-                      ${costOfSales.toLocaleString()}
+                      ${formatCurrency(costOfSales)}
                     </TableCell>
                   );
                 })}
                 <TableCell className="text-right font-medium">
-                  ${(
-                    (scenarios.find(s => s.id === "best-case")?.financials.revenue || 0) - 
-                    (scenarios.find(s => s.id === "best-case")?.financials.grossProfit || 0) - 
+                  ${formatCurrency(
+                    ((scenarios.find(s => s.id === "best-case")?.financials.revenue || 0) - 
+                     (scenarios.find(s => s.id === "best-case")?.financials.grossProfit || 0)) - 
                     ((scenarios.find(s => s.id === "worst-case")?.financials.revenue || 0) - 
                      (scenarios.find(s => s.id === "worst-case")?.financials.grossProfit || 0))
-                  ).toLocaleString()}
+                  )}
+                </TableCell>
+                <TableCell className="text-right font-medium">
+                  {(() => {
+                    const baseCaseCOS = (scenarios.find(s => s.id === "base-case")?.financials.revenue || 0) -
+                                      (scenarios.find(s => s.id === "base-case")?.financials.grossProfit || 0);
+                    const bestCaseCOS = (scenarios.find(s => s.id === "best-case")?.financials.revenue || 0) -
+                                      (scenarios.find(s => s.id === "best-case")?.financials.grossProfit || 0);
+                    const worstCaseCOS = (scenarios.find(s => s.id === "worst-case")?.financials.revenue || 0) -
+                                       (scenarios.find(s => s.id === "worst-case")?.financials.grossProfit || 0);
+                    
+                    return ((bestCaseCOS - worstCaseCOS) / (baseCaseCOS || 1) * 100).toFixed(1) + '%';
+                  })()}
                 </TableCell>
               </TableRow>
               
@@ -87,18 +110,27 @@ export const BudgetScenarioComparison: React.FC = () => {
                 <TableCell className="font-medium">Gross Profit</TableCell>
                 {scenarios.map(scenario => (
                   <TableCell key={`gp-${scenario.id}`} className="text-right">
-                    ${scenario.financials.grossProfit.toLocaleString()}
+                    ${formatCurrency(scenario.financials.grossProfit)}
                   </TableCell>
                 ))}
                 <TableCell className="text-right font-medium">
-                  ${(scenarios.find(s => s.id === "best-case")?.financials.grossProfit || 0 - 
-                     scenarios.find(s => s.id === "worst-case")?.financials.grossProfit || 0).toLocaleString()}
+                  ${formatCurrency(
+                    (scenarios.find(s => s.id === "best-case")?.financials.grossProfit || 0) - 
+                    (scenarios.find(s => s.id === "worst-case")?.financials.grossProfit || 0)
+                  )}
+                </TableCell>
+                <TableCell className="text-right font-medium">
+                  {((
+                    ((scenarios.find(s => s.id === "best-case")?.financials.grossProfit || 0) - 
+                     (scenarios.find(s => s.id === "worst-case")?.financials.grossProfit || 0)) /
+                    (scenarios.find(s => s.id === "base-case")?.financials.grossProfit || 1) * 100
+                  ).toFixed(1))}%
                 </TableCell>
               </TableRow>
               
               {/* Department budget section header */}
               <TableRow className="bg-muted/30 font-semibold">
-                <TableCell colSpan={scenarios.length + 2} className="py-2">
+                <TableCell colSpan={scenarios.length + 3} className="py-2">
                   Department Budgets
                 </TableCell>
               </TableRow>
@@ -118,12 +150,15 @@ export const BudgetScenarioComparison: React.FC = () => {
                       const budget = scenario.departments.find(d => d.id === dept.id)?.budget || 0;
                       return (
                         <TableCell key={`${dept.id}-${scenario.id}`} className="text-right">
-                          ${budget.toLocaleString()}
+                          ${formatCurrency(budget)}
                         </TableCell>
                       );
                     })}
                     <TableCell className="text-right font-medium">
-                      ${variance.toLocaleString()} ({variancePercent}%)
+                      ${formatCurrency(variance)}
+                    </TableCell>
+                    <TableCell className="text-right font-medium">
+                      {variancePercent}%
                     </TableCell>
                   </TableRow>
                 );
@@ -134,12 +169,21 @@ export const BudgetScenarioComparison: React.FC = () => {
                 <TableCell>Total Budget</TableCell>
                 {scenarios.map(scenario => (
                   <TableCell key={`total-${scenario.id}`} className="text-right">
-                    ${scenario.totalBudget.toLocaleString()}
+                    ${formatCurrency(scenario.totalBudget)}
                   </TableCell>
                 ))}
                 <TableCell className="text-right">
-                  ${(scenarios.find(s => s.id === "best-case")?.totalBudget || 0 - 
-                     scenarios.find(s => s.id === "worst-case")?.totalBudget || 0).toLocaleString()}
+                  ${formatCurrency(
+                    (scenarios.find(s => s.id === "best-case")?.totalBudget || 0) - 
+                    (scenarios.find(s => s.id === "worst-case")?.totalBudget || 0)
+                  )}
+                </TableCell>
+                <TableCell className="text-right">
+                  {((
+                    ((scenarios.find(s => s.id === "best-case")?.totalBudget || 0) - 
+                     (scenarios.find(s => s.id === "worst-case")?.totalBudget || 0)) /
+                    (scenarios.find(s => s.id === "base-case")?.totalBudget || 1) * 100
+                  ).toFixed(1))}%
                 </TableCell>
               </TableRow>
               
@@ -151,12 +195,21 @@ export const BudgetScenarioComparison: React.FC = () => {
                     key={`profit-${scenario.id}`} 
                     className={`text-right font-bold ${scenario.financials.profit >= 0 ? 'text-green-600' : 'text-red-600'}`}
                   >
-                    ${scenario.financials.profit.toLocaleString()}
+                    ${formatCurrency(scenario.financials.profit)}
                   </TableCell>
                 ))}
                 <TableCell className="text-right font-bold">
-                  ${(scenarios.find(s => s.id === "best-case")?.financials.profit || 0 - 
-                     scenarios.find(s => s.id === "worst-case")?.financials.profit || 0).toLocaleString()}
+                  ${formatCurrency(
+                    (scenarios.find(s => s.id === "best-case")?.financials.profit || 0) - 
+                    (scenarios.find(s => s.id === "worst-case")?.financials.profit || 0)
+                  )}
+                </TableCell>
+                <TableCell className="text-right font-bold">
+                  {((
+                    ((scenarios.find(s => s.id === "best-case")?.financials.profit || 0) - 
+                     (scenarios.find(s => s.id === "worst-case")?.financials.profit || 0)) /
+                    Math.abs(scenarios.find(s => s.id === "base-case")?.financials.profit || 1) * 100
+                  ).toFixed(1))}%
                 </TableCell>
               </TableRow>
             </TableBody>
