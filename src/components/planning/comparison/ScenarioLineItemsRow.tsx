@@ -110,6 +110,12 @@ export const ScenarioLineItemsRow: React.FC<ScenarioLineItemsRowProps> = ({
     };
   });
   
+  const toggleExpanded = () => {
+    console.log("Toggling expansion:", !expanded);
+    console.log("Line items:", mergedLineItems);
+    setExpanded(!expanded);
+  };
+  
   return (
     <>
       <TableRow className={isTotal ? "font-medium bg-muted/30" : ""}>
@@ -123,7 +129,7 @@ export const ScenarioLineItemsRow: React.FC<ScenarioLineItemsRowProps> = ({
                 variant="ghost" 
                 size="sm" 
                 className="p-0 h-6 w-6"
-                onClick={() => setExpanded(!expanded)}
+                onClick={toggleExpanded}
               >
                 {expanded ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
               </Button>
