@@ -165,6 +165,50 @@ export const useCostCenters = () => {
     });
   };
 
+  const changeCostCenterDepartment = (costCenterId: string, newDepartmentId: string) => {
+    // Find the cost center in all departments
+    let costCenterToMove: CostCenter | undefined;
+    let oldDepartmentId: string = "";
+    
+    for (const dept of departments) {
+      const costCenter = dept.costCenters.find(cc => cc.id === costCenterId);
+      if (costCenter) {
+        costCenterToMove = { ...costCenter, departmentId: newDepartmentId };
+        oldDepartmentId = dept.id;
+        break;
+      }
+    }
+    
+    if (!costCenterToMove || oldDepartmentId === newDepartmentId) return;
+    
+    // Update departments by removing the cost center from old department and adding to new
+    setDepartments(prev => 
+      prev.map(dept => {
+        if (dept.id === oldDepartmentId) {
+          // Remove cost center from old department and update budget
+          return {
+            ...dept,
+            costCenters: dept.costCenters.filter(cc => cc.id !== costCenterId),
+            budget: dept.budget - costCenterToMove!.budget
+          };
+        } else if (dept.id === newDepartmentId) {
+          // Add cost center to new department and update budget
+          return {
+            ...dept,
+            costCenters: [...dept.costCenters, costCenterToMove!],
+            budget: dept.budget + costCenterToMove!.budget
+          };
+        }
+        return dept;
+      })
+    );
+    
+    toast({
+      title: "Department Changed",
+      description: `Cost center moved to ${departments.find(d => d.id === newDepartmentId)?.name || newDepartmentId}.`
+    });
+  };
+
   return {
     selectedDepartmentId,
     departments,
@@ -182,6 +226,7 @@ export const useCostCenters = () => {
     updateNewCostCenterField,
     saveCostCenterChanges,
     addNewCostCenter,
-    deleteCostCenter
+    deleteCostCenter,
+    changeCostCenterDepartment
   };
 };

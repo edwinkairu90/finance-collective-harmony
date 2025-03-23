@@ -7,11 +7,17 @@ import { CostCenterTable } from "./CostCenterTable";
 interface AllCostCentersViewProps {
   costCenters: CostCenter[];
   departments: Department[];
+  onChangeDepartment?: (costCenterId: string, newDepartmentId: string) => void;
+  onStartEditing?: (costCenterId: string) => void;
+  onDelete?: (costCenterId: string) => void;
 }
 
 export const AllCostCentersView: React.FC<AllCostCentersViewProps> = ({
   costCenters,
-  departments
+  departments,
+  onChangeDepartment,
+  onStartEditing = () => {},
+  onDelete = () => {}
 }) => {
   return (
     <Card>
@@ -24,8 +30,9 @@ export const AllCostCentersView: React.FC<AllCostCentersViewProps> = ({
           costCenters={costCenters}
           departments={departments}
           showAllDepartments={true}
-          onStartEditing={() => {}}
-          onDelete={() => {}}
+          onStartEditing={onStartEditing}
+          onDelete={onDelete}
+          onChangeDepartment={onChangeDepartment}
         />
       </CardContent>
     </Card>

@@ -23,7 +23,8 @@ export const CostCenters = () => {
     updateNewCostCenterField,
     saveCostCenterChanges,
     addNewCostCenter,
-    deleteCostCenter
+    deleteCostCenter,
+    changeCostCenterDepartment
   } = useCostCenters();
 
   return (
@@ -59,6 +60,9 @@ export const CostCenters = () => {
           <AllCostCentersView 
             costCenters={allCostCenters}
             departments={departments}
+            onChangeDepartment={changeCostCenterDepartment}
+            onStartEditing={startEditingCostCenter}
+            onDelete={deleteCostCenter}
           />
         </TabsContent>
       </Tabs>

@@ -4,6 +4,7 @@ import { CostCenter, Department } from "@/types/budget";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFooter } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Pencil, Trash } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface CostCenterTableProps {
   costCenters: CostCenter[];
@@ -11,6 +12,7 @@ interface CostCenterTableProps {
   onDelete: (costCenterId: string) => void;
   departments?: Department[];
   showAllDepartments?: boolean;
+  onChangeDepartment?: (costCenterId: string, newDepartmentId: string) => void;
 }
 
 export const CostCenterTable = ({
@@ -19,6 +21,7 @@ export const CostCenterTable = ({
   onDelete,
   departments = [],
   showAllDepartments = false,
+  onChangeDepartment,
 }: CostCenterTableProps) => {
   if (costCenters.length === 0) {
     return (
@@ -60,6 +63,12 @@ export const CostCenterTable = ({
     return dept ? dept.name : departmentId;
   };
 
+  const handleDepartmentChange = (costCenterId: string, newDepartmentId: string) => {
+    if (onChangeDepartment) {
+      onChangeDepartment(costCenterId, newDepartmentId);
+    }
+  };
+
   return (
     <Table>
       <TableHeader>
@@ -69,54 +78,84 @@ export const CostCenterTable = ({
           <TableHead>Description</TableHead>
           <TableHead className="text-right">Previous Actual</TableHead>
           <TableHead className="text-right">Current Budget</TableHead>
-          <TableHead className="text-right">Increase/Decrease</TableHead>
+          <TableHead className="text-right">Difference</TableHead>
           <TableHead className="text-right">% Change</TableHead>
-          {!showAllDepartments && <TableHead className="text-right">Actions</TableHead>}
+          <TableHead className="text-right">Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {showAllDepartments ? (
-          // Display cost centers grouped by department
-          Object.entries(groupedCostCenters).map(([departmentId, departmentCostCenters]) => (
-            <React.Fragment key={departmentId}>
-              {departmentCostCenters.map((costCenter, index) => {
-                const difference = calculateDifference(costCenter.budget, costCenter.previousActual);
-                const differencePercent = calculateDifferencePercent(costCenter.budget, costCenter.previousActual);
-                
-                return (
-                  <TableRow key={costCenter.id}>
-                    {index === 0 && (
-                      <TableCell rowSpan={departmentCostCenters.length} className="font-semibold border-r">
-                        {getDepartmentName(departmentId)}
-                      </TableCell>
-                    )}
-                    <TableCell className="font-medium">{costCenter.name}</TableCell>
-                    <TableCell>{costCenter.description}</TableCell>
-                    <TableCell className="text-right">
-                      ${costCenter.previousActual?.toLocaleString() || 'N/A'}
-                    </TableCell>
-                    <TableCell className="text-right">${costCenter.budget.toLocaleString()}</TableCell>
-                    <TableCell className="text-right">
-                      {difference !== null ? (
-                        <span className={difference >= 0 ? "text-green-600" : "text-red-600"}>
-                          {difference >= 0 ? 
-                            `+$${difference.toLocaleString()}` : 
-                            `-$${Math.abs(difference).toLocaleString()}`}
-                        </span>
-                      ) : 'N/A'}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      {differencePercent !== null ? (
-                        <span className={differencePercent >= 0 ? "text-green-600" : "text-red-600"}>
-                          {differencePercent >= 0 ? "+" : ""}{differencePercent.toFixed(1)}%
-                        </span>
-                      ) : 'N/A'}
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </React.Fragment>
-          ))
+          // Display all cost centers with department dropdown
+          costCenters.map((costCenter) => {
+            const difference = calculateDifference(costCenter.budget, costCenter.previousActual);
+            const differencePercent = calculateDifferencePercent(costCenter.budget, costCenter.previousActual);
+            
+            return (
+              <TableRow key={costCenter.id}>
+                <TableCell>
+                  {onChangeDepartment ? (
+                    <Select
+                      value={costCenter.departmentId}
+                      onValueChange={(value) => handleDepartmentChange(costCenter.id, value)}
+                    >
+                      <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="Select department" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {departments.map((dept) => (
+                          <SelectItem key={dept.id} value={dept.id}>
+                            {dept.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  ) : (
+                    getDepartmentName(costCenter.departmentId)
+                  )}
+                </TableCell>
+                <TableCell className="font-medium">{costCenter.name}</TableCell>
+                <TableCell>{costCenter.description}</TableCell>
+                <TableCell className="text-right">
+                  ${costCenter.previousActual?.toLocaleString() || 'N/A'}
+                </TableCell>
+                <TableCell className="text-right">${costCenter.budget.toLocaleString()}</TableCell>
+                <TableCell className="text-right">
+                  {difference !== null ? (
+                    <span className={difference >= 0 ? "text-green-600" : "text-red-600"}>
+                      {difference >= 0 ? 
+                        `+$${difference.toLocaleString()}` : 
+                        `-$${Math.abs(difference).toLocaleString()}`}
+                    </span>
+                  ) : 'N/A'}
+                </TableCell>
+                <TableCell className="text-right">
+                  {differencePercent !== null ? (
+                    <span className={differencePercent >= 0 ? "text-green-600" : "text-red-600"}>
+                      {differencePercent >= 0 ? "+" : ""}{differencePercent.toFixed(1)}%
+                    </span>
+                  ) : 'N/A'}
+                </TableCell>
+                <TableCell className="text-right">
+                  <div className="flex justify-end space-x-2">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={() => onStartEditing(costCenter.id)}
+                    >
+                      <Pencil className="h-4 w-4" />
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={() => onDelete(costCenter.id)}
+                    >
+                      <Trash className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </TableCell>
+              </TableRow>
+            );
+          })
         ) : (
           // Original single department view
           costCenters.map(costCenter => {
@@ -197,7 +236,7 @@ export const CostCenterTable = ({
               </span>
             ) : 'N/A'}
           </TableCell>
-          {!showAllDepartments && <TableCell />}
+          <TableCell />
         </TableRow>
       </TableFooter>
     </Table>
