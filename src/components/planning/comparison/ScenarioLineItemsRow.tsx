@@ -112,6 +112,7 @@ export const ScenarioLineItemsRow: React.FC<ScenarioLineItemsRowProps> = ({
   
   const toggleExpanded = () => {
     console.log("Toggling expansion:", !expanded);
+    console.log("Line items count:", mergedLineItems.length);
     console.log("Line items:", mergedLineItems);
     setExpanded(!expanded);
   };
@@ -147,9 +148,9 @@ export const ScenarioLineItemsRow: React.FC<ScenarioLineItemsRowProps> = ({
         </TableCell>
       </TableRow>
       
-      {/* Line item breakdown when expanded */}
+      {/* Line item breakdown when expanded - only showing line items now */}
       {expanded && mergedLineItems.map((item, index) => (
-        <TableRow key={`line-item-${index}`} className="bg-muted/10 text-sm">
+        <TableRow key={`line-item-${item.name}-${index}`} className="bg-muted/10 text-sm">
           <TableCell style={{ paddingLeft: `${indentLevel * 1.5 + 3}rem` }}>
             {item.name}
           </TableCell>
