@@ -1,6 +1,14 @@
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { 
+  LineChart, 
+  Line, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  ResponsiveContainer 
+} from 'recharts';
 
 interface RevenueDataPoint {
   month: string;
@@ -15,38 +23,61 @@ interface RevenueChartProps {
 export const RevenueChart = ({ data }: RevenueChartProps) => {
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Revenue Projection vs Actuals</CardTitle>
-        <CardDescription>FY 2025 monthly revenue performance against projections</CardDescription>
+      <CardHeader className="pb-2">
+        <CardTitle className="text-lg">Revenue Forecast vs. Actuals</CardTitle>
       </CardHeader>
       <CardContent>
+        <div className="flex items-center text-xs mb-2 space-x-4">
+          <div className="flex items-center">
+            <div className="w-3 h-3 rounded-full bg-[#4DC1CB] mr-1"></div>
+            <span>Target</span>
+          </div>
+          <div className="flex items-center">
+            <div className="w-3 h-3 rounded-full bg-[#4DC1CB] mr-1"></div>
+            <span>Actual</span>
+          </div>
+          <div className="flex items-center">
+            <div className="w-3 h-3 rounded-full border border-[#4DC1CB] bg-transparent mr-1"></div>
+            <span>Forecast</span>
+          </div>
+        </div>
         <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 10 }}>
-              <CartesianGrid strokeDasharray="3 3" />
+            <LineChart 
+              data={data} 
+              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" vertical={false} />
               <XAxis dataKey="month" />
-              <YAxis />
-              <Tooltip 
-                formatter={(value) => value ? [`$${value.toLocaleString()}K`, ''] : ['Projected', '']} 
-                labelFormatter={(label) => `${label} 2025`}
+              <YAxis 
+                axisLine={false} 
+                tickLine={false}
               />
-              <Legend />
+              <Tooltip />
               <Line 
                 type="monotone" 
                 dataKey="projected" 
-                stroke="#8884d8" 
-                name="Projected Revenue" 
-                strokeWidth={2} 
-                dot={{ r: 3 }} 
+                stroke="#4DC1CB" 
+                strokeWidth={2}
+                dot={false}
               />
               <Line 
                 type="monotone" 
                 dataKey="actual" 
-                stroke="#0ea5e9" 
-                name="Actual Revenue" 
-                strokeWidth={2} 
-                dot={{ r: 4 }} 
+                stroke="#4DC1CB" 
+                strokeWidth={2}
+                dot={{ r: 4, fill: "#4DC1CB" }} 
+                activeDot={{ r: 6 }}
               />
+              <CartesianGrid stroke="#eee" vertical={false} />
+              
+              {/* Area to represent forecasted months */}
+              <defs>
+                <linearGradient id="colorProjArea" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#4DC1CB" stopOpacity={0.1}/>
+                  <stop offset="95%" stopColor="#4DC1CB" stopOpacity={0.05}/>
+                </linearGradient>
+              </defs>
             </LineChart>
           </ResponsiveContainer>
         </div>
