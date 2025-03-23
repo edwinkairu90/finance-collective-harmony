@@ -2,7 +2,8 @@
 import React from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { formatCurrency } from "@/lib/format";
-import { LineItem, ScenarioItem } from "@/types/planning";
+import { ScenarioItem } from "@/types/planning";
+import { useScenarioRowValues } from "@/hooks/useScenarioRowValues";
 
 interface ScenarioLineItemsRowProps {
   title: string;
@@ -25,34 +26,13 @@ export const ScenarioLineItemsRow: React.FC<ScenarioLineItemsRowProps> = ({
   indentLevel = 0,
   department
 }) => {
-  // Extract values with proper type safety
-  const getBaseValue = (): number => {
-    if (department && baseScenario.budgetImpact.departments) {
-      return baseScenario.budgetImpact.departments[department]?.budget || 0;
-    }
-    
-    // If this is a direct property of budgetImpact, get it
-    const value = baseScenario.budgetImpact[accessor as keyof typeof baseScenario.budgetImpact];
-    // Ensure it's a number
-    return typeof value === 'number' ? value : 0;
-  };
-  
-  const getCompareValue = (): number => {
-    if (department && compareScenario.budgetImpact.departments) {
-      return compareScenario.budgetImpact.departments[department]?.budget || 0;
-    }
-    
-    // If this is a direct property of budgetImpact, get it
-    const value = compareScenario.budgetImpact[accessor as keyof typeof compareScenario.budgetImpact];
-    // Ensure it's a number
-    return typeof value === 'number' ? value : 0;
-  };
-  
-  const baseValue = getBaseValue();
-  const compareValue = getCompareValue();
-  
-  const variance = compareValue - baseValue;
-  const percentVariance = baseValue !== 0 ? (variance / baseValue) * 100 : 0;
+  // Use our custom hook to get the calculated values
+  const { baseValue, compareValue, variance, percentVariance } = useScenarioRowValues({
+    baseScenario,
+    compareScenario,
+    accessor,
+    department
+  });
   
   return (
     <TableRow className={isTotal ? "font-medium bg-muted/30" : ""}>
