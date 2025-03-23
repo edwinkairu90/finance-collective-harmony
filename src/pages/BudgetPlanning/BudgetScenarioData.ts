@@ -49,7 +49,7 @@ export const getBudgetScenarios = (): BudgetScenario[] => {
         grossProfit: Math.round(baseRevenue * 0.80 * 0.65), // Lower gross margin in worst case
         profit: Math.round(baseRevenue * 0.80 - baseOpex * 0.90)
       },
-      color: "#e74c3c" // Red
+      color: "#FEC6A1" // Subtle Mustard (was Red)
     },
     {
       id: "best-case",
