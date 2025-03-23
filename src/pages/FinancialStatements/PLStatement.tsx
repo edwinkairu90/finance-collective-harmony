@@ -6,11 +6,13 @@ import { Download, FileText } from "lucide-react";
 import { 
   getLastFourQuarters, 
   getMonthsForYear,
-  calculateQuarterlyTotals, 
-  calculatePLSubtotals,
   calculateMonthlyTotals,
   calculateAnnualTotal
 } from "./data/plStatementData";
+import { 
+  calculateQuarterlyTotals,
+  calculatePLSubtotals 
+} from "./utils/plCalculations";
 import { PLTable } from "./components/PLTable";
 import { PeriodSelector, PeriodType } from "./components/PeriodSelector";
 
