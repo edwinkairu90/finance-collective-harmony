@@ -18,6 +18,8 @@ export const plDataByQuarter = {
       { item: "Insurance", amount: 28000 },
       { item: "Professional Services", amount: 65000 },
       { item: "Other Operating Expenses", amount: 95000 },
+      { item: "Depreciation", amount: 35000 },
+      { item: "Amortization", amount: 18000 },
     ]
   },
   "q4-2023": {
@@ -37,6 +39,8 @@ export const plDataByQuarter = {
       { item: "Insurance", amount: 27000 },
       { item: "Professional Services", amount: 60000 },
       { item: "Other Operating Expenses", amount: 90000 },
+      { item: "Depreciation", amount: 35000 },
+      { item: "Amortization", amount: 18000 },
     ]
   },
   "q3-2023": {
@@ -56,6 +60,8 @@ export const plDataByQuarter = {
       { item: "Insurance", amount: 26000 },
       { item: "Professional Services", amount: 55000 },
       { item: "Other Operating Expenses", amount: 85000 },
+      { item: "Depreciation", amount: 34000 },
+      { item: "Amortization", amount: 17000 },
     ]
   },
   "q2-2023": {
@@ -75,6 +81,8 @@ export const plDataByQuarter = {
       { item: "Insurance", amount: 25000 },
       { item: "Professional Services", amount: 52000 },
       { item: "Other Operating Expenses", amount: 82000 },
+      { item: "Depreciation", amount: 34000 },
+      { item: "Amortization", amount: 17000 },
     ]
   },
   "q1-2023": {
@@ -94,6 +102,8 @@ export const plDataByQuarter = {
       { item: "Insurance", amount: 24000 },
       { item: "Professional Services", amount: 48000 },
       { item: "Other Operating Expenses", amount: 78000 },
+      { item: "Depreciation", amount: 33000 },
+      { item: "Amortization", amount: 16000 },
     ]
   }
 };
@@ -124,4 +134,15 @@ export interface QuarterlyTotals {
   totalRevenue: number;
   totalExpenses: number;
   netProfit: number;
+}
+
+// Type for P&L subtotals
+export interface PLSubtotals {
+  title: string;
+  costOfSales: number;
+  grossProfit: number;
+  operatingExpenses: number;
+  ebitda: number;
+  depreciationAmortization: number;
+  ebit: number;
 }

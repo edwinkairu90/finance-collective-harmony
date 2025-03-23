@@ -1,5 +1,5 @@
 
-import { PLItem, QuarterData, QuarterlyTotals } from "../data/plStatementData";
+import { PLItem, QuarterData, QuarterlyTotals, PLSubtotals } from "../data/plStatementData";
 
 // Get all unique revenue and expense line items
 export const getAllItems = (quarters: QuarterData[]) => {
@@ -27,6 +27,49 @@ export const calculateQuarterlyTotals = (quarters: QuarterData[]): QuarterlyTota
       totalRevenue,
       totalExpenses,
       netProfit: totalRevenue - totalExpenses
+    };
+  });
+};
+
+// Calculate P&L subtotals (Gross Profit, EBITDA, EBIT)
+export const calculatePLSubtotals = (quarters: QuarterData[]): PLSubtotals[] => {
+  return quarters.map(quarter => {
+    // Calculate total revenue
+    const totalRevenue = quarter.revenue.reduce((sum, item) => sum + item.amount, 0);
+    
+    // Calculate Cost of Sales (COGS)
+    const costOfSales = quarter.expenses
+      .filter(item => item.item.includes('Cost of Goods') || item.item.includes('COGS'))
+      .reduce((sum, item) => sum + item.amount, 0);
+    
+    // Calculate Gross Profit
+    const grossProfit = totalRevenue - costOfSales;
+    
+    // Calculate Operating Expenses (excluding D&A)
+    const operatingExpenses = quarter.expenses
+      .filter(item => !item.item.includes('Cost of Goods') && !item.item.includes('COGS') && 
+                    !item.item.includes('Depreciation') && !item.item.includes('Amortization'))
+      .reduce((sum, item) => sum + item.amount, 0);
+    
+    // Calculate EBITDA
+    const ebitda = grossProfit - operatingExpenses;
+    
+    // Calculate Depreciation & Amortization
+    const depreciationAmortization = quarter.expenses
+      .filter(item => item.item.includes('Depreciation') || item.item.includes('Amortization'))
+      .reduce((sum, item) => sum + item.amount, 0);
+    
+    // Calculate EBIT
+    const ebit = ebitda - depreciationAmortization;
+    
+    return {
+      title: quarter.title,
+      costOfSales,
+      grossProfit,
+      operatingExpenses,
+      ebitda,
+      depreciationAmortization,
+      ebit
     };
   });
 };

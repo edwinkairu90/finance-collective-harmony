@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Download, FileText } from "lucide-react";
 import { getLastFourQuarters } from "./data/plStatementData";
-import { calculateQuarterlyTotals } from "./utils/plCalculations";
+import { calculateQuarterlyTotals, calculatePLSubtotals } from "./utils/plCalculations";
 import { PLTable } from "./components/PLTable";
 
 export const PLStatement = () => {
@@ -14,10 +14,13 @@ export const PLStatement = () => {
   // Calculate quarterly totals
   const quarterlyTotals = calculateQuarterlyTotals(quarters);
   
+  // Calculate P&L subtotals (gross profit, EBITDA, EBIT)
+  const plSubtotals = calculatePLSubtotals(quarters);
+  
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-lg font-medium">Last 4 Quarters Performance</h3>
+        <h3 className="text-lg font-medium">Complete P&L Statement</h3>
         
         <div className="flex gap-2">
           <Button variant="outline" size="sm">
@@ -33,15 +36,19 @@ export const PLStatement = () => {
       
       <Card>
         <CardContent className="p-6">
-          <h2 className="text-xl font-semibold text-center mb-4">Quarterly Profit & Loss Comparison</h2>
-          <p className="text-center text-muted-foreground mb-6">Last 4 quarters comparison</p>
+          <h2 className="text-xl font-semibold text-center mb-4">Complete Profit & Loss Statement</h2>
+          <p className="text-center text-muted-foreground mb-6">Actuals vs Projected with Variance Analysis</p>
           
           <div className="overflow-x-auto">
-            <PLTable quarters={quarters} quarterlyTotals={quarterlyTotals} />
+            <PLTable 
+              quarters={quarters} 
+              quarterlyTotals={quarterlyTotals} 
+              plSubtotals={plSubtotals}
+            />
           </div>
           
           <div className="mt-4 text-sm text-muted-foreground">
-            <p>Growth percentages show quarter-over-quarter changes. For expenses, negative growth (reduction) is shown in green.</p>
+            <p>Variance percentage shows the change between actual and projected figures. Negative variance for expenses indicates a favorable outcome.</p>
           </div>
         </CardContent>
       </Card>
