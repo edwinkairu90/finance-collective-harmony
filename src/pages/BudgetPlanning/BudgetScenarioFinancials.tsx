@@ -16,6 +16,13 @@ export const BudgetScenarioFinancials: React.FC = () => {
     category: "Revenue"
   }));
   
+  const grossProfitData = scenarios.map(scenario => ({
+    name: scenario.name,
+    value: scenario.financials.grossProfit,
+    color: scenario.color,
+    category: "Gross Profit"
+  }));
+  
   const opexData = scenarios.map(scenario => ({
     name: scenario.name,
     value: scenario.financials.opex,
@@ -37,6 +44,12 @@ export const BudgetScenarioFinancials: React.FC = () => {
       "Base Case": scenarios.find(s => s.id === "base-case")?.financials.revenue || 0,
       "Worst Case": scenarios.find(s => s.id === "worst-case")?.financials.revenue || 0,
       "Best Case": scenarios.find(s => s.id === "best-case")?.financials.revenue || 0,
+    },
+    {
+      name: "Gross Profit",
+      "Base Case": scenarios.find(s => s.id === "base-case")?.financials.grossProfit || 0,
+      "Worst Case": scenarios.find(s => s.id === "worst-case")?.financials.grossProfit || 0,
+      "Best Case": scenarios.find(s => s.id === "best-case")?.financials.grossProfit || 0,
     },
     {
       name: "Operating Expenses",
@@ -61,7 +74,7 @@ export const BudgetScenarioFinancials: React.FC = () => {
     <Card className="mt-4">
       <CardHeader>
         <CardTitle>Financial Comparison</CardTitle>
-        <CardDescription>Revenue, expenses and profit across different scenarios</CardDescription>
+        <CardDescription>Revenue, gross profit, expenses and net profit across different scenarios</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="h-80">

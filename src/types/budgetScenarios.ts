@@ -16,6 +16,7 @@ export interface BudgetScenario {
   financials: {
     revenue: number;
     opex: number;
+    grossProfit: number;
     profit: number;
   };
   color: string;

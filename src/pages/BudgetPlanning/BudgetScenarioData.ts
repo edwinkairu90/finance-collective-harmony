@@ -8,6 +8,8 @@ const baseCaseBudget = getTotalBudget();
 // Financial metrics for scenarios
 const baseRevenue = 1250000;
 const baseOpex = 950000;
+// Calculate gross profit (typically revenue - COGS, but we'll use a simple calculation here)
+const baseGrossProfit = baseRevenue * 0.7; // Assuming 70% gross margin
 const baseProfit = baseRevenue - baseOpex;
 
 // Generate scenario data based on the current budget data
@@ -26,6 +28,7 @@ export const getBudgetScenarios = (): BudgetScenario[] => {
       financials: {
         revenue: baseRevenue,
         opex: baseOpex,
+        grossProfit: baseGrossProfit,
         profit: baseProfit
       },
       color: "#3498db" // Blue
@@ -43,6 +46,7 @@ export const getBudgetScenarios = (): BudgetScenario[] => {
       financials: {
         revenue: Math.round(baseRevenue * 0.80), // 20% less revenue
         opex: Math.round(baseOpex * 0.90),       // 10% less opex
+        grossProfit: Math.round(baseRevenue * 0.80 * 0.65), // Lower gross margin in worst case
         profit: Math.round(baseRevenue * 0.80 - baseOpex * 0.90)
       },
       color: "#e74c3c" // Red
@@ -60,6 +64,7 @@ export const getBudgetScenarios = (): BudgetScenario[] => {
       financials: {
         revenue: Math.round(baseRevenue * 1.15), // 15% more revenue
         opex: Math.round(baseOpex * 1.05),       // 5% more opex
+        grossProfit: Math.round(baseRevenue * 1.15 * 0.75), // Better gross margin in best case
         profit: Math.round(baseRevenue * 1.15 - baseOpex * 1.05)
       },
       color: "#2ecc71" // Green

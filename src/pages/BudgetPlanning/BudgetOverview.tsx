@@ -64,9 +64,10 @@ export const BudgetOverview = () => {
             <div className="text-sm">
               <div className="flex space-x-4">
                 <div className="text-green-600">Revenue: ${scenario.financials.revenue.toLocaleString()}</div>
+                <div className="text-blue-600">Gross Profit: ${scenario.financials.grossProfit.toLocaleString()}</div>
                 <div className="text-red-600">Expenses: ${scenario.financials.opex.toLocaleString()}</div>
                 <div className={scenario.financials.profit >= 0 ? "text-green-600" : "text-red-600"}>
-                  Profit: ${scenario.financials.profit.toLocaleString()}
+                  Net Profit: ${scenario.financials.profit.toLocaleString()}
                 </div>
               </div>
             </div>
