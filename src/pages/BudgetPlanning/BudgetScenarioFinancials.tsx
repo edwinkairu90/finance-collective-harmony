@@ -52,6 +52,11 @@ export const BudgetScenarioFinancials: React.FC = () => {
     }
   ];
 
+  // Format currency for Y-axis
+  const formatYAxis = (value: number) => {
+    return `$${value.toLocaleString()}`;
+  };
+
   return (
     <Card className="mt-4">
       <CardHeader>
@@ -61,10 +66,13 @@ export const BudgetScenarioFinancials: React.FC = () => {
       <CardContent>
         <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={combinedData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+            <BarChart data={combinedData} margin={{ top: 20, right: 30, left: 50, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
-              <YAxis />
+              <YAxis 
+                tickFormatter={formatYAxis} 
+                width={80}
+              />
               <Tooltip 
                 formatter={(value) => [`$${Number(value).toLocaleString()}`, undefined]}
                 labelFormatter={(label) => `${label}`}
