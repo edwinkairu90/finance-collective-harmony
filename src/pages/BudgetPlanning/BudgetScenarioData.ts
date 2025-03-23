@@ -14,7 +14,7 @@ export const getBudgetScenarios = (): BudgetScenario[] => {
       description: "Our expected budget based on current projections",
       totalBudget: baseCaseBudget,
       departments: budgetData.map(item => ({
-        id: item.id || item.name.toLowerCase().replace(/\s+/g, '-'),
+        id: item.name.toLowerCase().replace(/\s+/g, '-'),
         name: item.name,
         budget: item.value
       })),
@@ -26,7 +26,7 @@ export const getBudgetScenarios = (): BudgetScenario[] => {
       description: "Conservative budget with 15% reduction in funding",
       totalBudget: Math.round(baseCaseBudget * 0.85),
       departments: budgetData.map(item => ({
-        id: item.id || item.name.toLowerCase().replace(/\s+/g, '-'),
+        id: item.name.toLowerCase().replace(/\s+/g, '-'),
         name: item.name,
         budget: Math.round(item.value * 0.85)
       })),
@@ -38,7 +38,7 @@ export const getBudgetScenarios = (): BudgetScenario[] => {
       description: "Optimistic budget with 10% increase in funding",
       totalBudget: Math.round(baseCaseBudget * 1.10),
       departments: budgetData.map(item => ({
-        id: item.id || item.name.toLowerCase().replace(/\s+/g, '-'),
+        id: item.name.toLowerCase().replace(/\s+/g, '-'),
         name: item.name,
         budget: Math.round(item.value * 1.10)
       })),
