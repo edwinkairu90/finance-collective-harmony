@@ -1,10 +1,15 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { TrendingDown, TrendingUp, Package } from "lucide-react";
-import { BudgetScenarioType } from "@/types/budgetScenarios";
+import { TrendingDown, TrendingUp, Package, Pencil } from "lucide-react";
+import { BudgetScenarioType, ScenarioFactor } from "@/types/budgetScenarios";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { ScenarioFactorsEditor } from "./ScenarioFactorsEditor";
+import { ScenarioAssumptionsEditor } from "./ScenarioAssumptionsEditor";
+import { getScenarioById, updateScenarioFactors, updateScenarioAssumptions } from "./BudgetScenarioData";
 
 interface BudgetScenarioSelectorProps {
   activeScenario: BudgetScenarioType;
@@ -15,11 +20,40 @@ export const BudgetScenarioSelector: React.FC<BudgetScenarioSelectorProps> = ({
   activeScenario, 
   onScenarioChange 
 }) => {
+  const [showDetails, setShowDetails] = useState(false);
+  const [activeTab, setActiveTab] = useState<string>("factors");
+  
+  const scenario = getScenarioById(activeScenario);
+
+  const handleSaveFactors = (updatedFactors: ScenarioFactor[]) => {
+    // In a real app, this would update state through context or redux
+    // For demo purposes, we'll just call the update function
+    updateScenarioFactors(activeScenario, updatedFactors);
+  };
+
+  const handleSaveAssumptions = (updatedAssumptions: string[]) => {
+    // In a real app, this would update state through context or redux
+    // For demo purposes, we'll just call the update function
+    updateScenarioAssumptions(activeScenario, updatedAssumptions);
+  };
+
   return (
     <Card className="mb-4">
       <CardHeader className="pb-3">
-        <CardTitle>Budget Scenarios</CardTitle>
-        <CardDescription>View different budget projections</CardDescription>
+        <div className="flex justify-between items-center">
+          <div>
+            <CardTitle>Budget Scenarios</CardTitle>
+            <CardDescription>View different budget projections</CardDescription>
+          </div>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={() => setShowDetails(!showDetails)}
+          >
+            <Pencil className="h-4 w-4 mr-1" /> 
+            {showDetails ? "Hide Details" : "Edit Factors"}
+          </Button>
+        </div>
       </CardHeader>
       <CardContent>
         <RadioGroup 
@@ -60,6 +94,33 @@ export const BudgetScenarioSelector: React.FC<BudgetScenarioSelectorProps> = ({
             </Label>
           </div>
         </RadioGroup>
+
+        {showDetails && scenario && (
+          <div className="mt-6">
+            <Tabs value={activeTab} onValueChange={setActiveTab}>
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="factors">Key Factors</TabsTrigger>
+                <TabsTrigger value="assumptions">Assumptions</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="factors" className="mt-4">
+                <ScenarioFactorsEditor 
+                  scenarioId={activeScenario}
+                  factors={scenario.factors}
+                  onSave={handleSaveFactors}
+                />
+              </TabsContent>
+              
+              <TabsContent value="assumptions" className="mt-4">
+                <ScenarioAssumptionsEditor
+                  scenarioId={activeScenario}
+                  assumptions={scenario.assumptions}
+                  onSave={handleSaveAssumptions}
+                />
+              </TabsContent>
+            </Tabs>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

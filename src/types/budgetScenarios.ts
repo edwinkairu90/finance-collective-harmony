@@ -20,4 +20,13 @@ export interface BudgetScenario {
     profit: number;
   };
   color: string;
+  factors: ScenarioFactor[];
+  assumptions: string[];
+}
+
+export interface ScenarioFactor {
+  id: string;
+  name: string;
+  impact: number; // percentage impact on budget (-15 to +15)
+  description: string;
 }
