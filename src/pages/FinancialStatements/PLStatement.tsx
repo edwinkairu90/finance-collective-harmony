@@ -9,10 +9,14 @@ import { PLTable } from "./components/PLTable";
 import { PeriodSelector, PeriodType } from "./components/PeriodSelector";
 
 export const PLStatement = () => {
-  // State for period selection
-  const [periodType, setPeriodType] = useState<PeriodType>('quarterly');
+  // Available years for selection
+  const availableYears = [2024, 2023, 2022, 2021];
   
-  // Get quarters data
+  // State for period and year selection
+  const [periodType, setPeriodType] = useState<PeriodType>('quarterly');
+  const [selectedYear, setSelectedYear] = useState<number>(2024);
+  
+  // Get quarters data (this would normally filter by the selected year)
   const quarters = getLastFourQuarters();
   
   // Calculate quarterly totals
@@ -21,13 +25,30 @@ export const PLStatement = () => {
   // Calculate P&L subtotals (gross profit, EBITDA, EBIT)
   const plSubtotals = calculatePLSubtotals(quarters);
   
+  // Handle period type change
+  const handlePeriodTypeChange = (newPeriodType: PeriodType) => {
+    setPeriodType(newPeriodType);
+  };
+  
+  // Handle year change
+  const handleYearChange = (year: number) => {
+    setSelectedYear(year);
+    // In a real application, you would fetch data for the selected year here
+  };
+  
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-lg font-medium">Profit & Loss Statement</h3>
         
         <div className="flex items-center gap-4">
-          <PeriodSelector value={periodType} onChange={setPeriodType} />
+          <PeriodSelector 
+            periodType={periodType} 
+            onPeriodTypeChange={handlePeriodTypeChange}
+            selectedYear={selectedYear}
+            onYearChange={handleYearChange}
+            availableYears={availableYears}
+          />
           
           <div className="flex gap-2">
             <Button variant="outline" size="sm">
@@ -47,9 +68,9 @@ export const PLStatement = () => {
           <div className="text-center border-b pb-4">
             <h2 className="text-xl font-semibold mb-1">Complete Profit & Loss Statement</h2>
             <p className="text-muted-foreground">
-              {periodType === 'monthly' && 'Monthly View'}
-              {periodType === 'quarterly' && 'Fiscal Year 2024 - Quarter 1'}
-              {periodType === 'annual' && 'Annual View - Fiscal Year 2024'}
+              {periodType === 'monthly' && `Monthly View - ${selectedYear}`}
+              {periodType === 'quarterly' && `Quarterly View - ${selectedYear}`}
+              {periodType === 'annual' && `Annual View - ${selectedYear}`}
             </p>
             <p className="text-sm text-muted-foreground mt-1">All figures in USD</p>
           </div>

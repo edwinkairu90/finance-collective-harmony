@@ -8,11 +8,26 @@ import { BalanceSheetTable } from "./components/BalanceSheetTable";
 import { PeriodSelector, PeriodType } from "./components/PeriodSelector";
 
 export const BalanceSheet = () => {
-  // State for period selection
-  const [periodType, setPeriodType] = useState<PeriodType>('quarterly');
+  // Available years for selection
+  const availableYears = [2024, 2023, 2022, 2021];
   
-  // Get quarters data
+  // State for period and year selection
+  const [periodType, setPeriodType] = useState<PeriodType>('quarterly');
+  const [selectedYear, setSelectedYear] = useState<number>(2024);
+  
+  // Get quarters data (this would normally filter by the selected year)
   const quarters = getLastFourQuarters();
+  
+  // Handle period type change
+  const handlePeriodTypeChange = (newPeriodType: PeriodType) => {
+    setPeriodType(newPeriodType);
+  };
+  
+  // Handle year change
+  const handleYearChange = (year: number) => {
+    setSelectedYear(year);
+    // In a real application, you would fetch data for the selected year here
+  };
   
   return (
     <div className="space-y-4">
@@ -20,7 +35,13 @@ export const BalanceSheet = () => {
         <h3 className="text-lg font-medium">Balance Sheet</h3>
         
         <div className="flex items-center gap-4">
-          <PeriodSelector value={periodType} onChange={setPeriodType} />
+          <PeriodSelector 
+            periodType={periodType} 
+            onPeriodTypeChange={handlePeriodTypeChange}
+            selectedYear={selectedYear}
+            onYearChange={handleYearChange}
+            availableYears={availableYears}
+          />
           
           <div className="flex gap-2">
             <Button variant="outline" size="sm">
@@ -40,9 +61,9 @@ export const BalanceSheet = () => {
           <div className="text-center border-b pb-4">
             <h2 className="text-xl font-semibold mb-1">Balance Sheet</h2>
             <p className="text-muted-foreground">
-              {periodType === 'monthly' && 'Monthly View - March 2024'}
-              {periodType === 'quarterly' && 'Quarterly View - Last 4 Quarters'}
-              {periodType === 'annual' && 'Annual View - 2023 vs 2024 YTD'}
+              {periodType === 'monthly' && `Monthly View - ${selectedYear}`}
+              {periodType === 'quarterly' && `Quarterly View - ${selectedYear}`}
+              {periodType === 'annual' && `Annual View - ${selectedYear}`}
             </p>
             <p className="text-sm text-muted-foreground mt-1">All figures in USD</p>
           </div>
