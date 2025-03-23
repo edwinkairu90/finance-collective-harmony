@@ -1,5 +1,4 @@
-
-import { BudgetScenario, ScenarioFactor } from "@/types/budgetScenarios";
+import { BudgetScenario, ScenarioFactor, BudgetScenarioType } from "@/types/budgetScenarios";
 import { budgetData, COLORS, getTotalBudget } from "./BudgetData";
 
 // Base case is our current budget
