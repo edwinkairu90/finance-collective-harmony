@@ -1,33 +1,88 @@
 
-import { useState } from "react";
-import { CostCenter, Department } from "@/types/budget";
-import { useToast } from "@/components/ui/use-toast";
-import { departmentsWithCostCenters } from "../data/departmentData";
+import { useState, useEffect } from 'react';
+import { CostCenter, Department } from '@/types/budget';
+import { departments } from '../BudgetData';
+
+// Mock data for cost centers
+const initialCostCenters: CostCenter[] = [
+  {
+    id: '1',
+    departmentId: 'sales',
+    name: 'Sales Team',
+    description: 'Cost center for the sales team operations',
+    budget: 150000,
+    previousActual: 140000,
+  },
+  {
+    id: '2',
+    departmentId: 'sales',
+    name: 'Sales Office',
+    description: 'Office space and utilities for sales department',
+    budget: 50000,
+    previousActual: 48000,
+  },
+  {
+    id: '3',
+    departmentId: 'marketing',
+    name: 'Marketing Operations',
+    description: 'General marketing operations',
+    budget: 200000,
+    previousActual: 190000,
+  },
+  {
+    id: '4',
+    departmentId: 'engineering',
+    name: 'Engineering Team',
+    description: 'Cost center for the engineering department',
+    budget: 300000,
+    previousActual: 280000,
+  },
+  {
+    id: '5',
+    departmentId: 'customer-support',
+    name: 'Support Operations',
+    description: 'Customer support operations',
+    budget: 120000,
+    previousActual: 110000,
+  },
+];
 
 export const useCostCenters = () => {
-  const { toast } = useToast();
-  const [selectedDepartmentId, setSelectedDepartmentId] = useState<string>("");
-  const [departments, setDepartments] = useState<Department[]>(departmentsWithCostCenters);
+  const [costCenters, setCostCenters] = useState<CostCenter[]>(initialCostCenters);
+  const [selectedDepartmentId, setSelectedDepartmentId] = useState<string>(departments[0].id);
   const [editingCostCenterId, setEditingCostCenterId] = useState<string | null>(null);
   const [isAddingCostCenter, setIsAddingCostCenter] = useState(false);
-  const [newCostCenter, setNewCostCenter] = useState<Omit<CostCenter, "id">>({
-    name: "",
-    description: "",
+  const [newCostCenter, setNewCostCenter] = useState<Omit<CostCenter, 'id'>>({
+    departmentId: selectedDepartmentId,
+    name: '',
+    description: '',
     budget: 0,
-    departmentId: ""
+    previousActual: 0,
   });
 
-  const selectedDepartment = departments.find(d => d.id === selectedDepartmentId);
-  const allCostCenters = departments.flatMap(dept => dept.costCenters);
+  // Get the selected department
+  const selectedDepartment = departments.find(dept => dept.id === selectedDepartmentId);
+
+  // Filter cost centers by selected department
+  const filteredCostCenters = costCenters.filter(
+    cc => cc.departmentId === selectedDepartmentId
+  );
+
+  // Get all cost centers
+  const allCostCenters = costCenters;
+
+  // Update newCostCenter when selected department changes
+  useEffect(() => {
+    setNewCostCenter(prev => ({
+      ...prev,
+      departmentId: selectedDepartmentId,
+    }));
+  }, [selectedDepartmentId]);
 
   const handleSelectDepartment = (departmentId: string) => {
     setSelectedDepartmentId(departmentId);
     setEditingCostCenterId(null);
     setIsAddingCostCenter(false);
-  };
-
-  const calculateTotalBudget = (costCenters: CostCenter[]) => {
-    return costCenters.reduce((sum, cc) => sum + cc.budget, 0);
   };
 
   const startEditingCostCenter = (costCenterId: string) => {
@@ -40,22 +95,14 @@ export const useCostCenters = () => {
   };
 
   const startAddingCostCenter = () => {
-    if (!selectedDepartmentId) {
-      toast({
-        title: "No Department Selected",
-        description: "Please select a department first.",
-        variant: "destructive"
-      });
-      return;
-    }
-
     setIsAddingCostCenter(true);
     setEditingCostCenterId(null);
     setNewCostCenter({
-      name: "",
-      description: "",
+      departmentId: selectedDepartmentId,
+      name: '',
+      description: '',
       budget: 0,
-      departmentId: selectedDepartmentId
+      previousActual: 0,
     });
   };
 
@@ -63,156 +110,69 @@ export const useCostCenters = () => {
     setIsAddingCostCenter(false);
   };
 
-  const updateCostCenterField = (id: string, field: keyof CostCenter, value: string | number) => {
-    setDepartments(prev => 
-      prev.map(dept => ({
-        ...dept,
-        costCenters: dept.costCenters.map(cc => 
-          cc.id === id ? { ...cc, [field]: field === "budget" ? Number(value) : value } : cc
-        )
-      }))
+  const updateCostCenterField = (
+    costCenterId: string,
+    field: keyof CostCenter,
+    value: string | number
+  ) => {
+    setCostCenters(prevCostCenters =>
+      prevCostCenters.map(cc =>
+        cc.id === costCenterId ? { ...cc, [field]: value } : cc
+      )
     );
   };
 
-  const updateNewCostCenterField = (field: keyof Omit<CostCenter, "id">, value: string | number) => {
+  const updateNewCostCenterField = (
+    field: keyof Omit<CostCenter, 'id'>,
+    value: string | number
+  ) => {
     setNewCostCenter(prev => ({
       ...prev,
-      [field]: field === "budget" ? Number(value) : value
+      [field]: value,
     }));
   };
 
   const saveCostCenterChanges = () => {
-    if (!selectedDepartment) return;
-
-    // Update department total budget
-    setDepartments(prev => 
-      prev.map(dept => 
-        dept.id === selectedDepartmentId 
-          ? { 
-              ...dept, 
-              budget: calculateTotalBudget(dept.costCenters) 
-            } 
-          : dept
-      )
-    );
-    
     setEditingCostCenterId(null);
-    
-    toast({
-      title: "Changes Saved",
-      description: "Cost center updated successfully."
-    });
   };
 
   const addNewCostCenter = () => {
-    if (!selectedDepartmentId || !newCostCenter.name) {
-      toast({
-        title: "Invalid Cost Center",
-        description: "Please provide a name for the cost center.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    const newId = `${selectedDepartmentId}-${newCostCenter.name.toLowerCase().replace(/\s+/g, '-')}`;
-    
-    const newCostCenterWithId: CostCenter = {
-      id: newId,
-      ...newCostCenter
-    };
-    
-    setDepartments(prev => 
-      prev.map(dept => 
-        dept.id === selectedDepartmentId 
-          ? { 
-              ...dept, 
-              costCenters: [...dept.costCenters, newCostCenterWithId],
-              budget: dept.budget + newCostCenter.budget
-            } 
-          : dept
-      )
-    );
-    
+    const newId = `cc-${Date.now()}`;
+    setCostCenters(prev => [
+      ...prev,
+      { ...newCostCenter, id: newId },
+    ]);
     setIsAddingCostCenter(false);
-    
-    toast({
-      title: "Cost Center Added",
-      description: `${newCostCenter.name} has been added successfully.`
-    });
   };
 
   const deleteCostCenter = (costCenterId: string) => {
-    if (!selectedDepartment) return;
-    
-    const costCenter = selectedDepartment.costCenters.find(cc => cc.id === costCenterId);
-    if (!costCenter) return;
-    
-    setDepartments(prev => 
-      prev.map(dept => 
-        dept.id === selectedDepartmentId 
-          ? { 
-              ...dept, 
-              costCenters: dept.costCenters.filter(cc => cc.id !== costCenterId),
-              budget: dept.budget - costCenter.budget
-            } 
-          : dept
-      )
-    );
-    
-    toast({
-      title: "Cost Center Deleted",
-      description: `${costCenter.name} has been removed.`
-    });
+    setCostCenters(prev => prev.filter(cc => cc.id !== costCenterId));
+    if (editingCostCenterId === costCenterId) {
+      setEditingCostCenterId(null);
+    }
   };
 
   const changeCostCenterDepartment = (costCenterId: string, newDepartmentId: string) => {
-    // Find the cost center in all departments
-    let costCenterToMove: CostCenter | undefined;
-    let oldDepartmentId: string = "";
-    
-    for (const dept of departments) {
-      const costCenter = dept.costCenters.find(cc => cc.id === costCenterId);
-      if (costCenter) {
-        costCenterToMove = { ...costCenter, departmentId: newDepartmentId };
-        oldDepartmentId = dept.id;
-        break;
-      }
-    }
-    
-    if (!costCenterToMove || oldDepartmentId === newDepartmentId) return;
-    
-    // Update departments by removing the cost center from old department and adding to new
-    setDepartments(prev => 
-      prev.map(dept => {
-        if (dept.id === oldDepartmentId) {
-          // Remove cost center from old department and update budget
-          return {
-            ...dept,
-            costCenters: dept.costCenters.filter(cc => cc.id !== costCenterId),
-            budget: dept.budget - costCenterToMove!.budget
-          };
-        } else if (dept.id === newDepartmentId) {
-          // Add cost center to new department and update budget
-          return {
-            ...dept,
-            costCenters: [...dept.costCenters, costCenterToMove!],
-            budget: dept.budget + costCenterToMove!.budget
-          };
-        }
-        return dept;
-      })
+    setCostCenters(prev => 
+      prev.map(cc => 
+        cc.id === costCenterId ? { ...cc, departmentId: newDepartmentId } : cc
+      )
     );
-    
-    toast({
-      title: "Department Changed",
-      description: `Cost center moved to ${departments.find(d => d.id === newDepartmentId)?.name || newDepartmentId}.`
-    });
+  };
+
+  const changeCostCenterCategory = (costCenterId: string, newCategory: string) => {
+    setCostCenters(prev => 
+      prev.map(cc => 
+        cc.id === costCenterId ? { ...cc, name: newCategory } : cc
+      )
+    );
   };
 
   return {
     selectedDepartmentId,
     departments,
     selectedDepartment,
+    filteredCostCenters,
     allCostCenters,
     editingCostCenterId,
     isAddingCostCenter,
@@ -227,6 +187,7 @@ export const useCostCenters = () => {
     saveCostCenterChanges,
     addNewCostCenter,
     deleteCostCenter,
-    changeCostCenterDepartment
+    changeCostCenterDepartment,
+    changeCostCenterCategory
   };
 };

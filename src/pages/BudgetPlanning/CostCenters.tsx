@@ -24,7 +24,8 @@ export const CostCenters = () => {
     saveCostCenterChanges,
     addNewCostCenter,
     deleteCostCenter,
-    changeCostCenterDepartment
+    changeCostCenterDepartment,
+    changeCostCenterCategory
   } = useCostCenters();
 
   return (
@@ -61,6 +62,7 @@ export const CostCenters = () => {
             costCenters={allCostCenters}
             departments={departments}
             onChangeDepartment={changeCostCenterDepartment}
+            onChangeCategory={changeCostCenterCategory}
             onStartEditing={startEditingCostCenter}
             onDelete={deleteCostCenter}
           />

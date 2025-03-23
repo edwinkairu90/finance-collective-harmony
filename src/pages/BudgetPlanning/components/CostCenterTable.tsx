@@ -1,10 +1,24 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { CostCenter, Department } from "@/types/budget";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFooter } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Pencil, Trash } from "lucide-react";
+import { Pencil, Trash, Plus } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+
+// Default categories
+const defaultCategories = [
+  "Operations", 
+  "Sales", 
+  "Marketing", 
+  "IT", 
+  "Human Resources", 
+  "Finance", 
+  "Research & Development",
+  "Customer Support"
+];
 
 interface CostCenterTableProps {
   costCenters: CostCenter[];
@@ -13,6 +27,7 @@ interface CostCenterTableProps {
   departments?: Department[];
   showAllDepartments?: boolean;
   onChangeDepartment?: (costCenterId: string, newDepartmentId: string) => void;
+  onChangeCategory?: (costCenterId: string, newCategory: string) => void;
 }
 
 export const CostCenterTable = ({
@@ -22,7 +37,12 @@ export const CostCenterTable = ({
   departments = [],
   showAllDepartments = false,
   onChangeDepartment,
+  onChangeCategory,
 }: CostCenterTableProps) => {
+  const [categories, setCategories] = useState<string[]>(defaultCategories);
+  const [newCategory, setNewCategory] = useState("");
+  const [isAddingCategory, setIsAddingCategory] = useState(false);
+
   if (costCenters.length === 0) {
     return (
       <div className="text-center py-8 text-muted-foreground">
@@ -41,17 +61,6 @@ export const CostCenterTable = ({
     return ((budget - actual) / actual) * 100;
   };
 
-  // Group cost centers by department for the all departments view
-  const groupedCostCenters = showAllDepartments 
-    ? costCenters.reduce((acc, cc) => {
-        if (!acc[cc.departmentId]) {
-          acc[cc.departmentId] = [];
-        }
-        acc[cc.departmentId].push(cc);
-        return acc;
-      }, {} as Record<string, CostCenter[]>)
-    : { single: costCenters };
-
   // Calculate total budget across all cost centers
   const totalBudget = costCenters.reduce((sum, cc) => sum + cc.budget, 0);
   const totalPreviousActual = costCenters
@@ -69,12 +78,26 @@ export const CostCenterTable = ({
     }
   };
 
+  const handleCategoryChange = (costCenterId: string, newCategory: string) => {
+    if (onChangeCategory) {
+      onChangeCategory(costCenterId, newCategory);
+    }
+  };
+
+  const handleAddCategory = () => {
+    if (newCategory && !categories.includes(newCategory)) {
+      setCategories([...categories, newCategory]);
+      setNewCategory("");
+      setIsAddingCategory(false);
+    }
+  };
+
   return (
     <Table>
       <TableHeader>
         <TableRow>
           {showAllDepartments && <TableHead>Department</TableHead>}
-          <TableHead>Name</TableHead>
+          <TableHead>Category</TableHead>
           <TableHead>Description</TableHead>
           <TableHead className="text-right">Previous Actual</TableHead>
           <TableHead className="text-right">Current Budget</TableHead>
@@ -113,7 +136,40 @@ export const CostCenterTable = ({
                     getDepartmentName(costCenter.departmentId)
                   )}
                 </TableCell>
-                <TableCell className="font-medium">{costCenter.name}</TableCell>
+                <TableCell>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline" className="w-full justify-between">
+                        {costCenter.name}
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-[200px]">
+                      {categories.map((category) => (
+                        <DropdownMenuItem 
+                          key={category}
+                          onClick={() => handleCategoryChange(costCenter.id, category)}
+                        >
+                          {category}
+                        </DropdownMenuItem>
+                      ))}
+                      <DropdownMenuItem onClick={() => setIsAddingCategory(true)}>
+                        <Plus className="h-4 w-4 mr-2" /> Add new category
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                  {isAddingCategory && (
+                    <div className="mt-2 flex items-center space-x-2">
+                      <Input
+                        value={newCategory}
+                        onChange={(e) => setNewCategory(e.target.value)}
+                        placeholder="New category name"
+                        className="flex-1"
+                      />
+                      <Button size="sm" onClick={handleAddCategory}>Add</Button>
+                      <Button size="sm" variant="outline" onClick={() => setIsAddingCategory(false)}>Cancel</Button>
+                    </div>
+                  )}
+                </TableCell>
                 <TableCell>{costCenter.description}</TableCell>
                 <TableCell className="text-right">
                   ${costCenter.previousActual?.toLocaleString() || 'N/A'}
@@ -164,7 +220,28 @@ export const CostCenterTable = ({
             
             return (
               <TableRow key={costCenter.id}>
-                <TableCell className="font-medium">{costCenter.name}</TableCell>
+                <TableCell>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline" className="w-full justify-between">
+                        {costCenter.name}
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-[200px]">
+                      {categories.map((category) => (
+                        <DropdownMenuItem 
+                          key={category}
+                          onClick={() => handleCategoryChange(costCenter.id, category)}
+                        >
+                          {category}
+                        </DropdownMenuItem>
+                      ))}
+                      <DropdownMenuItem onClick={() => setIsAddingCategory(true)}>
+                        <Plus className="h-4 w-4 mr-2" /> Add new category
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
                 <TableCell>{costCenter.description}</TableCell>
                 <TableCell className="text-right">
                   ${costCenter.previousActual?.toLocaleString() || 'N/A'}

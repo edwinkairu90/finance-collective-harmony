@@ -8,6 +8,7 @@ interface AllCostCentersViewProps {
   costCenters: CostCenter[];
   departments: Department[];
   onChangeDepartment?: (costCenterId: string, newDepartmentId: string) => void;
+  onChangeCategory?: (costCenterId: string, newCategory: string) => void;
   onStartEditing?: (costCenterId: string) => void;
   onDelete?: (costCenterId: string) => void;
 }
@@ -16,6 +17,7 @@ export const AllCostCentersView: React.FC<AllCostCentersViewProps> = ({
   costCenters,
   departments,
   onChangeDepartment,
+  onChangeCategory,
   onStartEditing = () => {},
   onDelete = () => {}
 }) => {
@@ -33,6 +35,7 @@ export const AllCostCentersView: React.FC<AllCostCentersViewProps> = ({
           onStartEditing={onStartEditing}
           onDelete={onDelete}
           onChangeDepartment={onChangeDepartment}
+          onChangeCategory={onChangeCategory}
         />
       </CardContent>
     </Card>
