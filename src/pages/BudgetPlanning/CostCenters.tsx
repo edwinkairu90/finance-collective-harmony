@@ -9,6 +9,8 @@ import { Plus } from "lucide-react";
 import { DepartmentSelector } from "./components/DepartmentSelector";
 import { CostCenterList } from "./components/CostCenterList";
 import { CostCenterHeader } from "./components/CostCenterHeader";
+import { CostCenterTable } from "./components/CostCenterTable";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const CostCenters = () => {
   const { toast } = useToast();
@@ -24,6 +26,9 @@ export const CostCenters = () => {
   });
 
   const selectedDepartment = departments.find(d => d.id === selectedDepartmentId);
+  
+  // Get all cost centers across all departments
+  const allCostCenters = departments.flatMap(dept => dept.costCenters);
 
   const handleSelectDepartment = (departmentId: string) => {
     setSelectedDepartmentId(departmentId);
@@ -172,58 +177,85 @@ export const CostCenters = () => {
 
   return (
     <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>Cost Centers</CardTitle>
-          <CardDescription>Manage departmental cost centers for detailed budgeting</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="flex space-x-4 items-end">
-              <DepartmentSelector 
-                departments={departments}
-                selectedDepartmentId={selectedDepartmentId}
-                onSelectDepartment={handleSelectDepartment}
-              />
-              {selectedDepartment && (
-                <Button 
-                  onClick={startAddingCostCenter} 
-                  className="mb-0.5 flex items-center gap-1"
-                >
-                  <Plus className="h-4 w-4" /> Add Cost Center
-                </Button>
-              )}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      <Tabs defaultValue="departments">
+        <TabsList className="mb-4">
+          <TabsTrigger value="departments">By Department</TabsTrigger>
+          <TabsTrigger value="all">All Cost Centers</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="departments" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Cost Centers</CardTitle>
+              <CardDescription>Manage departmental cost centers for detailed budgeting</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="flex space-x-4 items-end">
+                  <DepartmentSelector 
+                    departments={departments}
+                    selectedDepartmentId={selectedDepartmentId}
+                    onSelectDepartment={handleSelectDepartment}
+                  />
+                  {selectedDepartment && (
+                    <Button 
+                      onClick={startAddingCostCenter} 
+                      className="mb-0.5 flex items-center gap-1"
+                    >
+                      <Plus className="h-4 w-4" /> Add Cost Center
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-      {selectedDepartment && (
-        <Card>
-          <CardHeader>
-            <CostCenterHeader 
-              selectedDepartment={selectedDepartment}
-              onAddCostCenter={startAddingCostCenter}
-            />
-          </CardHeader>
-          <CardContent>
-            <CostCenterList
-              selectedDepartment={selectedDepartment}
-              editingCostCenterId={editingCostCenterId}
-              isAddingCostCenter={isAddingCostCenter}
-              newCostCenter={newCostCenter}
-              onStartEditingCostCenter={startEditingCostCenter}
-              onCancelEditing={cancelEditing}
-              onSaveCostCenterChanges={saveCostCenterChanges}
-              onDeleteCostCenter={deleteCostCenter}
-              onUpdateCostCenterField={updateCostCenterField}
-              onUpdateNewCostCenterField={updateNewCostCenterField}
-              onAddNewCostCenter={addNewCostCenter}
-              onCancelAddingCostCenter={cancelAddingCostCenter}
-            />
-          </CardContent>
-        </Card>
-      )}
+          {selectedDepartment && (
+            <Card>
+              <CardHeader>
+                <CostCenterHeader 
+                  selectedDepartment={selectedDepartment}
+                  onAddCostCenter={startAddingCostCenter}
+                />
+              </CardHeader>
+              <CardContent>
+                <CostCenterList
+                  selectedDepartment={selectedDepartment}
+                  editingCostCenterId={editingCostCenterId}
+                  isAddingCostCenter={isAddingCostCenter}
+                  newCostCenter={newCostCenter}
+                  onStartEditingCostCenter={startEditingCostCenter}
+                  onCancelEditing={cancelEditing}
+                  onSaveCostCenterChanges={saveCostCenterChanges}
+                  onDeleteCostCenter={deleteCostCenter}
+                  onUpdateCostCenterField={updateCostCenterField}
+                  onUpdateNewCostCenterField={updateNewCostCenterField}
+                  onAddNewCostCenter={addNewCostCenter}
+                  onCancelAddingCostCenter={cancelAddingCostCenter}
+                />
+              </CardContent>
+            </Card>
+          )}
+        </TabsContent>
+        
+        <TabsContent value="all">
+          <Card>
+            <CardHeader>
+              <CardTitle>All Cost Centers</CardTitle>
+              <CardDescription>View all cost centers across all departments</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <CostCenterTable 
+                costCenters={allCostCenters}
+                departments={departments}
+                showAllDepartments={true}
+                onStartEditing={() => {}}
+                onDelete={() => {}}
+              />
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
