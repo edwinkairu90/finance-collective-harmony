@@ -17,10 +17,10 @@ import { BarChart, ChartPie, ClipboardCheck, Compass, FileText, Home, Settings, 
 
 export function AppSidebar() {
   return (
-    <Sidebar>
-      <SidebarHeader className="px-4 py-4">
+    <Sidebar className="w-auto">
+      <SidebarHeader className="px-3 py-3">
         <div className="flex items-center gap-2">
-          <Compass className="h-6 w-6 text-sidebar-primary" />
+          <Compass className="h-5 w-5 text-sidebar-primary" />
           <span className="text-lg font-bold">Kompass</span>
         </div>
       </SidebarHeader>
@@ -96,7 +96,7 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className="px-4 py-4">
+      <SidebarFooter className="px-3 py-3">
         <div className="text-xs text-muted-foreground">
           &copy; 2025 Kompass Inc.
         </div>
