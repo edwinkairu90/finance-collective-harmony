@@ -17,7 +17,7 @@ import { BarChart, ChartPie, ClipboardCheck, Compass, FileText, Home, Settings, 
 
 export function AppSidebar() {
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar>
       <SidebarHeader className="px-4 py-4">
         <div className="flex items-center gap-2">
           <Compass className="h-6 w-6 text-sidebar-primary" />
@@ -30,7 +30,7 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Dashboard">
+                <SidebarMenuButton asChild>
                   <Link to="/">
                     <Home className="h-4 w-4 mr-2" />
                     <span>Dashboard</span>
@@ -38,7 +38,7 @@ export function AppSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Budget Planning">
+                <SidebarMenuButton asChild>
                   <Link to="/budget">
                     <ChartPie className="h-4 w-4 mr-2" />
                     <span>Budget Planning</span>
@@ -46,7 +46,7 @@ export function AppSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Financial Statements">
+                <SidebarMenuButton asChild>
                   <Link to="/financial-statements">
                     <FileText className="h-4 w-4 mr-2" />
                     <span>Financial Statements</span>
@@ -54,7 +54,7 @@ export function AppSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Collaboration">
+                <SidebarMenuButton asChild>
                   <Link to="/collaboration">
                     <Users className="h-4 w-4 mr-2" />
                     <span>Collaboration</span>
@@ -62,7 +62,7 @@ export function AppSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Approvals">
+                <SidebarMenuButton asChild>
                   <Link to="/approvals">
                     <ClipboardCheck className="h-4 w-4 mr-2" />
                     <span>Approvals</span>
@@ -70,7 +70,7 @@ export function AppSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Actuals vs Budget">
+                <SidebarMenuButton asChild>
                   <Link to="/actuals">
                     <BarChart className="h-4 w-4 mr-2" />
                     <span>Actuals vs Budget</span>
@@ -85,7 +85,7 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Settings">
+                <SidebarMenuButton asChild>
                   <Link to="/settings">
                     <Settings className="h-4 w-4 mr-2" />
                     <span>Settings</span>

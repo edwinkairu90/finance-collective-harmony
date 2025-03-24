@@ -6,7 +6,7 @@ import { CollaborationHeader } from "./CollaborationHeader";
 
 export function AppLayout() {
   return (
-    <SidebarProvider defaultOpen={false}>
+    <SidebarProvider defaultOpen={true}>
       <div className="min-h-screen flex w-full">
         <AppSidebar />
         <div className="flex-1 flex flex-col">
@@ -21,4 +21,3 @@ export function AppLayout() {
     </SidebarProvider>
   );
 }
-
