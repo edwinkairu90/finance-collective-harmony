@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { UserRole, Department } from '@/types/auth';
 import { PermissionGuard } from '@/components/auth/PermissionGuard';
+import { CreateUserDialog } from '@/components/admin/CreateUserDialog';
 
 const UserManagement: React.FC = () => {
   const { allUsers, updateUserRole, updateUserDepartment } = useAuth();
@@ -38,9 +39,12 @@ const UserManagement: React.FC = () => {
     <PermissionGuard requiredPermission="manage:users">
       <div className="container mx-auto py-6">
         <Card>
-          <CardHeader>
-            <CardTitle>User Management</CardTitle>
-            <CardDescription>Manage user roles and permissions</CardDescription>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <div>
+              <CardTitle>User Management</CardTitle>
+              <CardDescription>Manage user roles and permissions</CardDescription>
+            </div>
+            <CreateUserDialog />
           </CardHeader>
           <CardContent>
             <Table>

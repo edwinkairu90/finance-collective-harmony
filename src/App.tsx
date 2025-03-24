@@ -16,7 +16,6 @@ import Approvals from "./pages/Approvals";
 import ActualsVsBudget from "./pages/ActualsVsBudget";
 import FinancialStatements from "./pages/FinancialStatements";
 import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
 import UserManagement from "./pages/admin/UserManagement";
 
 const queryClient = new QueryClient();
@@ -32,7 +31,6 @@ const App = () => (
             {/* Public routes */}
             <Route path="/welcome" element={<Index />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
             
             {/* Protected routes */}
             <Route path="/" element={<AppLayout />}>

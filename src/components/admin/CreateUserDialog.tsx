@@ -1,23 +1,32 @@
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { UserRole, Department } from '@/types/auth';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { useToast } from '@/components/ui/use-toast';
 
-const Register: React.FC = () => {
+export const CreateUserDialog: React.FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState<UserRole>('user');
   const [department, setDepartment] = useState<Department>('sales');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [open, setOpen] = useState(false);
   const { register } = useAuth();
-  const navigate = useNavigate();
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,24 +34,46 @@ const Register: React.FC = () => {
     
     try {
       await register(name, email, password, role, department);
-      navigate('/login');
+      toast({
+        title: "User created",
+        description: `${name} has been added as a ${role} in the ${department} department.`,
+      });
+      resetForm();
+      setOpen(false);
     } catch (error) {
-      console.error('Registration failed:', error);
+      toast({
+        title: "Failed to create user",
+        description: error instanceof Error ? error.message : "Unknown error occurred",
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const resetForm = () => {
+    setName('');
+    setEmail('');
+    setPassword('');
+    setRole('user');
+    setDepartment('sales');
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <Card className="w-[400px]">
-        <CardHeader>
-          <CardTitle>Register for Kompass</CardTitle>
-          <CardDescription>Create a new account</CardDescription>
-        </CardHeader>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button>Create New User</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Create New User</DialogTitle>
+          <DialogDescription>
+            Add a new user to the system with specific role and department.
+          </DialogDescription>
+        </DialogHeader>
         <form onSubmit={handleSubmit}>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
               <Label htmlFor="name">Full Name</Label>
               <Input 
                 id="name" 
@@ -51,7 +82,7 @@ const Register: React.FC = () => {
                 required 
               />
             </div>
-            <div className="space-y-2">
+            <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input 
                 id="email" 
@@ -61,7 +92,7 @@ const Register: React.FC = () => {
                 required 
               />
             </div>
-            <div className="space-y-2">
+            <div className="grid gap-2">
               <Label htmlFor="password">Password</Label>
               <Input 
                 id="password" 
@@ -71,7 +102,7 @@ const Register: React.FC = () => {
                 required 
               />
             </div>
-            <div className="space-y-2">
+            <div className="grid gap-2">
               <Label htmlFor="role">Role</Label>
               <Select value={role} onValueChange={(value) => setRole(value as UserRole)}>
                 <SelectTrigger>
@@ -84,7 +115,7 @@ const Register: React.FC = () => {
                 </SelectContent>
               </Select>
             </div>
-            <div className="space-y-2">
+            <div className="grid gap-2">
               <Label htmlFor="department">Department</Label>
               <Select value={department} onValueChange={(value) => setDepartment(value as Department)}>
                 <SelectTrigger>
@@ -100,17 +131,17 @@ const Register: React.FC = () => {
                 </SelectContent>
               </Select>
             </div>
-          </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button variant="outline" onClick={() => navigate('/login')}>Back to Login</Button>
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Registering...' : 'Register'}
+          </div>
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+              Cancel
             </Button>
-          </CardFooter>
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? 'Creating...' : 'Create User'}
+            </Button>
+          </DialogFooter>
         </form>
-      </Card>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 };
-
-export default Register;

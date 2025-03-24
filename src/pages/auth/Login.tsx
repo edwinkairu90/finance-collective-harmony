@@ -60,9 +60,8 @@ const Login: React.FC = () => {
               />
             </div>
           </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button variant="outline" onClick={() => navigate('/register')}>Register</Button>
-            <Button type="submit" disabled={isSubmitting}>
+          <CardFooter>
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
               {isSubmitting ? 'Logging in...' : 'Login'}
             </Button>
           </CardFooter>
