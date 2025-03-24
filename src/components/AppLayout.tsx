@@ -1,10 +1,29 @@
 
+import { useEffect } from "react";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { CollaborationHeader } from "./CollaborationHeader";
+import { useAuth } from "@/context/AuthContext";
 
 export function AppLayout() {
+  const { isAuthenticated, isLoading } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      navigate('/login');
+    }
+  }, [isAuthenticated, isLoading, navigate]);
+
+  if (isLoading) {
+    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return null; // Will redirect via the useEffect
+  }
+
   return (
     <SidebarProvider defaultOpen={true}>
       <div className="min-h-screen flex w-full">
