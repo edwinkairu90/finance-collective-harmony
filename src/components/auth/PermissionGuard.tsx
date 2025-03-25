@@ -25,7 +25,8 @@ export const PermissionGuard: React.FC<PermissionGuardProps> = ({
     return <Navigate to="/login" replace />;
   }
 
-  if (!hasPermission(requiredPermission)) {
+  // Check if user has either the specific permission or view:all permission (for admin)
+  if (!hasPermission(requiredPermission) && !hasPermission('view:all')) {
     return <Navigate to={redirectTo} replace />;
   }
 

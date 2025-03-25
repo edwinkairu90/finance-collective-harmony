@@ -61,7 +61,11 @@ const App = () => (
                   <ActualsVsBudget />
                 </PermissionGuard>
               } />
-              <Route path="admin/users" element={<UserManagement />} />
+              <Route path="admin/users" element={
+                <PermissionGuard requiredPermission="manage:users">
+                  <UserManagement />
+                </PermissionGuard>
+              } />
             </Route>
             
             {/* Catch-all route */}
