@@ -1,10 +1,14 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ mode }) => ({
-  base: "/finance-collective-harmony/",
+  base: mode === "production" ? "/finance-collective-harmony/" : "/",
+  build: {
+    outDir: "dist",
+    assetsDir: "assets", // Ensure assets are in assets directory
+    emptyOutDir: true,
+  },
   server: {
     host: "::",
     port: 8080,
@@ -20,4 +24,3 @@ export default defineConfig(({ mode }) => ({
     },
   },
 }));
-
