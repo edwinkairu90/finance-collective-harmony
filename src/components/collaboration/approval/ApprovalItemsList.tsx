@@ -20,7 +20,7 @@ export const ApprovalItemsList = ({
   
   return (
     <Card className="overflow-hidden">
-      <CardHeader className="bg-amber-50 pb-0 pt-4">
+      <CardHeader className="bg-amber-300 pb-0 pt-4">
         <CardTitle className="flex justify-between text-base">
           <span className="text-xl font-bold">Pending Approval</span>
           <Badge variant="outline" className="text-xs rounded-full px-2 py-1 bg-white">{pendingItems.length}</Badge>
