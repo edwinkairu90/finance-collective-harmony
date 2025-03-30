@@ -1,3 +1,4 @@
+
 import {
   Sidebar,
   SidebarContent,
@@ -170,11 +171,6 @@ export function AppSidebar() {
           </div>
         )}
       </SidebarContent>
-      <SidebarFooter className="px-3 py-3">
-        <div className={`text-xs text-muted-foreground ${state === "collapsed" ? "text-center" : ""}`}>
-          &copy; 2025 Kompass Inc.
-        </div>
-      </SidebarFooter>
     </Sidebar>
   );
 }
