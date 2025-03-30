@@ -1,20 +1,27 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BudgetRequestData } from "../types/collaboration";
 import { CollaborationStatusTab } from "../components/collaboration/CollaborationStatusTab";
 import { SubmitBudgetTab } from "../components/collaboration/SubmitBudgetTab";
 import { HistoricalDataTab } from "../components/collaboration/HistoricalDataTab";
 import { LineItemsDialog } from "../components/collaboration/LineItemsDialog";
-import { budgetRequests, historicalData } from "../data/collaborationData";
+import { budgetRequests as initialBudgetRequests, historicalData } from "../data/collaborationData";
 import { CollaborationHeader } from "../components/CollaborationHeader";
+import { AddDepartmentDialog } from "../components/collaboration/AddDepartmentDialog";
+import { AssignUserDialog } from "../components/collaboration/AssignUserDialog";
+import { useAuth } from "../context/AuthContext";
 
 const Collaboration = () => {
   const { toast } = useToast();
+  const { hasPermission } = useAuth();
+  const [budgetRequests, setBudgetRequests] = useState<BudgetRequestData[]>(initialBudgetRequests);
   const [selectedDepartment, setSelectedDepartment] = useState<BudgetRequestData | null>(null);
   const [isLineItemsOpen, setIsLineItemsOpen] = useState(false);
+  const [isAssignUserOpen, setIsAssignUserOpen] = useState(false);
+  const [departmentToAssign, setDepartmentToAssign] = useState<BudgetRequestData | null>(null);
 
   const handleSend = () => {
     toast({
@@ -28,12 +35,34 @@ const Collaboration = () => {
     setIsLineItemsOpen(true);
   };
 
+  const handleAssignUser = (department: BudgetRequestData) => {
+    setDepartmentToAssign(department);
+    setIsAssignUserOpen(true);
+  };
+
+  const handleUserAssigned = (departmentId: string, userName: string, userAvatar: string) => {
+    setBudgetRequests(prevRequests => 
+      prevRequests.map(dept => 
+        dept.id === departmentId 
+          ? { ...dept, assignedTo: { name: userName, avatar: userAvatar } } 
+          : dept
+      )
+    );
+  };
+
+  const handleDepartmentAdded = (newDepartment: BudgetRequestData) => {
+    setBudgetRequests(prevRequests => [...prevRequests, newDepartment]);
+  };
+
+  const isAdmin = hasPermission('manage:users');
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold tracking-tight font-inter">Collaboration</h1>
         <div className="flex gap-4">
           <CollaborationHeader />
+          {isAdmin && <AddDepartmentDialog onDepartmentAdded={handleDepartmentAdded} />}
           <Button onClick={handleSend}>Send Reminders</Button>
         </div>
       </div>
@@ -48,7 +77,8 @@ const Collaboration = () => {
         <TabsContent value="status" className="space-y-4">
           <CollaborationStatusTab 
             budgetRequests={budgetRequests} 
-            onViewLineItems={handleViewLineItems} 
+            onViewLineItems={handleViewLineItems}
+            onAssignUser={isAdmin ? handleAssignUser : undefined}
           />
         </TabsContent>
 
@@ -67,6 +97,13 @@ const Collaboration = () => {
         selectedDepartment={selectedDepartment}
         setSelectedDepartment={setSelectedDepartment}
         budgetRequests={budgetRequests}
+      />
+
+      <AssignUserDialog
+        isOpen={isAssignUserOpen}
+        setIsOpen={setIsAssignUserOpen}
+        department={departmentToAssign}
+        onUserAssigned={handleUserAssigned}
       />
     </div>
   );

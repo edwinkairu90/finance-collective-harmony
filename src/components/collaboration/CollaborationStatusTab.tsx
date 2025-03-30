@@ -6,15 +6,18 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { BudgetRequestData } from "../../types/collaboration";
+import { Edit } from "lucide-react";
 
 interface CollaborationStatusTabProps {
   budgetRequests: BudgetRequestData[];
   onViewLineItems: (department: BudgetRequestData) => void;
+  onAssignUser?: (department: BudgetRequestData) => void;
 }
 
 export const CollaborationStatusTab: React.FC<CollaborationStatusTabProps> = ({
   budgetRequests,
   onViewLineItems,
+  onAssignUser,
 }) => {
   return (
     <Card>
@@ -47,6 +50,20 @@ export const CollaborationStatusTab: React.FC<CollaborationStatusTabProps> = ({
                     <AvatarFallback>{item.assignedTo.avatar}</AvatarFallback>
                   </Avatar>
                   <span>{item.assignedTo.name}</span>
+                  {onAssignUser && (
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className="h-6 w-6 ml-1" 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onAssignUser(item);
+                      }}
+                    >
+                      <Edit size={14} />
+                      <span className="sr-only">Edit Assigned User</span>
+                    </Button>
+                  )}
                 </div>
                 <div>
                   <Badge className={
