@@ -40,7 +40,7 @@ const Collaboration = () => {
 
       <Tabs defaultValue="status" className="space-y-4">
         <TabsList className="font-inter">
-          <TabsTrigger value="status">Collaboration Status</TabsTrigger>
+          <TabsTrigger value="status">Budget Request Status</TabsTrigger>
           <TabsTrigger value="submit">Submit Budget Request</TabsTrigger>
           <TabsTrigger value="history">Historical Data</TabsTrigger>
         </TabsList>
