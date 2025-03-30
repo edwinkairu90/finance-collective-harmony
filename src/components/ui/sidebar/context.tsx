@@ -5,9 +5,9 @@ const SIDEBAR_COOKIE_NAME = "sidebar:state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
-export const SIDEBAR_WIDTH = "16rem";  // Increased from 14rem
-export const SIDEBAR_WIDTH_MOBILE = "18rem";
-export const SIDEBAR_WIDTH_ICON = "4rem";  // Increased from 3rem
+export const SIDEBAR_WIDTH = "18rem";  // Increased from 16rem
+export const SIDEBAR_WIDTH_MOBILE = "20rem";  // Increased from 18rem
+export const SIDEBAR_WIDTH_ICON = "4.5rem";  // Increased from 4rem
 
 type SidebarContext = {
   state: "expanded" | "collapsed";
