@@ -1,3 +1,4 @@
+
 import * as React from "react"
 
 import type {
@@ -117,7 +118,7 @@ const addToRemoveQueue = (toastId: string) => {
 
   const timeout = setTimeout(() => {
     toastTimeouts.delete(toastId)
-    dispatch({
+    dispatchGlobal({
       type: actionTypes.REMOVE_TOAST,
       toastId: toastId,
     })
@@ -142,8 +143,14 @@ export default function reducer_init() {
   return reducer_init_state
 }
 
+// Create a global dispatch that can be used outside of the React component tree
+let dispatchGlobal: React.Dispatch<Action> = () => reducer_init_state;
+
 export const useToast = () => {
   const { state, dispatch } = React.useContext(ToastContext)
+  
+  // Set the global dispatch function
+  dispatchGlobal = dispatch;
 
   return {
     ...state,
@@ -223,13 +230,13 @@ export const toast = {
     }
   },
   success: (props: Omit<ToasterToast, "id" | "variant">) => {
-    return toast.custom({ ...props, variant: "success" })
+    return toast.custom({ ...props, variant: "default" })
   },
   error: (props: Omit<ToasterToast, "id" | "variant">) => {
     return toast.custom({ ...props, variant: "destructive" })
   },
   warning: (props: Omit<ToasterToast, "id" | "variant">) => {
-    return toast.custom({ ...props, variant: "warning" })
+    return toast.custom({ ...props, variant: "default" })
   },
   info: (props: Omit<ToasterToast, "id" | "variant">) => {
     return toast.custom({ ...props, variant: "default" })
