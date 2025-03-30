@@ -49,8 +49,8 @@ export function AppSidebar() {
         {user ? (
           <>
             <div className="p-3">
-              <div className={`flex ${state === "collapsed" ? "justify-center" : "items-center space-x-3"} mb-4`}>
-                <Avatar onClick={toggleSidebar} className="cursor-pointer">
+              <div className={`flex ${state === "collapsed" ? "justify-center" : "items-center space-x-3"}`}>
+                <Avatar onClick={toggleSidebar} className="cursor-pointer h-10 w-10">
                   <AvatarFallback>{user.name ? getInitials(user.name) : 'U'}</AvatarFallback>
                 </Avatar>
                 {state === "expanded" && (
@@ -69,7 +69,7 @@ export function AppSidebar() {
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild tooltip="Dashboard">
                       <Link to="/" className="flex items-center justify-start">
-                        <Home className="h-5 w-5 mr-2" />
+                        <Home className="h-6 w-6 mr-3" />
                         <span>Dashboard</span>
                       </Link>
                     </SidebarMenuButton>
@@ -79,7 +79,7 @@ export function AppSidebar() {
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild tooltip="Budget Planning & Forecasting">
                         <Link to="/budget" className="flex items-center justify-start">
-                          <ChartPie className="h-5 w-5 mr-2" />
+                          <ChartPie className="h-6 w-6 mr-3" />
                           <span className="leading-tight">Budget Planning<br />&amp; Forecasting</span>
                         </Link>
                       </SidebarMenuButton>
@@ -90,7 +90,7 @@ export function AppSidebar() {
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild tooltip="Financial Statements">
                         <Link to="/financial-statements" className="flex items-center justify-start">
-                          <FileText className="h-5 w-5 mr-2" />
+                          <FileText className="h-6 w-6 mr-3" />
                           <span>Financial Statements</span>
                         </Link>
                       </SidebarMenuButton>
@@ -101,7 +101,7 @@ export function AppSidebar() {
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild tooltip="Collaboration">
                         <Link to="/collaboration" className="flex items-center justify-start">
-                          <Users className="h-5 w-5 mr-2" />
+                          <Users className="h-6 w-6 mr-3" />
                           <span>Collaboration</span>
                         </Link>
                       </SidebarMenuButton>
@@ -112,7 +112,7 @@ export function AppSidebar() {
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild tooltip="Actuals vs Budget">
                         <Link to="/actuals" className="flex items-center justify-start">
-                          <BarChart className="h-5 w-5 mr-2" />
+                          <BarChart className="h-6 w-6 mr-3" />
                           <span>Actuals vs Budget</span>
                         </Link>
                       </SidebarMenuButton>
@@ -130,7 +130,7 @@ export function AppSidebar() {
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild tooltip="User Management">
                         <Link to="/admin/users" className="flex items-center justify-start">
-                          <Shield className="h-5 w-5 mr-2" />
+                          <Shield className="h-6 w-6 mr-3" />
                           <span>User Management</span>
                         </Link>
                       </SidebarMenuButton>
@@ -147,14 +147,14 @@ export function AppSidebar() {
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild tooltip="Settings">
                       <Link to="/settings" className="flex items-center justify-start">
-                        <Settings className="h-5 w-5 mr-2" />
+                        <Settings className="h-6 w-6 mr-3" />
                         <span>Settings</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                     <SidebarMenuButton onClick={handleLogout} tooltip="Logout" className="flex items-center justify-start">
-                      <LogOut className="h-5 w-5 mr-2" />
+                      <LogOut className="h-6 w-6 mr-3" />
                       <span>Logout</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
