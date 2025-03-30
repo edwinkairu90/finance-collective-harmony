@@ -41,7 +41,7 @@ export function AppSidebar() {
     <Sidebar className="w-auto">
       <SidebarHeader className="px-3 py-3">
         <div className="flex items-center gap-2 justify-center md:justify-start">
-          <Compass className="h-5 w-5 text-sidebar-primary" />
+          <Compass className="h-6 w-6 text-sidebar-primary" />
           <span className={`text-lg font-bold ${state === "collapsed" ? "hidden" : "block"}`}>Kompass</span>
         </div>
       </SidebarHeader>
@@ -68,8 +68,8 @@ export function AppSidebar() {
                 <SidebarMenu>
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild tooltip="Dashboard">
-                      <Link to="/">
-                        <Home className="h-4 w-4 mr-2" />
+                      <Link to="/" className="flex items-center justify-start">
+                        <Home className="h-5 w-5 mr-2" />
                         <span>Dashboard</span>
                       </Link>
                     </SidebarMenuButton>
@@ -78,8 +78,8 @@ export function AppSidebar() {
                   {(hasPermission('view:all') || hasPermission('view:department')) && (
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild tooltip="Budget Planning & Forecasting">
-                        <Link to="/budget">
-                          <ChartPie className="h-4 w-4 mr-2" />
+                        <Link to="/budget" className="flex items-center justify-start">
+                          <ChartPie className="h-5 w-5 mr-2" />
                           <span className="leading-tight">Budget Planning<br />&amp; Forecasting</span>
                         </Link>
                       </SidebarMenuButton>
@@ -89,8 +89,8 @@ export function AppSidebar() {
                   {(hasPermission('view:all') || hasPermission('view:department')) && (
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild tooltip="Financial Statements">
-                        <Link to="/financial-statements">
-                          <FileText className="h-4 w-4 mr-2" />
+                        <Link to="/financial-statements" className="flex items-center justify-start">
+                          <FileText className="h-5 w-5 mr-2" />
                           <span>Financial Statements</span>
                         </Link>
                       </SidebarMenuButton>
@@ -100,8 +100,8 @@ export function AppSidebar() {
                   {(hasPermission('view:all') || hasPermission('view:department')) && (
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild tooltip="Collaboration">
-                        <Link to="/collaboration">
-                          <Users className="h-4 w-4 mr-2" />
+                        <Link to="/collaboration" className="flex items-center justify-start">
+                          <Users className="h-5 w-5 mr-2" />
                           <span>Collaboration</span>
                         </Link>
                       </SidebarMenuButton>
@@ -111,8 +111,8 @@ export function AppSidebar() {
                   {(hasPermission('view:all') || hasPermission('view:department')) && (
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild tooltip="Actuals vs Budget">
-                        <Link to="/actuals">
-                          <BarChart className="h-4 w-4 mr-2" />
+                        <Link to="/actuals" className="flex items-center justify-start">
+                          <BarChart className="h-5 w-5 mr-2" />
                           <span>Actuals vs Budget</span>
                         </Link>
                       </SidebarMenuButton>
@@ -129,8 +129,8 @@ export function AppSidebar() {
                   <SidebarMenu>
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild tooltip="User Management">
-                        <Link to="/admin/users">
-                          <Shield className="h-4 w-4 mr-2" />
+                        <Link to="/admin/users" className="flex items-center justify-start">
+                          <Shield className="h-5 w-5 mr-2" />
                           <span>User Management</span>
                         </Link>
                       </SidebarMenuButton>
@@ -146,15 +146,15 @@ export function AppSidebar() {
                 <SidebarMenu>
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild tooltip="Settings">
-                      <Link to="/settings">
-                        <Settings className="h-4 w-4 mr-2" />
+                      <Link to="/settings" className="flex items-center justify-start">
+                        <Settings className="h-5 w-5 mr-2" />
                         <span>Settings</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                    <SidebarMenuButton onClick={handleLogout} tooltip="Logout">
-                      <LogOut className="h-4 w-4 mr-2" />
+                    <SidebarMenuButton onClick={handleLogout} tooltip="Logout" className="flex items-center justify-start">
+                      <LogOut className="h-5 w-5 mr-2" />
                       <span>Logout</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
