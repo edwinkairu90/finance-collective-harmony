@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -31,7 +30,7 @@ export const CollaborationStatusTab: React.FC<CollaborationStatusTabProps> = ({
             <div>Overall Completion</div>
             <div>65%</div>
           </div>
-          <Progress value={65} className="h-2" />
+          <Progress value={65} className="h-2 bg-slate-200" indicatorClassName="bg-[#5ECFCC]" />
 
           <div className="pt-6 space-y-4">
             <div className="grid grid-cols-5 text-sm font-medium">
