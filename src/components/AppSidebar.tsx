@@ -13,7 +13,7 @@ import {
   SidebarTrigger
 } from "@/components/ui/sidebar";
 import { Link, useNavigate } from "react-router-dom";
-import { BarChart, ChartPie, ClipboardCheck, Compass, FileText, Home, LogOut, Settings, Shield, Users } from "lucide-react";
+import { BarChart, ChartPie, Compass, FileText, Home, LogOut, Settings, Shield, Users } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -99,17 +99,6 @@ export function AppSidebar() {
                         <Link to="/collaboration">
                           <Users className="h-4 w-4 mr-2" />
                           <span>Collaboration</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  )}
-                  
-                  {hasPermission('approve:budgets') && (
-                    <SidebarMenuItem>
-                      <SidebarMenuButton asChild>
-                        <Link to="/approvals">
-                          <ClipboardCheck className="h-4 w-4 mr-2" />
-                          <span>Approvals</span>
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>

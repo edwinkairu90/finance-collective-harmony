@@ -12,7 +12,6 @@ import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
 import BudgetPlanning from "./pages/BudgetPlanning/index";
 import Collaboration from "./pages/Collaboration";
-import Approvals from "./pages/Approvals";
 import ActualsVsBudget from "./pages/ActualsVsBudget";
 import FinancialStatements from "./pages/FinancialStatements";
 import Login from "./pages/auth/Login";
@@ -49,11 +48,6 @@ const App = () => (
               <Route path="collaboration" element={
                 <PermissionGuard requiredPermission="view:department">
                   <Collaboration />
-                </PermissionGuard>
-              } />
-              <Route path="approvals" element={
-                <PermissionGuard requiredPermission="approve:budgets">
-                  <Approvals />
                 </PermissionGuard>
               } />
               <Route path="actuals" element={
