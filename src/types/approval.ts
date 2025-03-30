@@ -23,4 +23,13 @@ export interface HistoricalApproval {
   approvedBy: string;
   approvedDate: string;
   status: "approved" | "rejected";
+  conversation?: ApprovalMessage[];
+}
+
+export interface ApprovalMessage {
+  id: string;
+  sender: string;
+  timestamp: string;
+  message: string;
+  isApprover: boolean;
 }

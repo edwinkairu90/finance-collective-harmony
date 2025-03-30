@@ -1,6 +1,8 @@
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { MessageCircle } from "lucide-react";
 import { HistoricalApproval } from "../../../types/approval";
 
 interface ApprovalHistoryDetailsDialogProps {
@@ -18,7 +20,7 @@ export const ApprovalHistoryDetailsDialog = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-2xl max-h-[90vh]">
         <DialogHeader>
           <DialogTitle className="text-lg flex items-center justify-between">
             <span>{item.title}</span>
@@ -68,6 +70,39 @@ export const ApprovalHistoryDetailsDialog = ({
                 : "Budget request rejected due to budget constraints. Consider resubmitting with a revised scope."}
             </p>
           </div>
+
+          {item.conversation && item.conversation.length > 0 && (
+            <div className="mt-6">
+              <div className="flex items-center gap-2 font-medium mb-3">
+                <MessageCircle className="h-4 w-4" />
+                <h4>Approval Discussion</h4>
+              </div>
+              
+              <ScrollArea className="h-[220px] rounded-md border p-4">
+                <div className="space-y-4">
+                  {item.conversation.map((message) => (
+                    <div 
+                      key={message.id} 
+                      className={`flex flex-col ${message.isApprover ? 'items-end' : 'items-start'}`}
+                    >
+                      <div className={`max-w-[80%] rounded-lg p-3 ${
+                        message.isApprover 
+                          ? 'bg-blue-50 text-blue-800' 
+                          : 'bg-gray-100 text-gray-800'
+                      }`}>
+                        <p className="text-sm">{message.message}</p>
+                      </div>
+                      <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
+                        <span className="font-medium">{message.sender}</span>
+                        <span>•</span>
+                        <span>{message.timestamp}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </ScrollArea>
+            </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>
