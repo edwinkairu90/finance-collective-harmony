@@ -22,7 +22,7 @@ export const HistoricalDataTab: React.FC<HistoricalDataTabProps> = ({
     <Card>
       <CardHeader>
         <CardTitle className="font-inter">Historical Data</CardTitle>
-        <CardDescription>View and download previous submissions</CardDescription>
+        <CardDescription className="font-inter">View and download previous submissions</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
