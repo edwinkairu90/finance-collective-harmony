@@ -35,7 +35,10 @@ const Dashboard = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold tracking-tight">Executive Dashboard</h1>
-        <Button onClick={showNotification}>
+        <Button 
+          onClick={showNotification}
+          className="bg-[#50C2A0] hover:bg-[#3BA989] text-white"
+        >
           Show Sample Notification
         </Button>
       </div>
