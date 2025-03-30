@@ -2,9 +2,11 @@
 import { useState } from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { HistoricalApproval } from "../../../types/approval";
 import { ApprovalHistoryDetailsDialog } from "./ApprovalHistoryDetailsDialog";
+import { Eye } from "lucide-react";
 
 interface ApprovalHistoryProps {
   historicalApprovals: HistoricalApproval[];
@@ -19,6 +21,12 @@ export const ApprovalHistory = ({ historicalApprovals }: ApprovalHistoryProps) =
       setSelectedItem(item);
       setIsDetailsOpen(true);
     }
+  };
+
+  const handleViewClick = (item: HistoricalApproval, e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent row click from firing
+    setSelectedItem(item);
+    setIsDetailsOpen(true);
   };
 
   return (
@@ -41,6 +49,7 @@ export const ApprovalHistory = ({ historicalApprovals }: ApprovalHistoryProps) =
                 <TableHead className="font-inter">Date</TableHead>
                 <TableHead className="font-inter">Approved By</TableHead>
                 <TableHead className="font-inter">Status</TableHead>
+                <TableHead className="font-inter">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -68,6 +77,19 @@ export const ApprovalHistory = ({ historicalApprovals }: ApprovalHistoryProps) =
                     }>
                       {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
                     </Badge>
+                  </TableCell>
+                  <TableCell>
+                    {(item.status === "approved" || item.status === "rejected") && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="p-0 h-6 font-inter flex items-center gap-1"
+                        onClick={(e) => handleViewClick(item, e)}
+                      >
+                        <Eye className="h-3.5 w-3.5" />
+                        <span>View</span>
+                      </Button>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
