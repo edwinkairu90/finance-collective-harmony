@@ -72,7 +72,8 @@ const Collaboration = () => {
           )}
           <Button 
             onClick={handleSend}
-            className="bg-[#50C2A0] hover:bg-[#3BA989] text-white"
+            size="sm"
+            className="bg-[#50C2A0] hover:bg-[#3BA989] text-white text-xs py-1.5 px-3 h-8"
           >
             Send Reminders
           </Button>

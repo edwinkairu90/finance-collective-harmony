@@ -72,8 +72,8 @@ export const AddDepartmentDialog: React.FC<AddDepartmentDialogProps> = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="sm" className="gap-1 bg-[#50C2A0] hover:bg-[#3BA989] text-white">
-          <Plus size={16} />
+        <Button size="sm" className="gap-1 bg-[#50C2A0] hover:bg-[#3BA989] text-white text-xs py-1.5 px-3 h-8">
+          <Plus size={14} />
           Add Department
         </Button>
       </DialogTrigger>
