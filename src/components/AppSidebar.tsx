@@ -10,7 +10,8 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger
+  SidebarTrigger,
+  useSidebar
 } from "@/components/ui/sidebar";
 import { Link, useNavigate } from "react-router-dom";
 import { BarChart, ChartPie, Compass, FileText, Home, LogOut, Settings, Shield, Users } from "lucide-react";
@@ -21,6 +22,7 @@ import { Button } from "@/components/ui/button";
 export function AppSidebar() {
   const { user, logout, hasPermission } = useAuth();
   const navigate = useNavigate();
+  const { state, toggleSidebar } = useSidebar();
 
   const handleLogout = () => {
     logout();
@@ -38,32 +40,34 @@ export function AppSidebar() {
   return (
     <Sidebar className="w-auto">
       <SidebarHeader className="px-3 py-3">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 justify-center md:justify-start">
           <Compass className="h-5 w-5 text-sidebar-primary" />
-          <span className="text-lg font-bold">Kompass</span>
+          <span className={`text-lg font-bold ${state === "collapsed" ? "hidden" : "block"}`}>Kompass</span>
         </div>
       </SidebarHeader>
       <SidebarContent>
         {user ? (
           <>
             <div className="p-3">
-              <div className="flex items-center space-x-3 mb-4">
-                <Avatar>
+              <div className={`flex ${state === "collapsed" ? "justify-center" : "items-center space-x-3"} mb-4`}>
+                <Avatar onClick={toggleSidebar} className="cursor-pointer">
                   <AvatarFallback>{user.name ? getInitials(user.name) : 'U'}</AvatarFallback>
                 </Avatar>
-                <div>
-                  <p className="text-sm font-medium">{user.name}</p>
-                  <p className="text-xs text-muted-foreground">{user.role} • {user.department}</p>
-                </div>
+                {state === "expanded" && (
+                  <div>
+                    <p className="text-sm font-medium">{user.name}</p>
+                    <p className="text-xs text-muted-foreground">{user.role} • {user.department}</p>
+                  </div>
+                )}
               </div>
             </div>
             
             <SidebarGroup>
-              <SidebarGroupLabel>Main Navigation</SidebarGroupLabel>
+              <SidebarGroupLabel className={state === "collapsed" ? "hidden" : "block"}>Main Navigation</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
+                    <SidebarMenuButton asChild tooltip="Dashboard">
                       <Link to="/">
                         <Home className="h-4 w-4 mr-2" />
                         <span>Dashboard</span>
@@ -73,7 +77,7 @@ export function AppSidebar() {
                   
                   {(hasPermission('view:all') || hasPermission('view:department')) && (
                     <SidebarMenuItem>
-                      <SidebarMenuButton asChild>
+                      <SidebarMenuButton asChild tooltip="Budget Planning & Forecasting">
                         <Link to="/budget">
                           <ChartPie className="h-4 w-4 mr-2" />
                           <span className="leading-tight">Budget Planning<br />&amp; Forecasting</span>
@@ -84,7 +88,7 @@ export function AppSidebar() {
                   
                   {(hasPermission('view:all') || hasPermission('view:department')) && (
                     <SidebarMenuItem>
-                      <SidebarMenuButton asChild>
+                      <SidebarMenuButton asChild tooltip="Financial Statements">
                         <Link to="/financial-statements">
                           <FileText className="h-4 w-4 mr-2" />
                           <span>Financial Statements</span>
@@ -95,7 +99,7 @@ export function AppSidebar() {
                   
                   {(hasPermission('view:all') || hasPermission('view:department')) && (
                     <SidebarMenuItem>
-                      <SidebarMenuButton asChild>
+                      <SidebarMenuButton asChild tooltip="Collaboration">
                         <Link to="/collaboration">
                           <Users className="h-4 w-4 mr-2" />
                           <span>Collaboration</span>
@@ -106,7 +110,7 @@ export function AppSidebar() {
                   
                   {(hasPermission('view:all') || hasPermission('view:department')) && (
                     <SidebarMenuItem>
-                      <SidebarMenuButton asChild>
+                      <SidebarMenuButton asChild tooltip="Actuals vs Budget">
                         <Link to="/actuals">
                           <BarChart className="h-4 w-4 mr-2" />
                           <span>Actuals vs Budget</span>
@@ -120,11 +124,11 @@ export function AppSidebar() {
             
             {hasPermission('manage:users') && (
               <SidebarGroup>
-                <SidebarGroupLabel>Administration</SidebarGroupLabel>
+                <SidebarGroupLabel className={state === "collapsed" ? "hidden" : "block"}>Administration</SidebarGroupLabel>
                 <SidebarGroupContent>
                   <SidebarMenu>
                     <SidebarMenuItem>
-                      <SidebarMenuButton asChild>
+                      <SidebarMenuButton asChild tooltip="User Management">
                         <Link to="/admin/users">
                           <Shield className="h-4 w-4 mr-2" />
                           <span>User Management</span>
@@ -137,11 +141,11 @@ export function AppSidebar() {
             )}
             
             <SidebarGroup>
-              <SidebarGroupLabel>Settings</SidebarGroupLabel>
+              <SidebarGroupLabel className={state === "collapsed" ? "hidden" : "block"}>Settings</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
+                    <SidebarMenuButton asChild tooltip="Settings">
                       <Link to="/settings">
                         <Settings className="h-4 w-4 mr-2" />
                         <span>Settings</span>
@@ -149,7 +153,7 @@ export function AppSidebar() {
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                    <SidebarMenuButton onClick={handleLogout}>
+                    <SidebarMenuButton onClick={handleLogout} tooltip="Logout">
                       <LogOut className="h-4 w-4 mr-2" />
                       <span>Logout</span>
                     </SidebarMenuButton>
@@ -166,11 +170,10 @@ export function AppSidebar() {
         )}
       </SidebarContent>
       <SidebarFooter className="px-3 py-3">
-        <div className="text-xs text-muted-foreground">
+        <div className={`text-xs text-muted-foreground ${state === "collapsed" ? "text-center" : ""}`}>
           &copy; 2025 Kompass Inc.
         </div>
       </SidebarFooter>
     </Sidebar>
   );
 }
-
