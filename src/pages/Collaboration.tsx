@@ -80,11 +80,33 @@ const Collaboration = () => {
       </div>
 
       <Tabs defaultValue="status" className="space-y-4">
-        <TabsList className="font-inter">
-          <TabsTrigger value="status">Budget Request Status</TabsTrigger>
-          <TabsTrigger value="submit">Submit Budget Request</TabsTrigger>
-          <TabsTrigger value="history">Historical Data</TabsTrigger>
-          {canApprove && <TabsTrigger value="approvals">Approvals</TabsTrigger>}
+        <TabsList className="font-inter bg-transparent p-1 h-auto space-x-1">
+          <TabsTrigger 
+            value="status" 
+            className="text-sm py-2 px-4 rounded-md data-[state=active]:bg-[#D3E4FD] data-[state=active]:text-foreground data-[state=active]:shadow-none"
+          >
+            Budget Request Status
+          </TabsTrigger>
+          <TabsTrigger 
+            value="submit" 
+            className="text-sm py-2 px-4 rounded-md data-[state=active]:bg-[#D3E4FD] data-[state=active]:text-foreground data-[state=active]:shadow-none"
+          >
+            Submit Budget Request
+          </TabsTrigger>
+          <TabsTrigger 
+            value="history" 
+            className="text-sm py-2 px-4 rounded-md data-[state=active]:bg-[#D3E4FD] data-[state=active]:text-foreground data-[state=active]:shadow-none"
+          >
+            Historical Data
+          </TabsTrigger>
+          {canApprove && (
+            <TabsTrigger 
+              value="approvals" 
+              className="text-sm py-2 px-4 rounded-md data-[state=active]:bg-[#D3E4FD] data-[state=active]:text-foreground data-[state=active]:shadow-none"
+            >
+              Approvals
+            </TabsTrigger>
+          )}
         </TabsList>
 
         <TabsContent value="status" className="space-y-4">
