@@ -6,11 +6,12 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { ApprovalItem } from "../../../types/approval";
+import { useAuth } from "@/context/AuthContext";
 
 interface ApprovalDetailsProps {
   selectedItem: ApprovalItem | null;
-  onApprove: (id: string) => void;
-  onReject: (id: string) => void;
+  onApprove: (id: string, reason: string) => void;
+  onReject: (id: string, reason: string) => void;
   onClose: () => void;
 }
 
@@ -21,6 +22,8 @@ export const ApprovalDetails = ({
   onClose 
 }: ApprovalDetailsProps) => {
   const [comment, setComment] = useState("");
+  const { hasPermission } = useAuth();
+  const isAdmin = hasPermission('manage:users');
 
   if (!selectedItem) {
     return (
@@ -82,15 +85,47 @@ export const ApprovalDetails = ({
           </div>
         </div>
 
-        <div>
-          <div className="font-medium mb-1 text-xs">Add Comment</div>
-          <Textarea
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            placeholder="Enter your comments here..."
-            className="resize-none text-xs"
-          />
-        </div>
+        {selectedItem.status !== "pending" && selectedItem.approver && (
+          <div>
+            <div className="font-medium mb-1 text-xs">
+              {selectedItem.status === "approved" ? "Approved By" : "Rejected By"}
+            </div>
+            <div className="flex items-center gap-2">
+              <Avatar className="h-6 w-6">
+                <AvatarFallback className="text-xs">{selectedItem.approver.avatar}</AvatarFallback>
+              </Avatar>
+              <div>
+                <div className="text-xs">{selectedItem.approver.name}</div>
+                <div className="text-xs text-muted-foreground">
+                  {selectedItem.approvalDate}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {selectedItem.status !== "pending" && selectedItem.reason && (
+          <div>
+            <div className="font-medium mb-1 text-xs">
+              {selectedItem.status === "approved" ? "Approval Justification" : "Rejection Reason"}
+            </div>
+            <div className="text-xs border p-2 rounded-md bg-slate-50">
+              {selectedItem.reason}
+            </div>
+          </div>
+        )}
+
+        {selectedItem.status === "pending" && (
+          <div>
+            <div className="font-medium mb-1 text-xs">Add Comment</div>
+            <Textarea
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              placeholder="Enter your comments here..."
+              className="resize-none text-xs"
+            />
+          </div>
+        )}
       </CardContent>
       <CardFooter className="space-x-2 py-3">
         {selectedItem.status === "pending" && (
@@ -98,13 +133,13 @@ export const ApprovalDetails = ({
             <Button
               variant="outline"
               className="border-red-500 text-red-500 hover:bg-red-50 text-xs h-7"
-              onClick={() => onReject(selectedItem.id)}
+              onClick={() => onReject(selectedItem.id, comment)}
             >
               Reject
             </Button>
             <Button
               className="bg-green-500 hover:bg-green-600 text-xs h-7"
-              onClick={() => onApprove(selectedItem.id)}
+              onClick={() => onApprove(selectedItem.id, comment)}
             >
               Approve
             </Button>
