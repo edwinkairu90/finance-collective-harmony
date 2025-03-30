@@ -21,7 +21,7 @@ export const HistoricalDataTab: React.FC<HistoricalDataTabProps> = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Historical Data</CardTitle>
+        <CardTitle className="font-inter">Historical Data</CardTitle>
         <CardDescription>View and download previous submissions</CardDescription>
       </CardHeader>
       <CardContent>
@@ -30,24 +30,24 @@ export const HistoricalDataTab: React.FC<HistoricalDataTabProps> = ({
             <table className="w-full">
               <thead>
                 <tr className="border-b">
-                  <th className="text-left py-3 font-medium">Period</th>
-                  <th className="text-left py-3 font-medium">Department</th>
-                  <th className="text-right py-3 font-medium">Revenue</th>
-                  <th className="text-right py-3 font-medium">Expenses</th>
-                  <th className="text-right py-3 font-medium">Submitted By</th>
-                  <th className="text-right py-3 font-medium">Actions</th>
+                  <th className="text-left py-3 font-medium font-inter text-gray-600">Period</th>
+                  <th className="text-left py-3 font-medium font-inter text-gray-600">Department</th>
+                  <th className="text-right py-3 font-medium font-inter text-gray-600">Revenue</th>
+                  <th className="text-right py-3 font-medium font-inter text-gray-600">Expenses</th>
+                  <th className="text-right py-3 font-medium font-inter text-gray-600">Submitted By</th>
+                  <th className="text-right py-3 font-medium font-inter text-gray-600">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {historicalData.map((item, index) => (
-                  <tr key={index} className="border-b">
-                    <td className="py-3">{item.period}</td>
-                    <td className="py-3">{item.department}</td>
-                    <td className="text-right py-3">${item.revenue.toLocaleString()}</td>
-                    <td className="text-right py-3">${item.expenses.toLocaleString()}</td>
-                    <td className="text-right py-3">{item.submittedBy}</td>
+                  <tr key={index} className="border-b hover:bg-gray-50">
+                    <td className="py-3 font-inter">{item.period}</td>
+                    <td className="py-3 font-inter">{item.department}</td>
+                    <td className="text-right py-3 font-inter">${item.revenue.toLocaleString()}</td>
+                    <td className="text-right py-3 font-inter">${item.expenses.toLocaleString()}</td>
+                    <td className="text-right py-3 font-inter">{item.submittedBy}</td>
                     <td className="text-right py-3">
-                      <Button variant="link" className="h-auto p-0">View</Button>
+                      <Button variant="link" className="h-auto p-0 font-inter">View</Button>
                     </td>
                   </tr>
                 ))}
@@ -57,7 +57,7 @@ export const HistoricalDataTab: React.FC<HistoricalDataTabProps> = ({
         </div>
       </CardContent>
       <CardFooter>
-        <Button variant="outline">Export All Data</Button>
+        <Button variant="outline" className="font-inter">Export All Data</Button>
       </CardFooter>
     </Card>
   );

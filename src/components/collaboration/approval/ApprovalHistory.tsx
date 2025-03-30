@@ -25,7 +25,7 @@ export const ApprovalHistory = ({ historicalApprovals }: ApprovalHistoryProps) =
     <>
       <Card>
         <CardHeader className="py-3">
-          <CardTitle className="text-base">Approval History</CardTitle>
+          <CardTitle className="text-base font-inter">Approval History</CardTitle>
           <CardDescription className="text-xs">
             Past approvals and rejections
           </CardDescription>
@@ -34,13 +34,13 @@ export const ApprovalHistory = ({ historicalApprovals }: ApprovalHistoryProps) =
           <Table>
             <TableHeader>
               <TableRow className="text-xs">
-                <TableHead className="w-[250px]">Request</TableHead>
-                <TableHead>Department</TableHead>
-                <TableHead>Amount</TableHead>
-                <TableHead>Requested By</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Approved By</TableHead>
-                <TableHead>Status</TableHead>
+                <TableHead className="w-[250px] font-inter">Request</TableHead>
+                <TableHead className="font-inter">Department</TableHead>
+                <TableHead className="font-inter">Amount</TableHead>
+                <TableHead className="font-inter">Requested By</TableHead>
+                <TableHead className="font-inter">Date</TableHead>
+                <TableHead className="font-inter">Approved By</TableHead>
+                <TableHead className="font-inter">Status</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -54,12 +54,12 @@ export const ApprovalHistory = ({ historicalApprovals }: ApprovalHistoryProps) =
                   }`}
                   onClick={() => handleRowClick(item)}
                 >
-                  <TableCell className="font-medium">{item.title}</TableCell>
-                  <TableCell>{item.department}</TableCell>
-                  <TableCell>${item.amount.toLocaleString()}</TableCell>
-                  <TableCell>{item.requestedBy}</TableCell>
-                  <TableCell>{item.requestDate}</TableCell>
-                  <TableCell>{item.approvedBy}</TableCell>
+                  <TableCell className="font-medium font-inter">{item.title}</TableCell>
+                  <TableCell className="font-inter">{item.department}</TableCell>
+                  <TableCell className="font-inter">${item.amount.toLocaleString()}</TableCell>
+                  <TableCell className="font-inter">{item.requestedBy}</TableCell>
+                  <TableCell className="font-inter">{item.requestDate}</TableCell>
+                  <TableCell className="font-inter">{item.approvedBy}</TableCell>
                   <TableCell>
                     <Badge className={
                       item.status === "approved"
