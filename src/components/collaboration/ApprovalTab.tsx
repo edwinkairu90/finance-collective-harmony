@@ -50,9 +50,17 @@ export const ApprovalTab = () => {
   return (
     <div className="space-y-6">
       <Tabs defaultValue="current" className="w-full" onValueChange={setActiveTab}>
-        <TabsList className="mb-4">
-          <TabsTrigger value="current" className="text-xs">Current Approvals</TabsTrigger>
-          <TabsTrigger value="history" className="text-xs">
+        <TabsList className="mb-4 bg-transparent p-0 h-auto space-x-1">
+          <TabsTrigger 
+            value="current" 
+            className="text-xs font-inter py-2 px-4 rounded-md data-[state=active]:bg-[#D3E4FD] data-[state=active]:text-foreground data-[state=active]:shadow-none"
+          >
+            Current Approvals
+          </TabsTrigger>
+          <TabsTrigger 
+            value="history" 
+            className="text-xs font-inter py-2 px-4 rounded-md data-[state=active]:bg-[#D3E4FD] data-[state=active]:text-foreground data-[state=active]:shadow-none"
+          >
             <History className="w-3.5 h-3.5 mr-1" />
             Approval History
           </TabsTrigger>
