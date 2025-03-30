@@ -88,7 +88,7 @@ export const ApprovalHistoryDetailsDialog = ({
                       <div className={`max-w-[80%] rounded-lg p-3 ${
                         message.isApprover 
                           ? 'bg-blue-50 text-blue-800' 
-                          : 'bg-[#FFDEE2] text-gray-800'
+                          : 'bg-[#FFDEE2] text-[#FF5A78]'
                       }`}>
                         <p className="text-sm font-inter">{message.message}</p>
                       </div>
