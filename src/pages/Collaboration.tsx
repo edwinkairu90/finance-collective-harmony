@@ -9,6 +9,7 @@ import { SubmitBudgetTab } from "../components/collaboration/SubmitBudgetTab";
 import { HistoricalDataTab } from "../components/collaboration/HistoricalDataTab";
 import { LineItemsDialog } from "../components/collaboration/LineItemsDialog";
 import { budgetRequests, historicalData } from "../data/collaborationData";
+import { CollaborationHeader } from "../components/CollaborationHeader";
 
 const Collaboration = () => {
   const { toast } = useToast();
@@ -30,12 +31,15 @@ const Collaboration = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold tracking-tight">Collaboration</h1>
-        <Button onClick={handleSend}>Send Reminders</Button>
+        <h1 className="text-3xl font-bold tracking-tight font-inter">Collaboration</h1>
+        <div className="flex gap-4">
+          <CollaborationHeader />
+          <Button onClick={handleSend}>Send Reminders</Button>
+        </div>
       </div>
 
       <Tabs defaultValue="status" className="space-y-4">
-        <TabsList>
+        <TabsList className="font-inter">
           <TabsTrigger value="status">Collaboration Status</TabsTrigger>
           <TabsTrigger value="submit">Submit Budget Request</TabsTrigger>
           <TabsTrigger value="history">Historical Data</TabsTrigger>
