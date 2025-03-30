@@ -72,7 +72,7 @@ export const AddDepartmentDialog: React.FC<AddDepartmentDialogProps> = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="sm" className="gap-1">
+        <Button size="sm" className="gap-1 bg-[#50C2A0] hover:bg-[#3BA989] text-white">
           <Plus size={16} />
           Add Department
         </Button>
@@ -115,11 +115,10 @@ export const AddDepartmentDialog: React.FC<AddDepartmentDialogProps> = ({
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit">Add Department</Button>
+            <Button type="submit" className="bg-[#50C2A0] hover:bg-[#3BA989] text-white">Add Department</Button>
           </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
   );
 };
-

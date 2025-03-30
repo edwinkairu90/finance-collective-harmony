@@ -68,7 +68,12 @@ const Collaboration = () => {
               onNeedAssignment={handleAssignUser}
             />
           )}
-          <Button onClick={handleSend}>Send Reminders</Button>
+          <Button 
+            onClick={handleSend}
+            className="bg-[#50C2A0] hover:bg-[#3BA989] text-white"
+          >
+            Send Reminders
+          </Button>
         </div>
       </div>
 
@@ -115,4 +120,3 @@ const Collaboration = () => {
 };
 
 export default Collaboration;
-
