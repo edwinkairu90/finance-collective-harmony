@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -42,11 +43,11 @@ export const CollaborationStatusTab: React.FC<CollaborationStatusTabProps> = ({
             </div>
 
             {budgetRequests.map((item) => (
-              <div key={item.id} className="grid grid-cols-5 items-center gap-4 border-t pt-4">
+              <div key={item.id} className="grid grid-cols-5 items-center gap-4 border-t pt-4 text-sm">
                 <div>{item.department}</div>
                 <div className="flex items-center gap-2">
-                  <Avatar className="h-8 w-8">
-                    <AvatarFallback>{item.assignedTo.avatar}</AvatarFallback>
+                  <Avatar className="h-7 w-7">
+                    <AvatarFallback className="text-xs">{item.assignedTo.avatar}</AvatarFallback>
                   </Avatar>
                   <span>{item.assignedTo.name}</span>
                   {onAssignUser && (
@@ -67,10 +68,10 @@ export const CollaborationStatusTab: React.FC<CollaborationStatusTabProps> = ({
                 <div>
                   <Badge className={
                     item.status === "completed" 
-                      ? "bg-green-500" 
+                      ? "bg-green-500 text-xs px-3 py-0.5" 
                       : item.status === "in-progress" 
-                        ? "bg-amber-500" 
-                        : ""
+                        ? "bg-amber-500 text-xs px-3 py-0.5" 
+                        : "text-xs px-3 py-0.5"
                   }>
                     {item.status === "completed" 
                       ? "Completed" 
@@ -84,6 +85,7 @@ export const CollaborationStatusTab: React.FC<CollaborationStatusTabProps> = ({
                   <Button 
                     variant="outline" 
                     size="sm" 
+                    className="text-xs h-8 px-3"
                     onClick={() => onViewLineItems(item)}
                   >
                     View Details
