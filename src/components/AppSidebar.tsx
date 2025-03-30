@@ -49,12 +49,12 @@ export function AppSidebar() {
         {user ? (
           <>
             <div className="p-3">
-              <div className={`flex ${state === "collapsed" ? "justify-center" : "items-center space-x-3"}`}>
+              <div className="flex justify-center">
                 <Avatar onClick={toggleSidebar} className="cursor-pointer h-10 w-10">
                   <AvatarFallback>{user.name ? getInitials(user.name) : 'U'}</AvatarFallback>
                 </Avatar>
                 {state === "expanded" && (
-                  <div>
+                  <div className="ml-3">
                     <p className="text-sm font-medium">{user.name}</p>
                     <p className="text-xs text-muted-foreground">{user.role} • {user.department}</p>
                   </div>
@@ -67,9 +67,9 @@ export function AppSidebar() {
               <SidebarGroupContent>
                 <SidebarMenu>
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild tooltip="Dashboard" className="justify-center md:justify-start">
-                      <Link to="/" className="flex items-center">
-                        <Home className="h-6 w-6 flex-shrink-0" />
+                    <SidebarMenuButton asChild tooltip="Dashboard" className="flex justify-center">
+                      <Link to="/" className="flex items-center justify-center md:justify-start">
+                        <Home className="h-6 w-6" />
                         <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"}`}>Dashboard</span>
                       </Link>
                     </SidebarMenuButton>
@@ -77,9 +77,9 @@ export function AppSidebar() {
                   
                   {(hasPermission('view:all') || hasPermission('view:department')) && (
                     <SidebarMenuItem>
-                      <SidebarMenuButton asChild tooltip="Budget Planning & Forecasting" className="justify-center md:justify-start">
-                        <Link to="/budget" className="flex items-center">
-                          <ChartPie className="h-6 w-6 flex-shrink-0" />
+                      <SidebarMenuButton asChild tooltip="Budget Planning & Forecasting" className="flex justify-center">
+                        <Link to="/budget" className="flex items-center justify-center md:justify-start">
+                          <ChartPie className="h-6 w-6" />
                           <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"} leading-tight`}>Budget Planning<br />&amp; Forecasting</span>
                         </Link>
                       </SidebarMenuButton>
@@ -88,9 +88,9 @@ export function AppSidebar() {
                   
                   {(hasPermission('view:all') || hasPermission('view:department')) && (
                     <SidebarMenuItem>
-                      <SidebarMenuButton asChild tooltip="Financial Statements" className="justify-center md:justify-start">
-                        <Link to="/financial-statements" className="flex items-center">
-                          <FileText className="h-6 w-6 flex-shrink-0" />
+                      <SidebarMenuButton asChild tooltip="Financial Statements" className="flex justify-center">
+                        <Link to="/financial-statements" className="flex items-center justify-center md:justify-start">
+                          <FileText className="h-6 w-6" />
                           <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"}`}>Financial Statements</span>
                         </Link>
                       </SidebarMenuButton>
@@ -99,9 +99,9 @@ export function AppSidebar() {
                   
                   {(hasPermission('view:all') || hasPermission('view:department')) && (
                     <SidebarMenuItem>
-                      <SidebarMenuButton asChild tooltip="Collaboration" className="justify-center md:justify-start">
-                        <Link to="/collaboration" className="flex items-center">
-                          <Users className="h-6 w-6 flex-shrink-0" />
+                      <SidebarMenuButton asChild tooltip="Collaboration" className="flex justify-center">
+                        <Link to="/collaboration" className="flex items-center justify-center md:justify-start">
+                          <Users className="h-6 w-6" />
                           <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"}`}>Collaboration</span>
                         </Link>
                       </SidebarMenuButton>
@@ -110,9 +110,9 @@ export function AppSidebar() {
                   
                   {(hasPermission('view:all') || hasPermission('view:department')) && (
                     <SidebarMenuItem>
-                      <SidebarMenuButton asChild tooltip="Actuals vs Budget" className="justify-center md:justify-start">
-                        <Link to="/actuals" className="flex items-center">
-                          <BarChart className="h-6 w-6 flex-shrink-0" />
+                      <SidebarMenuButton asChild tooltip="Actuals vs Budget" className="flex justify-center">
+                        <Link to="/actuals" className="flex items-center justify-center md:justify-start">
+                          <BarChart className="h-6 w-6" />
                           <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"}`}>Actuals vs Budget</span>
                         </Link>
                       </SidebarMenuButton>
@@ -128,9 +128,9 @@ export function AppSidebar() {
                 <SidebarGroupContent>
                   <SidebarMenu>
                     <SidebarMenuItem>
-                      <SidebarMenuButton asChild tooltip="User Management" className="justify-center md:justify-start">
-                        <Link to="/admin/users" className="flex items-center">
-                          <Shield className="h-6 w-6 flex-shrink-0" />
+                      <SidebarMenuButton asChild tooltip="User Management" className="flex justify-center">
+                        <Link to="/admin/users" className="flex items-center justify-center md:justify-start">
+                          <Shield className="h-6 w-6" />
                           <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"}`}>User Management</span>
                         </Link>
                       </SidebarMenuButton>
@@ -145,17 +145,19 @@ export function AppSidebar() {
               <SidebarGroupContent>
                 <SidebarMenu>
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild tooltip="Settings" className="justify-center md:justify-start">
-                      <Link to="/settings" className="flex items-center">
-                        <Settings className="h-6 w-6 flex-shrink-0" />
+                    <SidebarMenuButton asChild tooltip="Settings" className="flex justify-center">
+                      <Link to="/settings" className="flex items-center justify-center md:justify-start">
+                        <Settings className="h-6 w-6" />
                         <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"}`}>Settings</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                    <SidebarMenuButton onClick={handleLogout} tooltip="Logout" className="justify-center md:justify-start flex items-center">
-                      <LogOut className="h-6 w-6 flex-shrink-0" />
-                      <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"}`}>Logout</span>
+                    <SidebarMenuButton onClick={handleLogout} tooltip="Logout" className="flex justify-center items-center">
+                      <div className="flex items-center justify-center md:justify-start">
+                        <LogOut className="h-6 w-6" />
+                        <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"}`}>Logout</span>
+                      </div>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 </SidebarMenu>
@@ -177,4 +179,3 @@ export function AppSidebar() {
     </Sidebar>
   );
 }
-
