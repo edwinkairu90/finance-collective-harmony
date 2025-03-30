@@ -51,7 +51,7 @@ export function AppSidebar() {
             <div className="p-3">
               <div className="flex justify-center">
                 <Avatar onClick={toggleSidebar} className="cursor-pointer h-10 w-10">
-                  <AvatarFallback className="text-gray-800">{user.name ? getInitials(user.name) : 'U'}</AvatarFallback>
+                  <AvatarFallback className="bg-[#1a5954] text-white">{user.name ? getInitials(user.name) : 'U'}</AvatarFallback>
                 </Avatar>
                 {state === "expanded" && (
                   <div className="ml-3">
