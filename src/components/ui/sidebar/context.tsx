@@ -42,7 +42,7 @@ export const SidebarProvider = ({
   defaultState = "expanded",
   persistKey = "sidebar-state",
   width = "18rem",
-  iconWidth = "5.5rem",
+  iconWidth = "5rem",
   mobileWidth = "80%",
 }: SidebarProviderProps) => {
   const [state, setState] = React.useState<"expanded" | "collapsed">(
@@ -133,4 +133,3 @@ export const SidebarProvider = ({
 };
 
 SidebarProvider.displayName = "SidebarProvider";
-
