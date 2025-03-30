@@ -1,4 +1,3 @@
-
 import * as React from "react";
 
 // Define the context props
@@ -41,8 +40,8 @@ export const SidebarProvider = ({
   children,
   defaultState = "expanded",
   persistKey = "sidebar-state",
-  width = "18rem",
-  iconWidth = "5rem",
+  width = "16rem",
+  iconWidth = "4rem",
   mobileWidth = "80%",
 }: SidebarProviderProps) => {
   const [state, setState] = React.useState<"expanded" | "collapsed">(

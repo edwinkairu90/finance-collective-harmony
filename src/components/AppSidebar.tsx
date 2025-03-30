@@ -1,4 +1,3 @@
-
 import {
   Sidebar,
   SidebarContent,
@@ -69,7 +68,7 @@ export function AppSidebar() {
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild tooltip="Dashboard" className="flex items-center">
                       <Link to="/" className="flex items-center justify-center">
-                        <Home className="h-6 w-6 mx-auto" />
+                        <Home className="h-6 w-6" />
                         <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"}`}>Dashboard</span>
                       </Link>
                     </SidebarMenuButton>
@@ -79,7 +78,7 @@ export function AppSidebar() {
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild tooltip="Budget Planning & Forecasting" className="flex items-center">
                         <Link to="/budget" className="flex items-center justify-center">
-                          <ChartPie className="h-6 w-6 mx-auto" />
+                          <ChartPie className="h-6 w-6" />
                           <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"} leading-tight`}>Budget Planning<br />&amp; Forecasting</span>
                         </Link>
                       </SidebarMenuButton>
@@ -90,7 +89,7 @@ export function AppSidebar() {
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild tooltip="Financial Statements" className="flex items-center">
                         <Link to="/financial-statements" className="flex items-center justify-center">
-                          <FileText className="h-6 w-6 mx-auto" />
+                          <FileText className="h-6 w-6" />
                           <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"}`}>Financial Statements</span>
                         </Link>
                       </SidebarMenuButton>
@@ -101,7 +100,7 @@ export function AppSidebar() {
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild tooltip="Collaboration" className="flex items-center">
                         <Link to="/collaboration" className="flex items-center justify-center">
-                          <Users className="h-6 w-6 mx-auto" />
+                          <Users className="h-6 w-6" />
                           <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"}`}>Collaboration</span>
                         </Link>
                       </SidebarMenuButton>
@@ -112,7 +111,7 @@ export function AppSidebar() {
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild tooltip="Actuals vs Budget" className="flex items-center">
                         <Link to="/actuals" className="flex items-center justify-center">
-                          <BarChart className="h-6 w-6 mx-auto" />
+                          <BarChart className="h-6 w-6" />
                           <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"}`}>Actuals vs Budget</span>
                         </Link>
                       </SidebarMenuButton>
@@ -130,7 +129,7 @@ export function AppSidebar() {
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild tooltip="User Management" className="flex items-center">
                         <Link to="/admin/users" className="flex items-center justify-center">
-                          <Shield className="h-6 w-6 mx-auto" />
+                          <Shield className="h-6 w-6" />
                           <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"}`}>User Management</span>
                         </Link>
                       </SidebarMenuButton>
@@ -147,7 +146,7 @@ export function AppSidebar() {
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild tooltip="Settings" className="flex items-center">
                       <Link to="/settings" className="flex items-center justify-center">
-                        <Settings className="h-6 w-6 mx-auto" />
+                        <Settings className="h-6 w-6" />
                         <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"}`}>Settings</span>
                       </Link>
                     </SidebarMenuButton>
@@ -155,7 +154,7 @@ export function AppSidebar() {
                   <SidebarMenuItem>
                     <SidebarMenuButton onClick={handleLogout} tooltip="Logout" className="flex items-center">
                       <div className="flex items-center justify-center">
-                        <LogOut className="h-6 w-6 mx-auto" />
+                        <LogOut className="h-6 w-6" />
                         <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"}`}>Logout</span>
                       </div>
                     </SidebarMenuButton>
