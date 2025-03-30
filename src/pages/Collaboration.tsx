@@ -7,6 +7,7 @@ import { BudgetRequestData } from "../types/collaboration";
 import { CollaborationStatusTab } from "../components/collaboration/CollaborationStatusTab";
 import { SubmitBudgetTab } from "../components/collaboration/SubmitBudgetTab";
 import { HistoricalDataTab } from "../components/collaboration/HistoricalDataTab";
+import { ApprovalTab } from "../components/collaboration/ApprovalTab";
 import { LineItemsDialog } from "../components/collaboration/LineItemsDialog";
 import { budgetRequests as initialBudgetRequests, historicalData } from "../data/collaborationData";
 import { CollaborationHeader } from "../components/CollaborationHeader";
@@ -55,6 +56,7 @@ const Collaboration = () => {
   };
 
   const isAdmin = hasPermission('manage:users');
+  const canApprove = hasPermission('approve:budgets');
 
   return (
     <div className="space-y-6">
@@ -82,6 +84,7 @@ const Collaboration = () => {
           <TabsTrigger value="status">Budget Request Status</TabsTrigger>
           <TabsTrigger value="submit">Submit Budget Request</TabsTrigger>
           <TabsTrigger value="history">Historical Data</TabsTrigger>
+          {canApprove && <TabsTrigger value="approvals">Approvals</TabsTrigger>}
         </TabsList>
 
         <TabsContent value="status" className="space-y-4">
@@ -99,6 +102,12 @@ const Collaboration = () => {
         <TabsContent value="history" className="space-y-4">
           <HistoricalDataTab historicalData={historicalData} />
         </TabsContent>
+        
+        {canApprove && (
+          <TabsContent value="approvals" className="space-y-4">
+            <ApprovalTab />
+          </TabsContent>
+        )}
       </Tabs>
 
       <LineItemsDialog 
