@@ -37,7 +37,8 @@ const Dashboard = () => {
         <h1 className="text-3xl font-bold tracking-tight">Executive Dashboard</h1>
         <Button 
           onClick={showNotification}
-          className="bg-[#50C2A0] hover:bg-[#3BA989] text-white"
+          className="bg-[#50C2A0] hover:bg-[#3BA989] text-white text-xs py-1.5 px-3 h-8"
+          size="sm"
         >
           Show Sample Notification
         </Button>
