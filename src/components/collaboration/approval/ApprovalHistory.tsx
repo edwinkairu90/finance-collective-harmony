@@ -87,7 +87,7 @@ export const ApprovalHistory = ({ historicalApprovals }: ApprovalHistoryProps) =
                         onClick={(e) => handleViewClick(item, e)}
                       >
                         <Eye className="h-3.5 w-3.5" />
-                        <span>View</span>
+                        <span className="font-inter">View</span>
                       </Button>
                     )}
                   </TableCell>
