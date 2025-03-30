@@ -11,12 +11,6 @@ export interface ApprovalItem {
   amount: number;
   status: "pending" | "approved" | "rejected";
   description: string;
-  approver?: {
-    name: string;
-    avatar: string;
-  };
-  approvalDate?: string;
-  reason?: string;
 }
 
 export interface HistoricalApproval {
@@ -29,5 +23,4 @@ export interface HistoricalApproval {
   approvedBy: string;
   approvedDate: string;
   status: "approved" | "rejected";
-  reason?: string;
 }

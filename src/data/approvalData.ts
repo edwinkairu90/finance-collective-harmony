@@ -38,14 +38,8 @@ export const approvalItems: ApprovalItem[] = [
     },
     dateSubmitted: "Aug 12, 2023",
     amount: 8500,
-    status: "approved",
+    status: "pending",
     description: "Replace outdated workstations and purchase ergonomic chairs for the customer support team.",
-    approver: {
-      name: "Michael Scott",
-      avatar: "MS"
-    },
-    approvalDate: "Aug 13, 2023",
-    reason: "Approved as the equipment upgrade will improve employee productivity and reduce ergonomic-related health complaints."
   },
   {
     id: "ap-004",
@@ -57,14 +51,8 @@ export const approvalItems: ApprovalItem[] = [
     },
     dateSubmitted: "Aug 10, 2023",
     amount: 45000,
-    status: "rejected",
+    status: "pending",
     description: "Increase cloud server capacity to support new product features and growing user base.",
-    approver: {
-      name: "David Wallace",
-      avatar: "DW"
-    },
-    approvalDate: "Aug 11, 2023",
-    reason: "Rejected due to current budget constraints. Please resubmit with a phased approach or reduced scope."
   },
   {
     id: "ap-005",
@@ -89,14 +77,8 @@ export const approvalItems: ApprovalItem[] = [
     },
     dateSubmitted: "Aug 8, 2023",
     amount: 12000,
-    status: "approved",
+    status: "pending",
     description: "Annual subscription for advanced recruitment and applicant tracking software.",
-    approver: {
-      name: "Jennifer Taylor",
-      avatar: "JT"
-    },
-    approvalDate: "Aug 9, 2023",
-    reason: "Approved as this will streamline our hiring process and improve candidate experience."
   },
   {
     id: "ap-007",
@@ -108,76 +90,66 @@ export const approvalItems: ApprovalItem[] = [
     },
     dateSubmitted: "Aug 7, 2023",
     amount: 5000,
-    status: "rejected",
+    status: "pending",
     description: "Company-wide team building event to improve collaboration across departments.",
-    approver: {
-      name: "Jennifer Taylor",
-      avatar: "JT"
-    },
-    approvalDate: "Aug 8, 2023",
-    reason: "Rejected in favor of department-specific events with lower total cost. Please resubmit with a more targeted approach."
   },
 ];
 
+// Historical approval data
 export const historicalApprovals: HistoricalApproval[] = [
   {
-    id: "hist-001",
+    id: "ha-001",
     title: "Q2 Marketing Campaign",
     department: "Marketing",
-    amount: 28000,
+    amount: 28500,
     requestedBy: "Jane Lee",
-    requestDate: "May 5, 2023",
-    approvedBy: "Michael Scott",
-    approvedDate: "May 7, 2023",
-    status: "approved",
-    reason: "Approved based on strong Q1 performance and alignment with annual goals."
-  },
-  {
-    id: "hist-002",
-    title: "Development Team Hardware",
-    department: "Engineering",
-    amount: 32000,
-    requestedBy: "Robert Kim",
     requestDate: "May 10, 2023",
-    approvedBy: "David Wallace",
+    approvedBy: "David Wilson",
     approvedDate: "May 12, 2023",
-    status: "approved",
-    reason: "Approved as the hardware upgrade is necessary for the development of new features."
+    status: "approved"
   },
   {
-    id: "hist-003",
-    title: "Sales Conference Attendance",
+    id: "ha-002",
+    title: "Sales Conference",
     department: "Sales",
     amount: 18000,
     requestedBy: "John Doe",
-    requestDate: "April 20, 2023",
-    approvedBy: "Michael Scott",
-    approvedDate: "April 22, 2023",
-    status: "rejected",
-    reason: "Rejected due to travel budget limitations. Consider virtual conference options."
+    requestDate: "Apr 22, 2023",
+    approvedBy: "David Wilson",
+    approvedDate: "Apr 25, 2023",
+    status: "approved"
   },
   {
-    id: "hist-004",
+    id: "ha-003",
+    title: "Developer Licenses",
+    department: "Engineering",
+    amount: 9500,
+    requestedBy: "Robert Kim",
+    requestDate: "Apr 15, 2023",
+    approvedBy: "David Wilson",
+    approvedDate: "Apr 16, 2023",
+    status: "approved"
+  },
+  {
+    id: "ha-004",
     title: "Office Renovation",
     department: "Operations",
-    amount: 65000,
+    amount: 45000,
     requestedBy: "Lisa Geller",
-    requestDate: "March 15, 2023",
-    approvedBy: "David Wallace",
-    approvedDate: "March 18, 2023",
-    status: "rejected",
-    reason: "Rejected due to cost. Please resubmit with phased approach focusing on critical areas first."
+    requestDate: "Mar 28, 2023",
+    approvedBy: "David Wilson",
+    approvedDate: "Apr 2, 2023",
+    status: "rejected"
   },
   {
-    id: "hist-005",
-    title: "Customer Feedback Software",
+    id: "ha-005",
+    title: "Customer Support Training",
     department: "Customer Support",
-    amount: 8500,
+    amount: 12500,
     requestedBy: "Sarah Chen",
-    requestDate: "February 5, 2023",
-    approvedBy: "Jennifer Taylor",
-    approvedDate: "February 7, 2023",
-    status: "approved",
-    reason: "Approved as it directly supports our customer satisfaction KPIs."
-  },
+    requestDate: "Mar 15, 2023",
+    approvedBy: "David Wilson",
+    approvedDate: "Mar 17, 2023",
+    status: "approved"
+  }
 ];

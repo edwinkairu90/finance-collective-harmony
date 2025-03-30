@@ -8,34 +8,17 @@ import { ApprovalDetails } from "./approval/ApprovalDetails";
 import { ApprovalHistory } from "./approval/ApprovalHistory";
 import { approvalItems, historicalApprovals } from "../../data/approvalData";
 import { ApprovalItem } from "../../types/approval";
-import { useAuth } from "@/context/AuthContext";
 
 export const ApprovalTab = () => {
   const { toast } = useToast();
-  const { user } = useAuth();
   const [selectedItem, setSelectedItem] = useState<ApprovalItem | null>(null);
   const [items, setItems] = useState<ApprovalItem[]>(approvalItems);
   const [activeTab, setActiveTab] = useState("current");
 
-  const handleApprove = (id: string, reason: string) => {
-    const currentDate = new Date().toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
-    });
-    
+  const handleApprove = (id: string) => {
     setItems(
       items.map((item) =>
-        item.id === id ? { 
-          ...item, 
-          status: "approved",
-          approver: {
-            name: user?.name || "Admin User",
-            avatar: user?.name ? user.name.substring(0, 2).toUpperCase() : "AU"
-          },
-          approvalDate: currentDate,
-          reason: reason.trim() || "Approved based on budget alignment and business needs."
-        } : item
+        item.id === id ? { ...item, status: "approved" } : item
       )
     );
     toast({
@@ -45,25 +28,10 @@ export const ApprovalTab = () => {
     setSelectedItem(null);
   };
 
-  const handleReject = (id: string, reason: string) => {
-    const currentDate = new Date().toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
-    });
-    
+  const handleReject = (id: string) => {
     setItems(
       items.map((item) =>
-        item.id === id ? { 
-          ...item, 
-          status: "rejected",
-          approver: {
-            name: user?.name || "Admin User",
-            avatar: user?.name ? user.name.substring(0, 2).toUpperCase() : "AU"
-          },
-          approvalDate: currentDate,
-          reason: reason.trim() || "Rejected due to budget constraints."
-        } : item
+        item.id === id ? { ...item, status: "rejected" } : item
       )
     );
     toast({
