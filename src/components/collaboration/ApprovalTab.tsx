@@ -59,19 +59,23 @@ export const ApprovalTab = () => {
         </TabsList>
 
         <TabsContent value="current">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <ApprovalItemsList 
-              items={filteredItems.pending} 
-              selectedItem={selectedItem} 
-              onSelectItem={setSelectedItem} 
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="md:col-span-1">
+              <ApprovalItemsList 
+                items={filteredItems.pending} 
+                selectedItem={selectedItem} 
+                onSelectItem={setSelectedItem} 
+              />
+            </div>
             
-            <ApprovalDetails 
-              selectedItem={selectedItem}
-              onApprove={handleApprove}
-              onReject={handleReject}
-              onClose={() => setSelectedItem(null)}
-            />
+            <div className="md:col-span-1">
+              <ApprovalDetails 
+                selectedItem={selectedItem}
+                onApprove={handleApprove}
+                onReject={handleReject}
+                onClose={() => setSelectedItem(null)}
+              />
+            </div>
           </div>
         </TabsContent>
 
