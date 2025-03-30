@@ -10,9 +10,13 @@ import { BudgetRequestData } from "@/types/collaboration";
 
 interface AddDepartmentDialogProps {
   onDepartmentAdded: (department: BudgetRequestData) => void;
+  onNeedAssignment: (department: BudgetRequestData) => void;
 }
 
-export const AddDepartmentDialog: React.FC<AddDepartmentDialogProps> = ({ onDepartmentAdded }) => {
+export const AddDepartmentDialog: React.FC<AddDepartmentDialogProps> = ({ 
+  onDepartmentAdded, 
+  onNeedAssignment 
+}) => {
   const [open, setOpen] = useState(false);
   const [departmentName, setDepartmentName] = useState("");
   const [totalAmount, setTotalAmount] = useState("");
@@ -60,6 +64,9 @@ export const AddDepartmentDialog: React.FC<AddDepartmentDialogProps> = ({ onDepa
     setDepartmentName("");
     setTotalAmount("");
     setOpen(false);
+    
+    // Trigger assignment dialog
+    onNeedAssignment(newDepartment);
   };
 
   return (
@@ -115,3 +122,4 @@ export const AddDepartmentDialog: React.FC<AddDepartmentDialogProps> = ({ onDepa
     </Dialog>
   );
 };
+

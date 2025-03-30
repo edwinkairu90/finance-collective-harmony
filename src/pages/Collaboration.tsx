@@ -62,7 +62,12 @@ const Collaboration = () => {
         <h1 className="text-3xl font-bold tracking-tight font-inter">Collaboration</h1>
         <div className="flex gap-4">
           <CollaborationHeader />
-          {isAdmin && <AddDepartmentDialog onDepartmentAdded={handleDepartmentAdded} />}
+          {isAdmin && (
+            <AddDepartmentDialog 
+              onDepartmentAdded={handleDepartmentAdded} 
+              onNeedAssignment={handleAssignUser}
+            />
+          )}
           <Button onClick={handleSend}>Send Reminders</Button>
         </div>
       </div>
@@ -110,3 +115,4 @@ const Collaboration = () => {
 };
 
 export default Collaboration;
+
