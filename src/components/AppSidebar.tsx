@@ -1,3 +1,4 @@
+
 import {
   Sidebar,
   SidebarContent,
@@ -75,7 +76,7 @@ export function AppSidebar() {
                       <SidebarMenuButton asChild>
                         <Link to="/budget">
                           <ChartPie className="h-4 w-4 mr-2" />
-                          <span>Budget Planning & Forecasting</span>
+                          <span className="leading-tight">Budget Planning<br />&amp; Forecasting</span>
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
@@ -172,3 +173,4 @@ export function AppSidebar() {
     </Sidebar>
   );
 }
+
