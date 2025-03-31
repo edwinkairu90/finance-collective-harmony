@@ -2,7 +2,6 @@
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -41,7 +40,7 @@ export function AppSidebar() {
     <Sidebar className="w-auto">
       <SidebarHeader className="px-3 py-3">
         <div className="flex items-center gap-2 justify-center">
-          <Compass className="h-6 w-6 text-sidebar-primary" />
+          <Compass className="h-5 w-5 text-sidebar-primary" />
           <span className={`text-lg font-bold ${state === "collapsed" ? "hidden" : "block"}`}>Kompass</span>
         </div>
       </SidebarHeader>
@@ -50,7 +49,7 @@ export function AppSidebar() {
           <>
             <div className="p-3">
               <div className="flex justify-center">
-                <Avatar onClick={toggleSidebar} className="cursor-pointer h-10 w-10">
+                <Avatar onClick={toggleSidebar} className="cursor-pointer h-9 w-9">
                   <AvatarFallback className="bg-[#1a5954] text-white">{user.name ? getInitials(user.name) : 'U'}</AvatarFallback>
                 </Avatar>
                 {state === "expanded" && (
@@ -69,7 +68,7 @@ export function AppSidebar() {
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild tooltip="Dashboard" className="flex items-center">
                       <Link to="/" className="flex items-center justify-center">
-                        <Home className="h-6 w-6" />
+                        <Home className="h-4 w-4" />
                         <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"}`}>Dashboard</span>
                       </Link>
                     </SidebarMenuButton>
@@ -79,7 +78,7 @@ export function AppSidebar() {
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild tooltip="Budget Planning & Forecasting" className="flex items-center">
                         <Link to="/budget" className="flex items-center justify-center">
-                          <ChartPie className="h-6 w-6" />
+                          <ChartPie className="h-4 w-4" />
                           <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"} leading-tight`}>Budget Planning<br />&amp; Forecasting</span>
                         </Link>
                       </SidebarMenuButton>
@@ -90,7 +89,7 @@ export function AppSidebar() {
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild tooltip="Financial Statements" className="flex items-center">
                         <Link to="/financial-statements" className="flex items-center justify-center">
-                          <FileText className="h-6 w-6" />
+                          <FileText className="h-4 w-4" />
                           <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"}`}>Financial Statements</span>
                         </Link>
                       </SidebarMenuButton>
@@ -101,7 +100,7 @@ export function AppSidebar() {
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild tooltip="Collaboration" className="flex items-center">
                         <Link to="/collaboration" className="flex items-center justify-center">
-                          <Users className="h-6 w-6" />
+                          <Users className="h-4 w-4" />
                           <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"}`}>Collaboration</span>
                         </Link>
                       </SidebarMenuButton>
@@ -112,7 +111,7 @@ export function AppSidebar() {
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild tooltip="Actuals vs Budget" className="flex items-center">
                         <Link to="/actuals" className="flex items-center justify-center">
-                          <BarChart className="h-6 w-6" />
+                          <BarChart className="h-4 w-4" />
                           <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"}`}>Actuals vs Budget</span>
                         </Link>
                       </SidebarMenuButton>
@@ -130,7 +129,7 @@ export function AppSidebar() {
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild tooltip="User Management" className="flex items-center">
                         <Link to="/admin/users" className="flex items-center justify-center">
-                          <Shield className="h-6 w-6" />
+                          <Shield className="h-4 w-4" />
                           <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"}`}>User Management</span>
                         </Link>
                       </SidebarMenuButton>
@@ -147,7 +146,7 @@ export function AppSidebar() {
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild tooltip="Settings" className="flex items-center">
                       <Link to="/settings" className="flex items-center justify-center">
-                        <Settings className="h-6 w-6" />
+                        <Settings className="h-4 w-4" />
                         <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"}`}>Settings</span>
                       </Link>
                     </SidebarMenuButton>
@@ -155,7 +154,7 @@ export function AppSidebar() {
                   <SidebarMenuItem>
                     <SidebarMenuButton onClick={handleLogout} tooltip="Logout" className="flex items-center">
                       <div className="flex items-center justify-center">
-                        <LogOut className="h-6 w-6" />
+                        <LogOut className="h-4 w-4" />
                         <span className={`ml-3 ${state === "collapsed" ? "hidden" : "block"}`}>Logout</span>
                       </div>
                     </SidebarMenuButton>
