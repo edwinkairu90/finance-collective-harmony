@@ -16,32 +16,32 @@ export const QuarterlyProjectionsTable: React.FC<QuarterlyProjectionsTableProps>
   return (
     <Card className="border-slate-200 dark:border-slate-700">
       <CardHeader className="pb-2 bg-slate-50 dark:bg-slate-900/50 rounded-t-lg">
-        <CardTitle className="text-sm text-slate-800 dark:text-slate-200">Quarterly Revenue Projections</CardTitle>
+        <CardTitle className="text-xl font-montserrat font-semibold text-slate-800 dark:text-slate-200">Quarterly Revenue Projections</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
           <Table>
             <TableHeader className="bg-slate-100 dark:bg-slate-800/50">
               <TableRow>
-                <TableHead className="w-[150px] text-xs font-semibold">Category</TableHead>
+                <TableHead className="w-[150px] text-sm text-slate-600 dark:text-slate-300 font-medium">Category</TableHead>
                 {quarterlyProjections.map((item) => (
-                  <TableHead key={item.quarter} className="text-center text-xs font-semibold">{item.quarter}</TableHead>
+                  <TableHead key={item.quarter} className="text-center text-sm text-slate-600 dark:text-slate-300 font-medium">{item.quarter}</TableHead>
                 ))}
               </TableRow>
             </TableHeader>
             <TableBody>
               <TableRow className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
-                <TableCell className="font-medium text-slate-800 dark:text-slate-200 text-xs">Projected Revenue</TableCell>
+                <TableCell className="font-medium text-slate-800 dark:text-slate-200 text-sm">Projected Revenue</TableCell>
                 {quarterlyProjections.map((item) => (
-                  <TableCell key={`revenue-${item.quarter}`} className="text-center font-medium text-xs">
+                  <TableCell key={`revenue-${item.quarter}`} className="text-center font-medium text-slate-800 dark:text-slate-200 text-sm">
                     {formatCurrency(item.revenue)}
                   </TableCell>
                 ))}
               </TableRow>
               <TableRow className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
-                <TableCell className="font-medium text-slate-800 dark:text-slate-200 text-xs">Growth</TableCell>
+                <TableCell className="font-medium text-slate-800 dark:text-slate-200 text-sm">Growth</TableCell>
                 {quarterlyProjections.map((item) => (
-                  <TableCell key={`growth-${item.quarter}`} className="text-center text-emerald-600 dark:text-emerald-400 font-medium text-xs">
+                  <TableCell key={`growth-${item.quarter}`} className="text-center text-emerald-600 dark:text-emerald-400 font-medium text-sm">
                     {item.growth}
                   </TableCell>
                 ))}
