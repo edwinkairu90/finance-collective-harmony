@@ -1,16 +1,31 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { MonthlyRevenueTable } from "./MonthlyRevenueTable";
-import { initialMonthlyRevenueDrivers } from "./data/monthlyRevenueData";
 import { MonthlyRevenueData, SegmentData } from "./types/revenueTypes";
 import { useToast } from "@/hooks/use-toast";
 
-export const MonthlyRevenueDrivers: React.FC = () => {
-  const [monthlyRevenueDrivers, setMonthlyRevenueDrivers] = useState<MonthlyRevenueData[]>(
-    initialMonthlyRevenueDrivers
-  );
+interface MonthlyRevenueDriversProps {
+  initialData: MonthlyRevenueData[];
+  onDataUpdate: (data: MonthlyRevenueData[]) => void;
+}
+
+export const MonthlyRevenueDrivers: React.FC<MonthlyRevenueDriversProps> = ({ 
+  initialData, 
+  onDataUpdate 
+}) => {
+  const [monthlyRevenueDrivers, setMonthlyRevenueDrivers] = useState<MonthlyRevenueData[]>(initialData);
   const { toast } = useToast();
+
+  // When internal state changes, notify parent component
+  useEffect(() => {
+    onDataUpdate(monthlyRevenueDrivers);
+  }, [monthlyRevenueDrivers, onDataUpdate]);
+
+  // When prop changes, update internal state
+  useEffect(() => {
+    setMonthlyRevenueDrivers(initialData);
+  }, [initialData]);
 
   const handleUpdateData = (
     month: string,

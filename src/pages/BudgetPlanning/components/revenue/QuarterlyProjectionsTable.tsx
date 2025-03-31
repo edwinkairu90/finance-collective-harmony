@@ -3,16 +3,16 @@ import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { formatCurrency } from "@/lib/format";
+import { MonthlyRevenueData } from "./types/revenueTypes";
+import { calculateQuarterlyProjections } from "./utils/revenueProjections";
 
-// Quarterly projections
-const quarterlyProjections = [
-  { quarter: "Q1", revenue: 285000, growth: "8.2%" },
-  { quarter: "Q2", revenue: 335000, growth: "13.5%" },
-  { quarter: "Q3", revenue: 390000, growth: "15.2%" },
-  { quarter: "Q4", revenue: 435000, growth: "11.2%" },
-];
+interface QuarterlyProjectionsTableProps {
+  monthlyRevenueDrivers: MonthlyRevenueData[];
+}
 
-export const QuarterlyProjectionsTable: React.FC = () => {
+export const QuarterlyProjectionsTable: React.FC<QuarterlyProjectionsTableProps> = ({ monthlyRevenueDrivers }) => {
+  const quarterlyProjections = calculateQuarterlyProjections(monthlyRevenueDrivers);
+
   return (
     <Card className="border-slate-200 dark:border-slate-700">
       <CardHeader className="pb-2 bg-slate-50 dark:bg-slate-900/50 rounded-t-lg">

@@ -3,15 +3,16 @@ import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { formatCurrency } from "@/lib/format";
+import { MonthlyRevenueData } from "./types/revenueTypes";
+import { calculateSegmentProjections } from "./utils/revenueProjections";
 
-// Annual projections by segment
-const segmentProjections = [
-  { segment: "Enterprise", revenue: 720000, growth: "18.5%", percentage: "49.6%" },
-  { segment: "Mid-Market", revenue: 430000, growth: "9.2%", percentage: "29.7%" },
-  { segment: "SMB", revenue: 295000, growth: "5.8%", percentage: "20.7%" },
-];
+interface SegmentProjectionsTableProps {
+  monthlyRevenueDrivers: MonthlyRevenueData[];
+}
 
-export const SegmentProjectionsTable: React.FC = () => {
+export const SegmentProjectionsTable: React.FC<SegmentProjectionsTableProps> = ({ monthlyRevenueDrivers }) => {
+  const segmentProjections = calculateSegmentProjections(monthlyRevenueDrivers);
+
   return (
     <Card className="border-slate-200 dark:border-slate-700">
       <CardHeader className="pb-2 bg-slate-50 dark:bg-slate-900/50 rounded-t-lg">
