@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,7 @@ import { BudgetScenarioComparison } from "./BudgetScenarioComparison";
 import { BudgetScenarioFinancials } from "./BudgetScenarioFinancials";
 import { BudgetScenarioType } from "@/types/budgetScenarios";
 import { getBudgetScenarios, getScenarioById } from "./BudgetScenarioData";
+import { formatCurrency } from "@/lib/format";
 
 export const BudgetOverview = () => {
   const [activeScenario, setActiveScenario] = useState<BudgetScenarioType>("base-case");
@@ -28,9 +30,9 @@ export const BudgetOverview = () => {
       />
       
       <Card>
-        <CardHeader>
-          <CardTitle>FY 2025 Budget Allocation - {scenario?.name}</CardTitle>
-          <CardDescription>{scenario?.description}</CardDescription>
+        <CardHeader className="pb-2 bg-slate-50 dark:bg-slate-900/50 rounded-t-lg">
+          <CardTitle className="text-xl font-montserrat font-semibold text-slate-800 dark:text-slate-200">FY 2025 Budget Allocation - {scenario?.name}</CardTitle>
+          <CardDescription className="text-slate-600 dark:text-slate-300">{scenario?.description}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="h-80">
@@ -50,24 +52,24 @@ export const BudgetOverview = () => {
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip formatter={(value) => [`$${value.toLocaleString()}`, undefined]} />
+                <Tooltip formatter={(value) => [formatCurrency(value as number), undefined]} />
                 <Legend />
               </PieChart>
             </ResponsiveContainer>
           </div>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <div className="text-sm text-muted-foreground">
-            Total Budget: ${scenario?.totalBudget.toLocaleString() || 0}
+          <div className="text-sm text-slate-600 dark:text-slate-300">
+            Total Budget: {formatCurrency(scenario?.totalBudget || 0)}
           </div>
           {scenario && (
             <div className="text-sm">
               <div className="flex space-x-4">
-                <div className="text-green-600">Revenue: ${scenario.financials.revenue.toLocaleString()}</div>
-                <div className="text-blue-600">Gross Profit: ${scenario.financials.grossProfit.toLocaleString()}</div>
-                <div className="text-red-600">Expenses: ${scenario.financials.opex.toLocaleString()}</div>
+                <div className="text-green-600">Revenue: {formatCurrency(scenario.financials.revenue)}</div>
+                <div className="text-blue-600">Gross Profit: {formatCurrency(scenario.financials.grossProfit)}</div>
+                <div className="text-red-600">Expenses: {formatCurrency(scenario.financials.opex)}</div>
                 <div className={scenario.financials.profit >= 0 ? "text-green-600" : "text-red-600"}>
-                  Net Profit: ${scenario.financials.profit.toLocaleString()}
+                  Net Profit: {formatCurrency(scenario.financials.profit)}
                 </div>
               </div>
             </div>
@@ -92,8 +94,8 @@ export const BudgetOverview = () => {
 const QuickActions = () => {
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Quick Actions</CardTitle>
+      <CardHeader className="pb-2 bg-slate-50 dark:bg-slate-900/50 rounded-t-lg">
+        <CardTitle className="text-xl font-montserrat font-semibold text-slate-800 dark:text-slate-200">Quick Actions</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-2 gap-2">

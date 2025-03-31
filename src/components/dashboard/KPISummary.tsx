@@ -2,6 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { formatCurrency } from "@/lib/format";
 
 interface KPISummaryProps {
   annualRevenue: string;
@@ -47,7 +48,7 @@ export const KPISummary = ({
         </CardHeader>
         <CardContent className="pb-3">
           <div className="flex items-center justify-between">
-            <div className="text-xl font-bold">${(totalOpex / 1000000).toFixed(1)}M</div>
+            <div className="text-xl font-bold">{formatCurrency((totalOpex / 1000000))}</div>
             <div className="flex items-center text-red-200 text-xs">
               <ArrowUpIcon className="mr-1 h-3 w-3" />
               {opexGrowth}%
@@ -78,7 +79,7 @@ export const KPISummary = ({
         </CardHeader>
         <CardContent className="pb-3">
           <div className="flex items-center justify-between">
-            <div className="text-xl font-bold">${(totalVariance / 1000000).toFixed(1)}M</div>
+            <div className="text-xl font-bold">{formatCurrency(totalVariance / 1000000)}</div>
             <div className={`flex items-center ${variancePercentage < 0 ? 'text-green-200' : 'text-red-200'} text-xs`}>
               {variancePercentage < 0 ? <ArrowDownIcon className="mr-1 h-3 w-3" /> : <ArrowUpIcon className="mr-1 h-3 w-3" />}
               {Math.abs(variancePercentage).toFixed(1)}%

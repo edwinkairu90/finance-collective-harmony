@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from "recharts";
 import { BudgetScenario } from "@/types/budgetScenarios";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency } from "@/lib/format";
 import { 
   ChartContainer, 
   ChartTooltip, 
@@ -55,9 +55,9 @@ export const BudgetScenarioFinancials: React.FC<BudgetScenarioFinancialsProps> =
 
   return (
     <Card className="col-span-2">
-      <CardHeader>
-        <CardTitle>Financial Comparison</CardTitle>
-        <CardDescription>
+      <CardHeader className="pb-2 bg-slate-50 dark:bg-slate-900/50 rounded-t-lg">
+        <CardTitle className="text-xl font-montserrat font-semibold text-slate-800 dark:text-slate-200">Financial Comparison</CardTitle>
+        <CardDescription className="text-slate-600 dark:text-slate-300">
           Compare key financial metrics across budget scenarios
         </CardDescription>
       </CardHeader>
@@ -79,10 +79,10 @@ export const BudgetScenarioFinancials: React.FC<BudgetScenarioFinancialsProps> =
                 layout="vertical"
               >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" tickFormatter={(value) => `$${value / 1000}k`} />
+                <XAxis type="number" tickFormatter={(value) => formatCurrency(value / 1000) + 'k'} />
                 <YAxis type="category" dataKey="name" width={100} />
                 <Tooltip 
-                  formatter={(value) => [`$${formatCurrency(value as number)}`, undefined]} 
+                  formatter={(value) => [formatCurrency(value as number), undefined]} 
                 />
                 <Legend />
                 <Bar 
@@ -118,8 +118,8 @@ export const BudgetScenarioFinancials: React.FC<BudgetScenarioFinancialsProps> =
               <BarChart data={revenueChartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
-                <YAxis tickFormatter={(value) => `$${value / 1000}k`} />
-                <Tooltip formatter={(value) => [`$${formatCurrency(value as number)}`, 'Revenue']} />
+                <YAxis tickFormatter={(value) => formatCurrency(value / 1000) + 'k'} />
+                <Tooltip formatter={(value) => [formatCurrency(value as number), 'Revenue']} />
                 <Legend />
                 {scenarios.map((scenario, index) => (
                   <Bar 
@@ -138,8 +138,8 @@ export const BudgetScenarioFinancials: React.FC<BudgetScenarioFinancialsProps> =
               <BarChart data={opexChartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
-                <YAxis tickFormatter={(value) => `$${value / 1000}k`} />
-                <Tooltip formatter={(value) => [`$${formatCurrency(value as number)}`, 'OPEX']} />
+                <YAxis tickFormatter={(value) => formatCurrency(value / 1000) + 'k'} />
+                <Tooltip formatter={(value) => [formatCurrency(value as number), 'OPEX']} />
                 <Legend />
                 {scenarios.map((scenario, index) => (
                   <Bar 
@@ -158,8 +158,8 @@ export const BudgetScenarioFinancials: React.FC<BudgetScenarioFinancialsProps> =
               <BarChart data={profitChartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
-                <YAxis tickFormatter={(value) => `$${value / 1000}k`} />
-                <Tooltip formatter={(value) => [`$${formatCurrency(value as number)}`, 'Profit']} />
+                <YAxis tickFormatter={(value) => formatCurrency(value / 1000) + 'k'} />
+                <Tooltip formatter={(value) => [formatCurrency(value as number), 'Profit']} />
                 <Legend />
                 {scenarios.map((scenario, index) => (
                   <Bar 
@@ -203,4 +203,3 @@ export const BudgetScenarioFinancials: React.FC<BudgetScenarioFinancialsProps> =
     </Card>
   );
 };
-
