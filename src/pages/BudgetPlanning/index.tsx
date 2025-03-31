@@ -4,7 +4,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BudgetOverview } from "./BudgetOverview";
 import { DepartmentBudgets } from "./DepartmentBudgets";
 import { BudgetCategories } from "./BudgetCategories";
-import { BudgetTimeline } from "./BudgetTimeline";
 import { PlanningTools } from "./PlanningTools";
 import { CostCenters } from "./CostCenters";
 import { RevenueProjection } from "./RevenueProjection";
@@ -20,12 +19,11 @@ const BudgetPlanning = () => {
       </div>
 
       <Tabs defaultValue={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid grid-cols-4 md:grid-cols-7 w-full">
+        <TabsList className="grid grid-cols-4 md:grid-cols-6 w-full">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="departments">Departments</TabsTrigger>
           <TabsTrigger value="cost-centers">Cost Centers</TabsTrigger>
           <TabsTrigger value="categories">Categories</TabsTrigger>
-          <TabsTrigger value="timeline">Timeline</TabsTrigger>
           <TabsTrigger value="revenue">Revenue</TabsTrigger>
           <TabsTrigger value="tools">Planning Tools</TabsTrigger>
         </TabsList>
@@ -40,9 +38,6 @@ const BudgetPlanning = () => {
         </TabsContent>
         <TabsContent value="categories">
           <BudgetCategories />
-        </TabsContent>
-        <TabsContent value="timeline">
-          <BudgetTimeline />
         </TabsContent>
         <TabsContent value="revenue">
           <RevenueProjection />
