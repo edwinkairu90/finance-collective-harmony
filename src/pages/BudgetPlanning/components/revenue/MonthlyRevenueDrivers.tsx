@@ -11,7 +11,7 @@ export const MonthlyRevenueDrivers: React.FC = () => {
     <Card className="border-slate-200 dark:border-slate-700">
       <CardHeader className="pb-2 bg-slate-50 dark:bg-slate-900/50 rounded-t-lg">
         <CardTitle className="text-base text-slate-800 dark:text-slate-200">
-          Monthly Revenue Drivers
+          Monthly Revenue Breakdown
         </CardTitle>
       </CardHeader>
       <CardContent>
