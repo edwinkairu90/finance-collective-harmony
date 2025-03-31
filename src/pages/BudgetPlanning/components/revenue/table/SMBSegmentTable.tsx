@@ -3,15 +3,35 @@ import React from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { formatCurrency } from "@/lib/format";
 import { Badge } from "@/components/ui/badge";
-import { MonthlyRevenueData } from "../types/revenueTypes";
+import { MonthlyRevenueData, SegmentData } from "../types/revenueTypes";
 import { calculateSegmentTotalRevenue, calculateTotalClients, calculateTotalSubscription } from "../utils/revenueCalculations";
+import { EditableCell } from "./EditableCell";
 
 interface SMBSegmentTableProps {
   monthlyRevenueDrivers: MonthlyRevenueData[];
+  editingCell: {
+    month: string;
+    segment: "enterprise" | "midMarket" | "smb";
+    field: keyof SegmentData;
+  } | null;
+  onStartEdit: (
+    month: string,
+    segment: "enterprise" | "midMarket" | "smb", 
+    field: keyof SegmentData
+  ) => void;
+  onSaveEdit: (
+    month: string,
+    segment: "enterprise" | "midMarket" | "smb",
+    field: keyof SegmentData,
+    value: number
+  ) => void;
 }
 
 export const SMBSegmentTable: React.FC<SMBSegmentTableProps> = ({
-  monthlyRevenueDrivers
+  monthlyRevenueDrivers,
+  editingCell,
+  onStartEdit,
+  onSaveEdit
 }) => {
   return (
     <>
@@ -33,9 +53,17 @@ export const SMBSegmentTable: React.FC<SMBSegmentTableProps> = ({
       <TableRow>
         <TableCell className="font-medium pl-6">New Clients</TableCell>
         {monthlyRevenueDrivers.map(item => (
-          <TableCell key={`smb-new-clients-${item.month}`} className="text-center">
-            {item.smb.newClients}
-          </TableCell>
+          <EditableCell
+            key={`smb-new-clients-${item.month}`}
+            value={item.smb.newClients}
+            isEditing={
+              editingCell?.month === item.month &&
+              editingCell?.segment === "smb" &&
+              editingCell?.field === "newClients"
+            }
+            onStartEdit={() => onStartEdit(item.month, "smb", "newClients")}
+            onSave={(value) => onSaveEdit(item.month, "smb", "newClients", value)}
+          />
         ))}
       </TableRow>
       <TableRow>
@@ -49,9 +77,18 @@ export const SMBSegmentTable: React.FC<SMBSegmentTableProps> = ({
       <TableRow>
         <TableCell className="font-medium pl-6">Monthly Subscription/Client</TableCell>
         {monthlyRevenueDrivers.map(item => (
-          <TableCell key={`smb-subscription-per-client-${item.month}`} className="text-center">
-            {formatCurrency(item.smb.monthlySubscriptionPerClient)}
-          </TableCell>
+          <EditableCell
+            key={`smb-subscription-per-client-${item.month}`}
+            value={item.smb.monthlySubscriptionPerClient}
+            isEditing={
+              editingCell?.month === item.month &&
+              editingCell?.segment === "smb" &&
+              editingCell?.field === "monthlySubscriptionPerClient"
+            }
+            onStartEdit={() => onStartEdit(item.month, "smb", "monthlySubscriptionPerClient")}
+            onSave={(value) => onSaveEdit(item.month, "smb", "monthlySubscriptionPerClient", value)}
+            formatting="currency"
+          />
         ))}
       </TableRow>
       <TableRow>
@@ -73,9 +110,18 @@ export const SMBSegmentTable: React.FC<SMBSegmentTableProps> = ({
       <TableRow>
         <TableCell className="font-medium pl-6">Expansion Revenue</TableCell>
         {monthlyRevenueDrivers.map(item => (
-          <TableCell key={`smb-expansion-${item.month}`} className="text-center">
-            {formatCurrency(item.smb.expansionRevenue)}
-          </TableCell>
+          <EditableCell
+            key={`smb-expansion-${item.month}`}
+            value={item.smb.expansionRevenue}
+            isEditing={
+              editingCell?.month === item.month &&
+              editingCell?.segment === "smb" &&
+              editingCell?.field === "expansionRevenue"
+            }
+            onStartEdit={() => onStartEdit(item.month, "smb", "expansionRevenue")}
+            onSave={(value) => onSaveEdit(item.month, "smb", "expansionRevenue", value)}
+            formatting="currency"
+          />
         ))}
       </TableRow>
       <TableRow className="bg-slate-50/70 dark:bg-slate-800/20">

@@ -3,15 +3,35 @@ import React from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { formatCurrency } from "@/lib/format";
 import { Badge } from "@/components/ui/badge";
-import { MonthlyRevenueData } from "../types/revenueTypes";
+import { MonthlyRevenueData, SegmentData } from "../types/revenueTypes";
 import { calculateSegmentTotalRevenue, calculateTotalClients, calculateTotalSubscription } from "../utils/revenueCalculations";
+import { EditableCell } from "./EditableCell";
 
 interface MidMarketSegmentTableProps {
   monthlyRevenueDrivers: MonthlyRevenueData[];
+  editingCell: {
+    month: string;
+    segment: "enterprise" | "midMarket" | "smb";
+    field: keyof SegmentData;
+  } | null;
+  onStartEdit: (
+    month: string,
+    segment: "enterprise" | "midMarket" | "smb", 
+    field: keyof SegmentData
+  ) => void;
+  onSaveEdit: (
+    month: string,
+    segment: "enterprise" | "midMarket" | "smb",
+    field: keyof SegmentData,
+    value: number
+  ) => void;
 }
 
 export const MidMarketSegmentTable: React.FC<MidMarketSegmentTableProps> = ({
-  monthlyRevenueDrivers
+  monthlyRevenueDrivers,
+  editingCell,
+  onStartEdit,
+  onSaveEdit
 }) => {
   return (
     <>
@@ -33,9 +53,17 @@ export const MidMarketSegmentTable: React.FC<MidMarketSegmentTableProps> = ({
       <TableRow>
         <TableCell className="font-medium pl-6">New Clients</TableCell>
         {monthlyRevenueDrivers.map(item => (
-          <TableCell key={`midmarket-new-clients-${item.month}`} className="text-center">
-            {item.midMarket.newClients}
-          </TableCell>
+          <EditableCell
+            key={`midmarket-new-clients-${item.month}`}
+            value={item.midMarket.newClients}
+            isEditing={
+              editingCell?.month === item.month &&
+              editingCell?.segment === "midMarket" &&
+              editingCell?.field === "newClients"
+            }
+            onStartEdit={() => onStartEdit(item.month, "midMarket", "newClients")}
+            onSave={(value) => onSaveEdit(item.month, "midMarket", "newClients", value)}
+          />
         ))}
       </TableRow>
       <TableRow>
@@ -49,9 +77,18 @@ export const MidMarketSegmentTable: React.FC<MidMarketSegmentTableProps> = ({
       <TableRow>
         <TableCell className="font-medium pl-6">Monthly Subscription/Client</TableCell>
         {monthlyRevenueDrivers.map(item => (
-          <TableCell key={`midmarket-subscription-per-client-${item.month}`} className="text-center">
-            {formatCurrency(item.midMarket.monthlySubscriptionPerClient)}
-          </TableCell>
+          <EditableCell
+            key={`midmarket-subscription-per-client-${item.month}`}
+            value={item.midMarket.monthlySubscriptionPerClient}
+            isEditing={
+              editingCell?.month === item.month &&
+              editingCell?.segment === "midMarket" &&
+              editingCell?.field === "monthlySubscriptionPerClient"
+            }
+            onStartEdit={() => onStartEdit(item.month, "midMarket", "monthlySubscriptionPerClient")}
+            onSave={(value) => onSaveEdit(item.month, "midMarket", "monthlySubscriptionPerClient", value)}
+            formatting="currency"
+          />
         ))}
       </TableRow>
       <TableRow>
@@ -73,9 +110,18 @@ export const MidMarketSegmentTable: React.FC<MidMarketSegmentTableProps> = ({
       <TableRow>
         <TableCell className="font-medium pl-6">Expansion Revenue</TableCell>
         {monthlyRevenueDrivers.map(item => (
-          <TableCell key={`midmarket-expansion-${item.month}`} className="text-center">
-            {formatCurrency(item.midMarket.expansionRevenue)}
-          </TableCell>
+          <EditableCell
+            key={`midmarket-expansion-${item.month}`}
+            value={item.midMarket.expansionRevenue}
+            isEditing={
+              editingCell?.month === item.month &&
+              editingCell?.segment === "midMarket" &&
+              editingCell?.field === "expansionRevenue"
+            }
+            onStartEdit={() => onStartEdit(item.month, "midMarket", "expansionRevenue")}
+            onSave={(value) => onSaveEdit(item.month, "midMarket", "expansionRevenue", value)}
+            formatting="currency"
+          />
         ))}
       </TableRow>
       <TableRow className="bg-slate-50/70 dark:bg-slate-800/20">

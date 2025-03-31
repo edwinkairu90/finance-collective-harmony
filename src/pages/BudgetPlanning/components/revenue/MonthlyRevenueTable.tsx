@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Table, TableBody } from "@/components/ui/table";
-import { MonthlyRevenueData } from "./types/revenueTypes";
+import { MonthlyRevenueData, SegmentData } from "./types/revenueTypes";
 import { RevenueTableHeader } from "./table/TableHeader";
 import { EnterpriseSegmentTable } from "./table/EnterpriseSegmentTable";
 import { MidMarketSegmentTable } from "./table/MidMarketSegmentTable";
@@ -11,18 +11,48 @@ import { SegmentFilter } from "./table/SegmentFilter";
 
 interface MonthlyRevenueTableProps {
   monthlyRevenueDrivers: MonthlyRevenueData[];
+  onUpdateData: (
+    month: string,
+    segment: "enterprise" | "midMarket" | "smb",
+    field: keyof SegmentData,
+    value: number
+  ) => void;
 }
 
 export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
-  monthlyRevenueDrivers
+  monthlyRevenueDrivers,
+  onUpdateData
 }) => {
   const [selectedSegment, setSelectedSegment] = useState<string>("all");
+  const [editingCell, setEditingCell] = useState<{
+    month: string;
+    segment: "enterprise" | "midMarket" | "smb";
+    field: keyof SegmentData;
+  } | null>(null);
 
   // Filter the segments based on selection
   const showEnterprise = selectedSegment === "all" || selectedSegment === "enterprise";
   const showMidMarket = selectedSegment === "all" || selectedSegment === "midMarket";
   const showSMB = selectedSegment === "all" || selectedSegment === "smb";
   const showOther = selectedSegment === "all" || selectedSegment === "other";
+
+  const handleStartEdit = (
+    month: string,
+    segment: "enterprise" | "midMarket" | "smb",
+    field: keyof SegmentData
+  ) => {
+    setEditingCell({ month, segment, field });
+  };
+
+  const handleSaveEdit = (
+    month: string,
+    segment: "enterprise" | "midMarket" | "smb",
+    field: keyof SegmentData,
+    value: number
+  ) => {
+    onUpdateData(month, segment, field, value);
+    setEditingCell(null);
+  };
 
   return (
     <div>
@@ -37,17 +67,32 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
           <TableBody>
             {/* Enterprise Section */}
             {showEnterprise && (
-              <EnterpriseSegmentTable monthlyRevenueDrivers={monthlyRevenueDrivers} />
+              <EnterpriseSegmentTable 
+                monthlyRevenueDrivers={monthlyRevenueDrivers} 
+                editingCell={editingCell}
+                onStartEdit={handleStartEdit}
+                onSaveEdit={handleSaveEdit}
+              />
             )}
             
             {/* Mid-Market Section */}
             {showMidMarket && (
-              <MidMarketSegmentTable monthlyRevenueDrivers={monthlyRevenueDrivers} />
+              <MidMarketSegmentTable 
+                monthlyRevenueDrivers={monthlyRevenueDrivers} 
+                editingCell={editingCell}
+                onStartEdit={handleStartEdit}
+                onSaveEdit={handleSaveEdit}
+              />
             )}
             
             {/* SMB Section */}
             {showSMB && (
-              <SMBSegmentTable monthlyRevenueDrivers={monthlyRevenueDrivers} />
+              <SMBSegmentTable 
+                monthlyRevenueDrivers={monthlyRevenueDrivers} 
+                editingCell={editingCell}
+                onStartEdit={handleStartEdit}
+                onSaveEdit={handleSaveEdit}
+              />
             )}
             
             {/* Other Revenue - keep a simplified view */}

@@ -5,13 +5,33 @@ import { formatCurrency } from "@/lib/format";
 import { Badge } from "@/components/ui/badge";
 import { MonthlyRevenueData, SegmentData } from "../types/revenueTypes";
 import { calculateSegmentTotalRevenue, calculateTotalClients, calculateTotalSubscription } from "../utils/revenueCalculations";
+import { EditableCell } from "./EditableCell";
 
 interface EnterpriseSegmentTableProps {
   monthlyRevenueDrivers: MonthlyRevenueData[];
+  editingCell: {
+    month: string;
+    segment: "enterprise" | "midMarket" | "smb";
+    field: keyof SegmentData;
+  } | null;
+  onStartEdit: (
+    month: string,
+    segment: "enterprise" | "midMarket" | "smb", 
+    field: keyof SegmentData
+  ) => void;
+  onSaveEdit: (
+    month: string,
+    segment: "enterprise" | "midMarket" | "smb",
+    field: keyof SegmentData,
+    value: number
+  ) => void;
 }
 
 export const EnterpriseSegmentTable: React.FC<EnterpriseSegmentTableProps> = ({
-  monthlyRevenueDrivers
+  monthlyRevenueDrivers,
+  editingCell,
+  onStartEdit,
+  onSaveEdit
 }) => {
   return (
     <>
@@ -33,9 +53,17 @@ export const EnterpriseSegmentTable: React.FC<EnterpriseSegmentTableProps> = ({
       <TableRow>
         <TableCell className="font-medium pl-6">New Clients</TableCell>
         {monthlyRevenueDrivers.map(item => (
-          <TableCell key={`enterprise-new-clients-${item.month}`} className="text-center">
-            {item.enterprise.newClients}
-          </TableCell>
+          <EditableCell
+            key={`enterprise-new-clients-${item.month}`}
+            value={item.enterprise.newClients}
+            isEditing={
+              editingCell?.month === item.month &&
+              editingCell?.segment === "enterprise" &&
+              editingCell?.field === "newClients"
+            }
+            onStartEdit={() => onStartEdit(item.month, "enterprise", "newClients")}
+            onSave={(value) => onSaveEdit(item.month, "enterprise", "newClients", value)}
+          />
         ))}
       </TableRow>
       <TableRow>
@@ -49,9 +77,18 @@ export const EnterpriseSegmentTable: React.FC<EnterpriseSegmentTableProps> = ({
       <TableRow>
         <TableCell className="font-medium pl-6">Monthly Subscription/Client</TableCell>
         {monthlyRevenueDrivers.map(item => (
-          <TableCell key={`enterprise-subscription-per-client-${item.month}`} className="text-center">
-            {formatCurrency(item.enterprise.monthlySubscriptionPerClient)}
-          </TableCell>
+          <EditableCell
+            key={`enterprise-subscription-per-client-${item.month}`}
+            value={item.enterprise.monthlySubscriptionPerClient}
+            isEditing={
+              editingCell?.month === item.month &&
+              editingCell?.segment === "enterprise" &&
+              editingCell?.field === "monthlySubscriptionPerClient"
+            }
+            onStartEdit={() => onStartEdit(item.month, "enterprise", "monthlySubscriptionPerClient")}
+            onSave={(value) => onSaveEdit(item.month, "enterprise", "monthlySubscriptionPerClient", value)}
+            formatting="currency"
+          />
         ))}
       </TableRow>
       <TableRow>
@@ -73,9 +110,18 @@ export const EnterpriseSegmentTable: React.FC<EnterpriseSegmentTableProps> = ({
       <TableRow>
         <TableCell className="font-medium pl-6">Expansion Revenue</TableCell>
         {monthlyRevenueDrivers.map(item => (
-          <TableCell key={`enterprise-expansion-${item.month}`} className="text-center">
-            {formatCurrency(item.enterprise.expansionRevenue)}
-          </TableCell>
+          <EditableCell
+            key={`enterprise-expansion-${item.month}`}
+            value={item.enterprise.expansionRevenue}
+            isEditing={
+              editingCell?.month === item.month &&
+              editingCell?.segment === "enterprise" &&
+              editingCell?.field === "expansionRevenue"
+            }
+            onStartEdit={() => onStartEdit(item.month, "enterprise", "expansionRevenue")}
+            onSave={(value) => onSaveEdit(item.month, "enterprise", "expansionRevenue", value)}
+            formatting="currency"
+          />
         ))}
       </TableRow>
       <TableRow className="bg-slate-50/70 dark:bg-slate-800/20">
