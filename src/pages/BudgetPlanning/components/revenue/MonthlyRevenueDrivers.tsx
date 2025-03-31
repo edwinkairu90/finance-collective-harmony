@@ -1,37 +1,12 @@
 
 import React, { useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { AdditionalRevenueForm } from "./AdditionalRevenueForm";
 import { MonthlyRevenueTable } from "./MonthlyRevenueTable";
 import { initialMonthlyRevenueDrivers } from "./data/monthlyRevenueData";
-import { MonthlyRevenueData, RevenueType } from "./types/revenueTypes";
+import { MonthlyRevenueData } from "./types/revenueTypes";
 
 export const MonthlyRevenueDrivers: React.FC = () => {
-  const [monthlyRevenueDrivers, setMonthlyRevenueDrivers] = useState(initialMonthlyRevenueDrivers);
-  const [additionalRevenueType, setAdditionalRevenueType] = useState<RevenueType | "">("");
-  const [additionalRevenueAmount, setAdditionalRevenueAmount] = useState<number>(0);
-  const [selectedMonth, setSelectedMonth] = useState<string>("Jan");
-
-  // Handle adding additional revenue
-  const handleAddAdditionalRevenue = () => {
-    if (additionalRevenueAmount <= 0 || !selectedMonth || !additionalRevenueType) return;
-
-    setMonthlyRevenueDrivers(prevData => {
-      return prevData.map(item => {
-        if (item.month === selectedMonth) {
-          if (additionalRevenueType === "implementation") {
-            return { ...item, implementationRevenue: additionalRevenueAmount };
-          } else if (additionalRevenueType === "other") {
-            return { ...item, otherRevenue: additionalRevenueAmount };
-          }
-        }
-        return item;
-      });
-    });
-
-    // Reset form values
-    setAdditionalRevenueAmount(0);
-  };
+  const [monthlyRevenueDrivers] = useState(initialMonthlyRevenueDrivers);
 
   return (
     <Card className="border-slate-200 dark:border-slate-700">
@@ -41,16 +16,6 @@ export const MonthlyRevenueDrivers: React.FC = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <AdditionalRevenueForm
-          monthlyRevenueDrivers={monthlyRevenueDrivers}
-          selectedMonth={selectedMonth}
-          setSelectedMonth={setSelectedMonth}
-          additionalRevenueType={additionalRevenueType}
-          setAdditionalRevenueType={setAdditionalRevenueType}
-          additionalRevenueAmount={additionalRevenueAmount}
-          setAdditionalRevenueAmount={setAdditionalRevenueAmount}
-          handleAddAdditionalRevenue={handleAddAdditionalRevenue}
-        />
         <MonthlyRevenueTable monthlyRevenueDrivers={monthlyRevenueDrivers} />
       </CardContent>
     </Card>
