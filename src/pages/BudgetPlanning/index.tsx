@@ -21,14 +21,17 @@ const BudgetPlanning = () => {
       <Tabs defaultValue={activeTab} onValueChange={setActiveTab} className="space-y-4">
         <TabsList className="grid grid-cols-4 md:grid-cols-6 w-full">
           <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="revenue">Revenue Proj</TabsTrigger>
           <TabsTrigger value="departments">Departments</TabsTrigger>
           <TabsTrigger value="cost-centers">Cost Centers</TabsTrigger>
           <TabsTrigger value="categories">Categories</TabsTrigger>
-          <TabsTrigger value="revenue">Revenue Proj</TabsTrigger>
           <TabsTrigger value="tools">Planning Tools</TabsTrigger>
         </TabsList>
         <TabsContent value="overview">
           <BudgetOverview />
+        </TabsContent>
+        <TabsContent value="revenue">
+          <RevenueProjection />
         </TabsContent>
         <TabsContent value="departments">
           <DepartmentBudgets />
@@ -38,9 +41,6 @@ const BudgetPlanning = () => {
         </TabsContent>
         <TabsContent value="categories">
           <BudgetCategories />
-        </TabsContent>
-        <TabsContent value="revenue">
-          <RevenueProjection />
         </TabsContent>
         <TabsContent value="tools">
           <PlanningTools />
