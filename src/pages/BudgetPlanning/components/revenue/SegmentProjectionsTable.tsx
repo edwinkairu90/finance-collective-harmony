@@ -32,7 +32,7 @@ export const SegmentProjectionsTable: React.FC = () => {
               {segmentProjections.map((item) => (
                 <TableRow key={item.segment} className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
                   <TableCell className="font-medium text-slate-800 dark:text-slate-200">{item.segment}</TableCell>
-                  <TableCell className="font-medium">${formatCurrency(item.revenue)}</TableCell>
+                  <TableCell className="font-medium">{formatCurrency(item.revenue)}</TableCell>
                   <TableCell className="text-emerald-600 dark:text-emerald-400 font-medium">{item.growth}</TableCell>
                   <TableCell className="text-right text-blue-600 dark:text-blue-400 font-medium">{item.percentage}</TableCell>
                 </TableRow>

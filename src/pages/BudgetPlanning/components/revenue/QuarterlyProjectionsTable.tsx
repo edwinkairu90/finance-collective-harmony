@@ -34,7 +34,7 @@ export const QuarterlyProjectionsTable: React.FC = () => {
                 <TableCell className="font-medium text-slate-800 dark:text-slate-200">Projected Revenue</TableCell>
                 {quarterlyProjections.map((item) => (
                   <TableCell key={`revenue-${item.quarter}`} className="text-center font-medium">
-                    ${formatCurrency(item.revenue)}
+                    {formatCurrency(item.revenue)}
                   </TableCell>
                 ))}
               </TableRow>
