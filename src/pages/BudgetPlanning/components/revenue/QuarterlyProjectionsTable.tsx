@@ -23,9 +23,9 @@ export const QuarterlyProjectionsTable: React.FC<QuarterlyProjectionsTableProps>
           <Table>
             <TableHeader className="bg-slate-100 dark:bg-slate-800/50">
               <TableRow>
-                <TableHead className="w-[150px] text-xs">Category</TableHead>
+                <TableHead className="w-[150px] text-xs font-semibold">Category</TableHead>
                 {quarterlyProjections.map((item) => (
-                  <TableHead key={item.quarter} className="text-center text-xs">{item.quarter}</TableHead>
+                  <TableHead key={item.quarter} className="text-center text-xs font-semibold">{item.quarter}</TableHead>
                 ))}
               </TableRow>
             </TableHeader>
