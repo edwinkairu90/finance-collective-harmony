@@ -1,11 +1,9 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { BudgetTimeline } from "./BudgetTimeline";
 import { COLORS, getTotalBudget } from "./BudgetData";
-import { BudgetScenarioSelector } from "./BudgetScenarioSelector";
 import { BudgetScenarioComparison } from "./BudgetScenarioComparison";
 import { BudgetScenarioFinancials } from "./BudgetScenarioFinancials";
 import { BudgetScenarioType } from "@/types/budgetScenarios";
@@ -13,7 +11,8 @@ import { getBudgetScenarios, getScenarioById } from "./BudgetScenarioData";
 import { formatCurrency } from "@/lib/format";
 
 export const BudgetOverview = () => {
-  const [activeScenario, setActiveScenario] = useState<BudgetScenarioType>("base-case");
+  // Still maintain the activeScenario state but with a default value
+  const [activeScenario] = useState<BudgetScenarioType>("base-case");
   const scenario = getScenarioById(activeScenario);
   const scenarios = getBudgetScenarios();
   
@@ -24,15 +23,10 @@ export const BudgetOverview = () => {
 
   return (
     <>
-      <BudgetScenarioSelector 
-        activeScenario={activeScenario}
-        onScenarioChange={setActiveScenario}
-      />
-      
       <Card>
         <CardHeader className="pb-2 bg-slate-50 dark:bg-slate-900/50 rounded-t-lg">
-          <CardTitle className="text-xl font-montserrat font-semibold text-slate-800 dark:text-slate-200">FY 2025 Budget Allocation - {scenario?.name}</CardTitle>
-          <CardDescription className="text-slate-600 dark:text-slate-300">{scenario?.description}</CardDescription>
+          <CardTitle className="text-xl font-montserrat font-semibold text-slate-800 dark:text-slate-200">FY 2025 Budget Allocation</CardTitle>
+          <CardDescription className="text-slate-600 dark:text-slate-300">Current budget allocation based on the base case scenario</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="h-80">
