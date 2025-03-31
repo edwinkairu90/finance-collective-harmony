@@ -45,47 +45,47 @@ export const DashboardFilters: React.FC<DashboardFiltersProps> = ({
   filterOptions
 }) => {
   return (
-    <div className="flex flex-wrap gap-3 mb-6">
-      <div className="flex items-center gap-2 bg-white rounded-md border px-3 py-1.5">
-        <BarChart className="h-4 w-4 text-muted-foreground" />
-        <span className="text-sm text-muted-foreground mr-1">Scenario:</span>
+    <div className="flex flex-wrap gap-2 mb-4">
+      <div className="flex items-center gap-1.5 bg-white rounded-md border px-2 py-1">
+        <BarChart className="h-3.5 w-3.5 text-muted-foreground" />
+        <span className="text-xs text-muted-foreground">Scenario:</span>
         <Select value={selectedScenario} onValueChange={onScenarioChange}>
-          <SelectTrigger className="w-[140px] h-8 border-0 p-0 bg-transparent">
+          <SelectTrigger className="w-[110px] h-6 border-0 p-0 bg-transparent text-xs">
             <SelectValue placeholder="Select scenario" />
           </SelectTrigger>
           <SelectContent>
             {filterOptions.scenarios.map(scenario => (
-              <SelectItem key={scenario} value={scenario}>{scenario}</SelectItem>
+              <SelectItem key={scenario} value={scenario} className="text-xs">{scenario}</SelectItem>
             ))}
           </SelectContent>
         </Select>
       </div>
 
-      <div className="flex items-center gap-2 bg-white rounded-md border px-3 py-1.5">
-        <Globe className="h-4 w-4 text-muted-foreground" />
-        <span className="text-sm text-muted-foreground mr-1">Region:</span>
+      <div className="flex items-center gap-1.5 bg-white rounded-md border px-2 py-1">
+        <Globe className="h-3.5 w-3.5 text-muted-foreground" />
+        <span className="text-xs text-muted-foreground">Region:</span>
         <Select value={selectedRegion} onValueChange={onRegionChange}>
-          <SelectTrigger className="w-[140px] h-8 border-0 p-0 bg-transparent">
+          <SelectTrigger className="w-[110px] h-6 border-0 p-0 bg-transparent text-xs">
             <SelectValue placeholder="Select region" />
           </SelectTrigger>
           <SelectContent>
             {filterOptions.regions.map(region => (
-              <SelectItem key={region} value={region}>{region}</SelectItem>
+              <SelectItem key={region} value={region} className="text-xs">{region}</SelectItem>
             ))}
           </SelectContent>
         </Select>
       </div>
 
-      <div className="flex items-center gap-2 bg-white rounded-md border px-3 py-1.5">
-        <BarChart className="h-4 w-4 text-muted-foreground" />
-        <span className="text-sm text-muted-foreground mr-1">Year:</span>
+      <div className="flex items-center gap-1.5 bg-white rounded-md border px-2 py-1">
+        <BarChart className="h-3.5 w-3.5 text-muted-foreground" />
+        <span className="text-xs text-muted-foreground">Year:</span>
         <Select value={selectedYear.toString()} onValueChange={(val) => onYearChange(Number(val))}>
-          <SelectTrigger className="w-[140px] h-8 border-0 p-0 bg-transparent">
+          <SelectTrigger className="w-[70px] h-6 border-0 p-0 bg-transparent text-xs">
             <SelectValue placeholder="Select year" />
           </SelectTrigger>
           <SelectContent>
             {filterOptions.years.map(year => (
-              <SelectItem key={year} value={year.toString()}>
+              <SelectItem key={year} value={year.toString()} className="text-xs">
                 FY {year.toString().substring(2)}
               </SelectItem>
             ))}
@@ -93,16 +93,16 @@ export const DashboardFilters: React.FC<DashboardFiltersProps> = ({
         </Select>
       </div>
 
-      <div className="flex items-center gap-2 bg-white rounded-md border px-3 py-1.5">
-        <Building className="h-4 w-4 text-muted-foreground" />
-        <span className="text-sm text-muted-foreground mr-1">Department:</span>
+      <div className="flex items-center gap-1.5 bg-white rounded-md border px-2 py-1">
+        <Building className="h-3.5 w-3.5 text-muted-foreground" />
+        <span className="text-xs text-muted-foreground">Dept:</span>
         <Select value={selectedDepartment} onValueChange={onDepartmentChange}>
-          <SelectTrigger className="w-[140px] h-8 border-0 p-0 bg-transparent">
-            <SelectValue placeholder="Select department" />
+          <SelectTrigger className="w-[110px] h-6 border-0 p-0 bg-transparent text-xs">
+            <SelectValue placeholder="Select dept" />
           </SelectTrigger>
           <SelectContent>
             {filterOptions.departments.map(department => (
-              <SelectItem key={department} value={department}>{department}</SelectItem>
+              <SelectItem key={department} value={department} className="text-xs">{department}</SelectItem>
             ))}
           </SelectContent>
         </Select>
