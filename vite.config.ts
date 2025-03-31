@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => ({
       "Cross-Origin-Opener-Policy": "same-origin",
       "Cross-Origin-Embedder-Policy": "require-corp"
     },
-    allowedHosts: "all" // This allows all hosts to access the server
+    allowedHosts: true // Changed from "all" to true to fix the type error
   },
   plugins: [
     react(),
