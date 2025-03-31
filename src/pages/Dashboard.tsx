@@ -53,12 +53,12 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold tracking-tight">Executive Dashboard</h1>
+        <h1 className="text-2xl font-bold tracking-tight">Executive Dashboard</h1>
         <Button 
           onClick={showNotification}
-          className="bg-[#50C2A0] hover:bg-[#3BA989] text-white text-xs py-1.5 px-3 h-8"
+          className="bg-[#50C2A0] hover:bg-[#3BA989] text-white text-xs py-1 px-2.5 h-7"
           size="sm"
         >
           Show Sample Notification
@@ -91,13 +91,13 @@ const Dashboard = () => {
       />
 
       {/* Charts - Middle Row */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 gap-5">
         <RevenueChart data={revenueData} />
         <OpexBarChart />
       </div>
 
       {/* Tables - Bottom Row */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 gap-5">
         <BVASummaryTable />
         <BVAVarianceChart />
       </div>

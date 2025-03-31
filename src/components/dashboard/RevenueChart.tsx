@@ -23,35 +23,36 @@ interface RevenueChartProps {
 export const RevenueChart = ({ data }: RevenueChartProps) => {
   return (
     <Card>
-      <CardHeader className="pb-2">
-        <CardTitle className="text-lg">Revenue Forecast vs. Actuals</CardTitle>
+      <CardHeader className="pb-1 pt-3">
+        <CardTitle className="text-sm">Revenue Forecast vs. Actuals</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex items-center text-xs mb-2 space-x-4">
           <div className="flex items-center">
-            <div className="w-3 h-3 rounded-full bg-[#4DC1CB] mr-1"></div>
+            <div className="w-2.5 h-2.5 rounded-full bg-[#4DC1CB] mr-1"></div>
             <span>Target</span>
           </div>
           <div className="flex items-center">
-            <div className="w-3 h-3 rounded-full bg-[#0EA5E9] mr-1"></div>
+            <div className="w-2.5 h-2.5 rounded-full bg-[#0EA5E9] mr-1"></div>
             <span>Actual</span>
           </div>
           <div className="flex items-center">
-            <div className="w-3 h-3 rounded-full border border-[#4DC1CB] bg-transparent mr-1"></div>
+            <div className="w-2.5 h-2.5 rounded-full border border-[#4DC1CB] bg-transparent mr-1"></div>
             <span>Forecast</span>
           </div>
         </div>
-        <div className="h-80">
+        <div className="h-72">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart 
               data={data} 
               margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
             >
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="month" />
+              <XAxis dataKey="month" tick={{ fontSize: 10 }} />
               <YAxis 
                 axisLine={false} 
                 tickLine={false}
+                tick={{ fontSize: 10 }}
               />
               <Tooltip />
               <Line 
@@ -66,8 +67,8 @@ export const RevenueChart = ({ data }: RevenueChartProps) => {
                 dataKey="actual" 
                 stroke="#0EA5E9" 
                 strokeWidth={2}
-                dot={{ r: 4, fill: "#0EA5E9" }} 
-                activeDot={{ r: 6 }}
+                dot={{ r: 3, fill: "#0EA5E9" }} 
+                activeDot={{ r: 5 }}
               />
               <CartesianGrid stroke="#eee" vertical={false} />
               

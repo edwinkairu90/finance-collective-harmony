@@ -16,18 +16,18 @@ export const BVASummaryTable = () => {
 
   return (
     <Card>
-      <CardHeader className="pb-2">
-        <CardTitle className="text-lg">BVA Summary YTD</CardTitle>
+      <CardHeader className="pb-1 pt-3">
+        <CardTitle className="text-sm">BVA Summary YTD</CardTitle>
       </CardHeader>
-      <CardContent>
-        <Table>
+      <CardContent className="p-0">
+        <Table className="text-xs">
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[180px]"></TableHead>
-              <TableHead className="text-right">Actuals</TableHead>
-              <TableHead className="text-right">Forecast</TableHead>
-              <TableHead className="text-right">Variance</TableHead>
-              <TableHead className="text-right">Variance %</TableHead>
+              <TableHead className="w-[180px] py-2"></TableHead>
+              <TableHead className="text-right py-2">Actuals</TableHead>
+              <TableHead className="text-right py-2">Forecast</TableHead>
+              <TableHead className="text-right py-2">Variance</TableHead>
+              <TableHead className="text-right py-2">Variance %</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -36,11 +36,11 @@ export const BVASummaryTable = () => {
                 key={index}
                 className={row.name === "= EBITDA" ? "bg-blue-100" : ""}
               >
-                <TableCell className="font-medium">{row.name}</TableCell>
-                <TableCell className="text-right">{row.actuals}</TableCell>
-                <TableCell className="text-right">{row.forecast}</TableCell>
-                <TableCell className="text-right">{row.variance}</TableCell>
-                <TableCell className="text-right">{row.variancePercent}</TableCell>
+                <TableCell className="font-medium py-1.5">{row.name}</TableCell>
+                <TableCell className="text-right py-1.5">{row.actuals}</TableCell>
+                <TableCell className="text-right py-1.5">{row.forecast}</TableCell>
+                <TableCell className="text-right py-1.5">{row.variance}</TableCell>
+                <TableCell className="text-right py-1.5">{row.variancePercent}</TableCell>
               </TableRow>
             ))}
           </TableBody>

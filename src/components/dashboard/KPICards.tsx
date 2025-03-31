@@ -31,30 +31,30 @@ export const KPICards = ({
   return (
     <div className="grid grid-cols-4 gap-4">
       <Card className="bg-blue-100">
-        <CardContent className="p-6">
-          <div className="text-3xl font-bold">{annualRevenue}</div>
-          <div className="text-sm text-gray-600">FY Revenue YTD</div>
+        <CardContent className="p-4">
+          <div className="text-2xl font-bold">{annualRevenue}</div>
+          <div className="text-xs text-gray-600">FY Revenue YTD</div>
         </CardContent>
       </Card>
       
       <Card className="bg-teal-800 text-white">
-        <CardContent className="p-6">
-          <div className="text-3xl font-bold">{revenueGrowth}%</div>
-          <div className="text-sm text-gray-200">QTR YoY Growth %</div>
+        <CardContent className="p-4">
+          <div className="text-2xl font-bold">{revenueGrowth}%</div>
+          <div className="text-xs text-gray-200">QTR YoY Growth %</div>
         </CardContent>
       </Card>
       
       <Card className="bg-blue-100">
-        <CardContent className="p-6">
-          <div className="text-3xl font-bold">{formattedOpex}</div>
-          <div className="text-sm text-gray-600">FY OPEX YTD</div>
+        <CardContent className="p-4">
+          <div className="text-2xl font-bold">{formattedOpex}</div>
+          <div className="text-xs text-gray-600">FY OPEX YTD</div>
         </CardContent>
       </Card>
       
       <Card className="bg-teal-800 text-white">
-        <CardContent className="p-6">
-          <div className="text-3xl font-bold">{marginPercentage}%</div>
-          <div className="text-sm text-gray-200">FY Margin %</div>
+        <CardContent className="p-4">
+          <div className="text-2xl font-bold">{marginPercentage}%</div>
+          <div className="text-xs text-gray-200">FY Margin %</div>
         </CardContent>
       </Card>
     </div>

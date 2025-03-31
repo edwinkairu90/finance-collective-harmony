@@ -5,25 +5,25 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 export const OpexBarChart = () => {
   return (
     <Card>
-      <CardHeader className="pb-2">
-        <CardTitle className="text-lg">OPEX Summary</CardTitle>
+      <CardHeader className="pb-1 pt-3">
+        <CardTitle className="text-sm">OPEX Summary</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex items-center text-xs mb-2 space-x-4">
           <div className="flex items-center">
-            <div className="w-3 h-3 rounded-full bg-teal-800 mr-1"></div>
+            <div className="w-2.5 h-2.5 rounded-full bg-teal-800 mr-1"></div>
             <span>Dept A</span>
           </div>
           <div className="flex items-center">
-            <div className="w-3 h-3 rounded-full bg-teal-500 mr-1"></div>
+            <div className="w-2.5 h-2.5 rounded-full bg-teal-500 mr-1"></div>
             <span>Dept B</span>
           </div>
           <div className="flex items-center">
-            <div className="w-3 h-3 rounded-full bg-amber-300 mr-1"></div>
+            <div className="w-2.5 h-2.5 rounded-full bg-amber-300 mr-1"></div>
             <span>Dept C</span>
           </div>
         </div>
-        <div className="h-80">
+        <div className="h-72">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={[
@@ -43,10 +43,11 @@ export const OpexBarChart = () => {
               margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
             >
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="month" />
+              <XAxis dataKey="month" tick={{ fontSize: 10 }} />
               <YAxis 
                 axisLine={false} 
                 tickLine={false}
+                tick={{ fontSize: 10 }}
               />
               <Tooltip />
               <Bar dataKey="deptA" stackId="a" fill="#134e4a" /> 

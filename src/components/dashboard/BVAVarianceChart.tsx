@@ -6,11 +6,11 @@ import { ValueType } from "recharts/types/component/DefaultTooltipContent";
 export const BVAVarianceChart = () => {
   return (
     <Card>
-      <CardHeader className="pb-2">
-        <CardTitle className="text-lg">BVA Var by Type</CardTitle>
+      <CardHeader className="pb-1 pt-3">
+        <CardTitle className="text-sm">BVA Var by Type</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="h-[300px]">
+        <div className="h-[280px]">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               layout="vertical"
@@ -20,7 +20,7 @@ export const BVAVarianceChart = () => {
                 { name: "Permanent", value: -15000, fill: "#989898" },
                 { name: "Total", value: 90000, fill: "#FDC675" },
               ]}
-              margin={{ top: 20, right: 30, left: 70, bottom: 5 }}
+              margin={{ top: 20, right: 30, left: 60, bottom: 5 }}
             >
               <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />
               <XAxis 
@@ -28,12 +28,14 @@ export const BVAVarianceChart = () => {
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={(value) => `$${Math.abs(value/1000)}K`}
+                tick={{ fontSize: 10 }}
               />
               <YAxis 
                 type="category" 
                 dataKey="name"
                 axisLine={false}
                 tickLine={false}
+                tick={{ fontSize: 10 }}
               />
               <Tooltip 
                 formatter={(value: ValueType) => {
