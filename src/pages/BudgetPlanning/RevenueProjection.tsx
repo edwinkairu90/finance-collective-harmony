@@ -1,7 +1,6 @@
 
 import React from "react";
 import { KPICards } from "./components/revenue/KPICards";
-import { RevenueChart } from "./components/revenue/RevenueChart";
 import { QuarterlyProjectionsTable } from "./components/revenue/QuarterlyProjectionsTable";
 import { SegmentProjectionsTable } from "./components/revenue/SegmentProjectionsTable";
 import { RevenueDriversTable } from "./components/revenue/RevenueDriversTable";
@@ -11,7 +10,6 @@ export const RevenueProjection: React.FC = () => {
   return (
     <div className="space-y-4">
       <KPICards />
-      <RevenueChart />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <QuarterlyProjectionsTable />
         <SegmentProjectionsTable />
