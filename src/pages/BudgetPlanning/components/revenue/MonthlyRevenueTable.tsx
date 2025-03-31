@@ -95,7 +95,7 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
                   <TableCell className="font-medium pl-6">Monthly Subscription/Client</TableCell>
                   {monthlyRevenueDrivers.map(item => (
                     <TableCell key={`enterprise-subscription-per-client-${item.month}`} className="text-center">
-                      ${formatCurrency(item.enterprise.monthlySubscriptionPerClient)}
+                      {formatCurrency(item.enterprise.monthlySubscriptionPerClient)}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -103,7 +103,7 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
                   <TableCell className="font-medium pl-6">Total Subscription</TableCell>
                   {monthlyRevenueDrivers.map(item => (
                     <TableCell key={`enterprise-total-subscription-${item.month}`} className="text-center">
-                      ${formatCurrency(calculateTotalSubscription(item.enterprise))}
+                      {formatCurrency(calculateTotalSubscription(item.enterprise))}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -111,7 +111,7 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
                   <TableCell className="font-medium pl-6">Implementation Fee</TableCell>
                   {monthlyRevenueDrivers.map(item => (
                     <TableCell key={`enterprise-implementation-${item.month}`} className="text-center">
-                      ${formatCurrency(item.enterprise.implementationFee)}
+                      {formatCurrency(item.enterprise.implementationFee)}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -119,7 +119,7 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
                   <TableCell className="font-medium pl-6">Expansion Revenue</TableCell>
                   {monthlyRevenueDrivers.map(item => (
                     <TableCell key={`enterprise-expansion-${item.month}`} className="text-center">
-                      ${formatCurrency(item.enterprise.expansionRevenue)}
+                      {formatCurrency(item.enterprise.expansionRevenue)}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -127,7 +127,7 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
                   <TableCell className="font-semibold pl-6 text-purple-700 dark:text-purple-400">Total Enterprise Revenue</TableCell>
                   {monthlyRevenueDrivers.map(item => (
                     <TableCell key={`enterprise-total-${item.month}`} className="text-center font-semibold text-purple-700 dark:text-purple-400">
-                      ${formatCurrency(calculateSegmentTotalRevenue(item.enterprise))}
+                      {formatCurrency(calculateSegmentTotalRevenue(item.enterprise))}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -172,7 +172,7 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
                   <TableCell className="font-medium pl-6">Monthly Subscription/Client</TableCell>
                   {monthlyRevenueDrivers.map(item => (
                     <TableCell key={`midmarket-subscription-per-client-${item.month}`} className="text-center">
-                      ${formatCurrency(item.midMarket.monthlySubscriptionPerClient)}
+                      {formatCurrency(item.midMarket.monthlySubscriptionPerClient)}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -180,7 +180,7 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
                   <TableCell className="font-medium pl-6">Total Subscription</TableCell>
                   {monthlyRevenueDrivers.map(item => (
                     <TableCell key={`midmarket-total-subscription-${item.month}`} className="text-center">
-                      ${formatCurrency(calculateTotalSubscription(item.midMarket))}
+                      {formatCurrency(calculateTotalSubscription(item.midMarket))}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -188,7 +188,7 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
                   <TableCell className="font-medium pl-6">Implementation Fee</TableCell>
                   {monthlyRevenueDrivers.map(item => (
                     <TableCell key={`midmarket-implementation-${item.month}`} className="text-center">
-                      ${formatCurrency(item.midMarket.implementationFee)}
+                      {formatCurrency(item.midMarket.implementationFee)}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -196,7 +196,7 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
                   <TableCell className="font-medium pl-6">Expansion Revenue</TableCell>
                   {monthlyRevenueDrivers.map(item => (
                     <TableCell key={`midmarket-expansion-${item.month}`} className="text-center">
-                      ${formatCurrency(item.midMarket.expansionRevenue)}
+                      {formatCurrency(item.midMarket.expansionRevenue)}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -204,7 +204,7 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
                   <TableCell className="font-semibold pl-6 text-blue-700 dark:text-blue-400">Total Mid-Market Revenue</TableCell>
                   {monthlyRevenueDrivers.map(item => (
                     <TableCell key={`midmarket-total-${item.month}`} className="text-center font-semibold text-blue-700 dark:text-blue-400">
-                      ${formatCurrency(calculateSegmentTotalRevenue(item.midMarket))}
+                      {formatCurrency(calculateSegmentTotalRevenue(item.midMarket))}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -249,7 +249,7 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
                   <TableCell className="font-medium pl-6">Monthly Subscription/Client</TableCell>
                   {monthlyRevenueDrivers.map(item => (
                     <TableCell key={`smb-subscription-per-client-${item.month}`} className="text-center">
-                      ${formatCurrency(item.smb.monthlySubscriptionPerClient)}
+                      {formatCurrency(item.smb.monthlySubscriptionPerClient)}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -257,7 +257,7 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
                   <TableCell className="font-medium pl-6">Total Subscription</TableCell>
                   {monthlyRevenueDrivers.map(item => (
                     <TableCell key={`smb-total-subscription-${item.month}`} className="text-center">
-                      ${formatCurrency(calculateTotalSubscription(item.smb))}
+                      {formatCurrency(calculateTotalSubscription(item.smb))}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -265,7 +265,7 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
                   <TableCell className="font-medium pl-6">Implementation Fee</TableCell>
                   {monthlyRevenueDrivers.map(item => (
                     <TableCell key={`smb-implementation-${item.month}`} className="text-center">
-                      ${formatCurrency(item.smb.implementationFee)}
+                      {formatCurrency(item.smb.implementationFee)}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -273,7 +273,7 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
                   <TableCell className="font-medium pl-6">Expansion Revenue</TableCell>
                   {monthlyRevenueDrivers.map(item => (
                     <TableCell key={`smb-expansion-${item.month}`} className="text-center">
-                      ${formatCurrency(item.smb.expansionRevenue)}
+                      {formatCurrency(item.smb.expansionRevenue)}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -281,7 +281,7 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
                   <TableCell className="font-semibold pl-6 text-emerald-700 dark:text-emerald-400">Total SMB Revenue</TableCell>
                   {monthlyRevenueDrivers.map(item => (
                     <TableCell key={`smb-total-${item.month}`} className="text-center font-semibold text-emerald-700 dark:text-emerald-400">
-                      ${formatCurrency(calculateSegmentTotalRevenue(item.smb))}
+                      {formatCurrency(calculateSegmentTotalRevenue(item.smb))}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -302,7 +302,7 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
                   <TableCell className="font-medium pl-6">Miscellaneous Revenue</TableCell>
                   {monthlyRevenueDrivers.map(item => (
                     <TableCell key={`other-${item.month}`} className="text-center">
-                      ${formatCurrency(item.otherRevenue)}
+                      {formatCurrency(item.otherRevenue)}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -314,7 +314,7 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
               <TableCell className="font-bold text-teal-700 dark:text-teal-400">Monthly Total Revenue</TableCell>
               {monthlyRevenueDrivers.map(item => (
                 <TableCell key={`total-${item.month}`} className="text-center font-bold text-teal-700 dark:text-teal-400">
-                  ${formatCurrency(calculateMonthlyTotal(item.month, monthlyRevenueDrivers))}
+                  {formatCurrency(calculateMonthlyTotal(item.month, monthlyRevenueDrivers))}
                 </TableCell>
               ))}
             </TableRow>
