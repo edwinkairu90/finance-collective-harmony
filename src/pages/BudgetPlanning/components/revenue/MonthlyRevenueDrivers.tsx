@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -208,66 +207,85 @@ export const MonthlyRevenueDrivers: React.FC = () => {
           <Table>
             <TableHeader className="bg-slate-100 dark:bg-slate-800/50">
               <TableRow>
-                <TableHead className="w-[80px]">Month</TableHead>
-                <TableHead className="text-center">
-                  <div className="text-purple-600 dark:text-purple-400 font-medium">Enterprise</div>
-                  <div className="flex justify-between text-xs mt-1 font-normal">
-                    <span>New Clients</span>
-                    <span>MRR</span>
-                  </div>
-                </TableHead>
-                <TableHead className="text-center">
-                  <div className="text-blue-600 dark:text-blue-400 font-medium">Mid-Market</div>
-                  <div className="flex justify-between text-xs mt-1 font-normal">
-                    <span>New Clients</span>
-                    <span>MRR</span>
-                  </div>
-                </TableHead>
-                <TableHead className="text-center">
-                  <div className="text-emerald-600 dark:text-emerald-400 font-medium">SMB</div>
-                  <div className="flex justify-between text-xs mt-1 font-normal">
-                    <span>New Clients</span>
-                    <span>MRR</span>
-                  </div>
-                </TableHead>
-                <TableHead className="text-blue-600 dark:text-blue-400 font-medium">Implementation</TableHead>
-                <TableHead className="text-amber-600 dark:text-amber-400 font-medium">Other Revenue</TableHead>
-                <TableHead className="text-right font-medium text-teal-700 dark:text-teal-400">Monthly Total</TableHead>
+                <TableHead className="w-[180px]">Revenue Category</TableHead>
+                {monthlyRevenueDrivers.map(item => (
+                  <TableHead key={item.month} className="text-center">{item.month}</TableHead>
+                ))}
               </TableRow>
             </TableHeader>
             <TableBody>
-              {monthlyRevenueDrivers.map((item) => (
-                <TableRow key={item.month} className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
-                  <TableCell className="font-medium">{item.month}</TableCell>
-                  <TableCell className="text-center">
-                    <div className="flex justify-between">
-                      <span className="text-purple-600 dark:text-purple-400 font-medium">{item.enterprise.newClients}</span>
-                      <span>${formatCurrency(item.enterprise.subscriptionRevenue)}</span>
-                    </div>
+              <TableRow className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
+                <TableCell className="font-medium text-purple-600 dark:text-purple-400">Enterprise New Clients</TableCell>
+                {monthlyRevenueDrivers.map(item => (
+                  <TableCell key={`enterprise-clients-${item.month}`} className="text-center">
+                    {item.enterprise.newClients}
                   </TableCell>
-                  <TableCell className="text-center">
-                    <div className="flex justify-between">
-                      <span className="text-blue-600 dark:text-blue-400 font-medium">{item.midMarket.newClients}</span>
-                      <span>${formatCurrency(item.midMarket.subscriptionRevenue)}</span>
-                    </div>
+                ))}
+              </TableRow>
+              <TableRow className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
+                <TableCell className="font-medium text-purple-600 dark:text-purple-400">Enterprise MRR</TableCell>
+                {monthlyRevenueDrivers.map(item => (
+                  <TableCell key={`enterprise-mrr-${item.month}`} className="text-center">
+                    ${formatCurrency(item.enterprise.subscriptionRevenue)}
                   </TableCell>
-                  <TableCell className="text-center">
-                    <div className="flex justify-between">
-                      <span className="text-emerald-600 dark:text-emerald-400 font-medium">{item.smb.newClients}</span>
-                      <span>${formatCurrency(item.smb.subscriptionRevenue)}</span>
-                    </div>
+                ))}
+              </TableRow>
+              <TableRow className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
+                <TableCell className="font-medium text-blue-600 dark:text-blue-400">Mid-Market New Clients</TableCell>
+                {monthlyRevenueDrivers.map(item => (
+                  <TableCell key={`midmarket-clients-${item.month}`} className="text-center">
+                    {item.midMarket.newClients}
                   </TableCell>
-                  <TableCell className="text-blue-600 dark:text-blue-400 font-medium">
+                ))}
+              </TableRow>
+              <TableRow className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
+                <TableCell className="font-medium text-blue-600 dark:text-blue-400">Mid-Market MRR</TableCell>
+                {monthlyRevenueDrivers.map(item => (
+                  <TableCell key={`midmarket-mrr-${item.month}`} className="text-center">
+                    ${formatCurrency(item.midMarket.subscriptionRevenue)}
+                  </TableCell>
+                ))}
+              </TableRow>
+              <TableRow className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
+                <TableCell className="font-medium text-emerald-600 dark:text-emerald-400">SMB New Clients</TableCell>
+                {monthlyRevenueDrivers.map(item => (
+                  <TableCell key={`smb-clients-${item.month}`} className="text-center">
+                    {item.smb.newClients}
+                  </TableCell>
+                ))}
+              </TableRow>
+              <TableRow className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
+                <TableCell className="font-medium text-emerald-600 dark:text-emerald-400">SMB MRR</TableCell>
+                {monthlyRevenueDrivers.map(item => (
+                  <TableCell key={`smb-mrr-${item.month}`} className="text-center">
+                    ${formatCurrency(item.smb.subscriptionRevenue)}
+                  </TableCell>
+                ))}
+              </TableRow>
+              <TableRow className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
+                <TableCell className="font-medium text-blue-600 dark:text-blue-400">Implementation Revenue</TableCell>
+                {monthlyRevenueDrivers.map(item => (
+                  <TableCell key={`implementation-${item.month}`} className="text-center">
                     ${formatCurrency(item.implementationRevenue)}
                   </TableCell>
-                  <TableCell className="text-amber-600 dark:text-amber-400 font-medium">
+                ))}
+              </TableRow>
+              <TableRow className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
+                <TableCell className="font-medium text-amber-600 dark:text-amber-400">Other Revenue</TableCell>
+                {monthlyRevenueDrivers.map(item => (
+                  <TableCell key={`other-${item.month}`} className="text-center">
                     ${formatCurrency(item.otherRevenue)}
                   </TableCell>
-                  <TableCell className="text-right font-bold text-teal-700 dark:text-teal-400">
+                ))}
+              </TableRow>
+              <TableRow className="bg-slate-50 dark:bg-slate-800/20 border-t-2 border-slate-200">
+                <TableCell className="font-bold text-teal-700 dark:text-teal-400">Monthly Total</TableCell>
+                {monthlyRevenueDrivers.map(item => (
+                  <TableCell key={`total-${item.month}`} className="text-center font-bold text-teal-700 dark:text-teal-400">
                     ${formatCurrency(calculateMonthlyTotal(item.month))}
                   </TableCell>
-                </TableRow>
-              ))}
+                ))}
+              </TableRow>
             </TableBody>
           </Table>
         </div>
