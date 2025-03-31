@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { MonthlyRevenueTable } from "./MonthlyRevenueTable";
 import { initialMonthlyRevenueDrivers } from "./data/monthlyRevenueData";
 import { MonthlyRevenueData, SegmentData } from "./types/revenueTypes";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 export const MonthlyRevenueDrivers: React.FC = () => {
   const [monthlyRevenueDrivers, setMonthlyRevenueDrivers] = useState<MonthlyRevenueData[]>(
@@ -18,20 +18,45 @@ export const MonthlyRevenueDrivers: React.FC = () => {
     field: keyof SegmentData,
     value: number
   ) => {
-    setMonthlyRevenueDrivers((prev) =>
-      prev.map((item) => {
-        if (item.month === month) {
-          return {
-            ...item,
-            [segment]: {
-              ...item[segment],
-              [field]: value
-            }
-          };
-        }
-        return item;
-      })
-    );
+    // Update the current month's data
+    setMonthlyRevenueDrivers((prev) => {
+      const updatedData = [...prev];
+      
+      // Find the current month's index
+      const currentMonthIndex = updatedData.findIndex(item => item.month === month);
+      if (currentMonthIndex === -1) return prev;
+      
+      // Create a copy of the current month data
+      const currentMonthData = { ...updatedData[currentMonthIndex] };
+      
+      // Update the specific field for the segment
+      currentMonthData[segment] = {
+        ...currentMonthData[segment],
+        [field]: value
+      };
+      
+      // If the field is newClients, we need to update the following month's existing clients
+      if (field === "newClients" && currentMonthIndex < updatedData.length - 1) {
+        // Calculate the total clients for current month
+        const totalClientsCurrentMonth = 
+          currentMonthData[segment].clients + currentMonthData[segment].newClients;
+        
+        // Update the next month's existing clients
+        const nextMonthData = { ...updatedData[currentMonthIndex + 1] };
+        nextMonthData[segment] = {
+          ...nextMonthData[segment],
+          clients: totalClientsCurrentMonth
+        };
+        
+        // Update the next month in the data array
+        updatedData[currentMonthIndex + 1] = nextMonthData;
+      }
+      
+      // Update the current month in the data array
+      updatedData[currentMonthIndex] = currentMonthData;
+      
+      return updatedData;
+    });
 
     toast({
       title: "Data updated",
