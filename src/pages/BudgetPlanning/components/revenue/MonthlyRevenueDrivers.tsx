@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -217,7 +218,7 @@ export const MonthlyRevenueDrivers: React.FC = () => {
               <TableRow className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
                 <TableCell className="font-medium text-purple-600 dark:text-purple-400">Enterprise New Clients</TableCell>
                 {monthlyRevenueDrivers.map(item => (
-                  <TableCell key={`enterprise-clients-${item.month}`} className="text-center">
+                  <TableCell key={`enterprise-clients-${item.month}`} className="text-center font-medium">
                     {item.enterprise.newClients}
                   </TableCell>
                 ))}
@@ -225,7 +226,7 @@ export const MonthlyRevenueDrivers: React.FC = () => {
               <TableRow className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
                 <TableCell className="font-medium text-purple-600 dark:text-purple-400">Enterprise MRR</TableCell>
                 {monthlyRevenueDrivers.map(item => (
-                  <TableCell key={`enterprise-mrr-${item.month}`} className="text-center">
+                  <TableCell key={`enterprise-mrr-${item.month}`} className="text-center font-medium">
                     ${formatCurrency(item.enterprise.subscriptionRevenue)}
                   </TableCell>
                 ))}
@@ -233,7 +234,7 @@ export const MonthlyRevenueDrivers: React.FC = () => {
               <TableRow className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
                 <TableCell className="font-medium text-blue-600 dark:text-blue-400">Mid-Market New Clients</TableCell>
                 {monthlyRevenueDrivers.map(item => (
-                  <TableCell key={`midmarket-clients-${item.month}`} className="text-center">
+                  <TableCell key={`midmarket-clients-${item.month}`} className="text-center font-medium">
                     {item.midMarket.newClients}
                   </TableCell>
                 ))}
@@ -241,7 +242,7 @@ export const MonthlyRevenueDrivers: React.FC = () => {
               <TableRow className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
                 <TableCell className="font-medium text-blue-600 dark:text-blue-400">Mid-Market MRR</TableCell>
                 {monthlyRevenueDrivers.map(item => (
-                  <TableCell key={`midmarket-mrr-${item.month}`} className="text-center">
+                  <TableCell key={`midmarket-mrr-${item.month}`} className="text-center font-medium">
                     ${formatCurrency(item.midMarket.subscriptionRevenue)}
                   </TableCell>
                 ))}
@@ -249,7 +250,7 @@ export const MonthlyRevenueDrivers: React.FC = () => {
               <TableRow className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
                 <TableCell className="font-medium text-emerald-600 dark:text-emerald-400">SMB New Clients</TableCell>
                 {monthlyRevenueDrivers.map(item => (
-                  <TableCell key={`smb-clients-${item.month}`} className="text-center">
+                  <TableCell key={`smb-clients-${item.month}`} className="text-center font-medium">
                     {item.smb.newClients}
                   </TableCell>
                 ))}
@@ -257,7 +258,7 @@ export const MonthlyRevenueDrivers: React.FC = () => {
               <TableRow className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
                 <TableCell className="font-medium text-emerald-600 dark:text-emerald-400">SMB MRR</TableCell>
                 {monthlyRevenueDrivers.map(item => (
-                  <TableCell key={`smb-mrr-${item.month}`} className="text-center">
+                  <TableCell key={`smb-mrr-${item.month}`} className="text-center font-medium">
                     ${formatCurrency(item.smb.subscriptionRevenue)}
                   </TableCell>
                 ))}
@@ -265,7 +266,7 @@ export const MonthlyRevenueDrivers: React.FC = () => {
               <TableRow className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
                 <TableCell className="font-medium text-blue-600 dark:text-blue-400">Implementation Revenue</TableCell>
                 {monthlyRevenueDrivers.map(item => (
-                  <TableCell key={`implementation-${item.month}`} className="text-center">
+                  <TableCell key={`implementation-${item.month}`} className="text-center font-medium">
                     ${formatCurrency(item.implementationRevenue)}
                   </TableCell>
                 ))}
@@ -273,7 +274,7 @@ export const MonthlyRevenueDrivers: React.FC = () => {
               <TableRow className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
                 <TableCell className="font-medium text-amber-600 dark:text-amber-400">Other Revenue</TableCell>
                 {monthlyRevenueDrivers.map(item => (
-                  <TableCell key={`other-${item.month}`} className="text-center">
+                  <TableCell key={`other-${item.month}`} className="text-center font-medium">
                     ${formatCurrency(item.otherRevenue)}
                   </TableCell>
                 ))}
