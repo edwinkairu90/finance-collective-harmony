@@ -16,15 +16,15 @@ export const OtherRevenueTable: React.FC<OtherRevenueTableProps> = ({
     <>
       <TableRow className="bg-slate-50/50 dark:bg-slate-800/10">
         <TableCell colSpan={monthlyRevenueDrivers.length + 1} className="py-2">
-          <Badge variant="outline" className="bg-gray-50 text-gray-700 border-gray-200 dark:bg-gray-900/20 dark:text-gray-400 dark:border-gray-800">
+          <Badge variant="outline" className="bg-gray-50 text-gray-700 border-gray-200 dark:bg-gray-900/20 dark:text-gray-400 dark:border-gray-800 text-xs">
             Other Revenue
           </Badge>
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell className="font-medium pl-6">Miscellaneous Revenue</TableCell>
+        <TableCell className="font-medium pl-6 text-xs">Miscellaneous Revenue</TableCell>
         {monthlyRevenueDrivers.map(item => (
-          <TableCell key={`other-${item.month}`} className="text-center">
+          <TableCell key={`other-${item.month}`} className="text-center text-xs">
             {formatCurrency(item.otherRevenue)}
           </TableCell>
         ))}

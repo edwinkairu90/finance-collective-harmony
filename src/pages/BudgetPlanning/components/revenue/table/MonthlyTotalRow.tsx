@@ -14,9 +14,9 @@ export const MonthlyTotalRow: React.FC<MonthlyTotalRowProps> = ({
 }) => {
   return (
     <TableRow className="bg-slate-100 dark:bg-slate-800/30 border-t border-slate-300 dark:border-slate-700">
-      <TableCell className="font-bold text-teal-700 dark:text-teal-400">Monthly Total Revenue</TableCell>
+      <TableCell className="font-bold text-teal-700 dark:text-teal-400 text-xs">Monthly Total Revenue</TableCell>
       {monthlyRevenueDrivers.map(item => (
-        <TableCell key={`total-${item.month}`} className="text-center font-bold text-teal-700 dark:text-teal-400">
+        <TableCell key={`total-${item.month}`} className="text-center font-bold text-teal-700 dark:text-teal-400 text-xs">
           {formatCurrency(calculateMonthlyTotal(item.month, monthlyRevenueDrivers))}
         </TableCell>
       ))}

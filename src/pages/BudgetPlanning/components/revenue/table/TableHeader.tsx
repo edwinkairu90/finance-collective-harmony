@@ -13,9 +13,9 @@ export const RevenueTableHeader: React.FC<TableHeaderProps> = ({
   return (
     <TableHeader className="bg-slate-100 dark:bg-slate-800/50">
       <TableRow>
-        <TableHead className="w-[180px] font-semibold">Revenue Category</TableHead>
+        <TableHead className="w-[180px] font-semibold text-xs">Revenue Category</TableHead>
         {monthlyRevenueDrivers.map(item => (
-          <TableHead key={item.month} className="text-center font-semibold">{item.month}</TableHead>
+          <TableHead key={item.month} className="text-center font-semibold text-xs">{item.month}</TableHead>
         ))}
       </TableRow>
     </TableHeader>
