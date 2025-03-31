@@ -7,11 +7,17 @@ export interface SegmentData {
   expansionRevenue: number;
 }
 
-export interface MonthlyRevenueData {
-  month: string;
+export interface ProductRevenue {
+  id: string;
+  name: string;
   enterprise: SegmentData;
   midMarket: SegmentData;
   smb: SegmentData;
+}
+
+export interface MonthlyRevenueData {
+  month: string;
+  products: ProductRevenue[];
   otherRevenue: number;
 }
 

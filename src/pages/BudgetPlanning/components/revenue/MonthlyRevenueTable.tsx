@@ -11,8 +11,10 @@ import { SegmentFilter } from "./table/SegmentFilter";
 
 interface MonthlyRevenueTableProps {
   monthlyRevenueDrivers: MonthlyRevenueData[];
+  selectedProductId: string;
   onUpdateData: (
     month: string,
+    productId: string,
     segment: "enterprise" | "midMarket" | "smb",
     field: keyof SegmentData,
     value: number
@@ -21,6 +23,7 @@ interface MonthlyRevenueTableProps {
 
 export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
   monthlyRevenueDrivers,
+  selectedProductId,
   onUpdateData
 }) => {
   const [selectedSegment, setSelectedSegment] = useState<string>("all");
@@ -50,7 +53,7 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
     field: keyof SegmentData,
     value: number
   ) => {
-    onUpdateData(month, segment, field, value);
+    onUpdateData(month, selectedProductId, segment, field, value);
     setEditingCell(null);
   };
 
@@ -68,7 +71,8 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
             {/* Enterprise Section */}
             {showEnterprise && (
               <EnterpriseSegmentTable 
-                monthlyRevenueDrivers={monthlyRevenueDrivers} 
+                monthlyRevenueDrivers={monthlyRevenueDrivers}
+                selectedProductId={selectedProductId}
                 editingCell={editingCell}
                 onStartEdit={handleStartEdit}
                 onSaveEdit={handleSaveEdit}
@@ -78,7 +82,8 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
             {/* Mid-Market Section */}
             {showMidMarket && (
               <MidMarketSegmentTable 
-                monthlyRevenueDrivers={monthlyRevenueDrivers} 
+                monthlyRevenueDrivers={monthlyRevenueDrivers}
+                selectedProductId={selectedProductId}
                 editingCell={editingCell}
                 onStartEdit={handleStartEdit}
                 onSaveEdit={handleSaveEdit}
@@ -88,7 +93,8 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
             {/* SMB Section */}
             {showSMB && (
               <SMBSegmentTable 
-                monthlyRevenueDrivers={monthlyRevenueDrivers} 
+                monthlyRevenueDrivers={monthlyRevenueDrivers}
+                selectedProductId={selectedProductId}
                 editingCell={editingCell}
                 onStartEdit={handleStartEdit}
                 onSaveEdit={handleSaveEdit}
@@ -101,7 +107,10 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
             )}
             
             {/* Total Row - Always show this */}
-            <MonthlyTotalRow monthlyRevenueDrivers={monthlyRevenueDrivers} />
+            <MonthlyTotalRow 
+              monthlyRevenueDrivers={monthlyRevenueDrivers}
+              selectedProductId={selectedProductId}
+            />
           </TableBody>
         </Table>
       </div>
