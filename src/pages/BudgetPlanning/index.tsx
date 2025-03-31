@@ -24,7 +24,7 @@ const BudgetPlanning = () => {
           <TabsTrigger value="departments">Departments</TabsTrigger>
           <TabsTrigger value="cost-centers">Cost Centers</TabsTrigger>
           <TabsTrigger value="categories">Categories</TabsTrigger>
-          <TabsTrigger value="revenue">Revenue</TabsTrigger>
+          <TabsTrigger value="revenue">Revenue Proj</TabsTrigger>
           <TabsTrigger value="tools">Planning Tools</TabsTrigger>
         </TabsList>
         <TabsContent value="overview">
