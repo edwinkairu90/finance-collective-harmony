@@ -5,98 +5,302 @@ import { MonthlyRevenueData } from "../types/revenueTypes";
 export const initialMonthlyRevenueDrivers: MonthlyRevenueData[] = [
   { 
     month: "Jan", 
-    enterprise: { newClients: 1, subscriptionRevenue: 62500 },
-    midMarket: { newClients: 2, subscriptionRevenue: 37000 },
-    smb: { newClients: 7, subscriptionRevenue: 24500 },
-    implementationRevenue: 15000,
+    enterprise: { 
+      clients: 10, 
+      newClients: 1, 
+      monthlySubscriptionPerClient: 6250, 
+      implementationFee: 15000, 
+      expansionRevenue: 0 
+    },
+    midMarket: { 
+      clients: 15, 
+      newClients: 2, 
+      monthlySubscriptionPerClient: 2250, 
+      implementationFee: 8500, 
+      expansionRevenue: 0 
+    },
+    smb: { 
+      clients: 25, 
+      newClients: 7, 
+      monthlySubscriptionPerClient: 750, 
+      implementationFee: 5000, 
+      expansionRevenue: 0 
+    },
     otherRevenue: 0
   },
   { 
     month: "Feb", 
-    enterprise: { newClients: 1, subscriptionRevenue: 65000 },
-    midMarket: { newClients: 2, subscriptionRevenue: 38000 },
-    smb: { newClients: 7, subscriptionRevenue: 25000 },
-    implementationRevenue: 18000,
+    enterprise: { 
+      clients: 11, 
+      newClients: 1, 
+      monthlySubscriptionPerClient: 6250, 
+      implementationFee: 15000, 
+      expansionRevenue: 0 
+    },
+    midMarket: { 
+      clients: 17, 
+      newClients: 2, 
+      monthlySubscriptionPerClient: 2250, 
+      implementationFee: 8500, 
+      expansionRevenue: 0 
+    },
+    smb: { 
+      clients: 32, 
+      newClients: 7, 
+      monthlySubscriptionPerClient: 750, 
+      implementationFee: 5000, 
+      expansionRevenue: 0 
+    },
     otherRevenue: 0
   },
   { 
     month: "Mar", 
-    enterprise: { newClients: 1, subscriptionRevenue: 67500 },
-    midMarket: { newClients: 2, subscriptionRevenue: 39000 },
-    smb: { newClients: 7, subscriptionRevenue: 25500 },
-    implementationRevenue: 12000,
-    otherRevenue: 5000
+    enterprise: { 
+      clients: 12, 
+      newClients: 1, 
+      monthlySubscriptionPerClient: 6250, 
+      implementationFee: 12000, 
+      expansionRevenue: 5000 
+    },
+    midMarket: { 
+      clients: 19, 
+      newClients: 2, 
+      monthlySubscriptionPerClient: 2250, 
+      implementationFee: 8500, 
+      expansionRevenue: 0 
+    },
+    smb: { 
+      clients: 39, 
+      newClients: 7, 
+      monthlySubscriptionPerClient: 750, 
+      implementationFee: 5000, 
+      expansionRevenue: 0 
+    },
+    otherRevenue: 0
   },
   { 
     month: "Apr", 
-    enterprise: { newClients: 1, subscriptionRevenue: 70000 },
-    midMarket: { newClients: 2, subscriptionRevenue: 40000 },
-    smb: { newClients: 7, subscriptionRevenue: 26000 },
-    implementationRevenue: 15000,
+    enterprise: { 
+      clients: 13, 
+      newClients: 1, 
+      monthlySubscriptionPerClient: 6250, 
+      implementationFee: 15000, 
+      expansionRevenue: 0 
+    },
+    midMarket: { 
+      clients: 21, 
+      newClients: 2, 
+      monthlySubscriptionPerClient: 2250, 
+      implementationFee: 8500, 
+      expansionRevenue: 0 
+    },
+    smb: { 
+      clients: 46, 
+      newClients: 7, 
+      monthlySubscriptionPerClient: 750, 
+      implementationFee: 5000, 
+      expansionRevenue: 0 
+    },
     otherRevenue: 0
   },
   { 
     month: "May", 
-    enterprise: { newClients: 1, subscriptionRevenue: 72500 },
-    midMarket: { newClients: 2, subscriptionRevenue: 41000 },
-    smb: { newClients: 7, subscriptionRevenue: 26500 },
-    implementationRevenue: 20000,
+    enterprise: { 
+      clients: 14, 
+      newClients: 1, 
+      monthlySubscriptionPerClient: 6250, 
+      implementationFee: 15000, 
+      expansionRevenue: 0 
+    },
+    midMarket: { 
+      clients: 23, 
+      newClients: 2, 
+      monthlySubscriptionPerClient: 2250, 
+      implementationFee: 8500, 
+      expansionRevenue: 0 
+    },
+    smb: { 
+      clients: 53, 
+      newClients: 7, 
+      monthlySubscriptionPerClient: 750, 
+      implementationFee: 5000, 
+      expansionRevenue: 0 
+    },
     otherRevenue: 0
   },
   { 
     month: "Jun", 
-    enterprise: { newClients: 1, subscriptionRevenue: 75000 },
-    midMarket: { newClients: 2, subscriptionRevenue: 42000 },
-    smb: { newClients: 7, subscriptionRevenue: 27000 },
-    implementationRevenue: 22000,
+    enterprise: { 
+      clients: 15, 
+      newClients: 1, 
+      monthlySubscriptionPerClient: 6250, 
+      implementationFee: 15000, 
+      expansionRevenue: 0 
+    },
+    midMarket: { 
+      clients: 25, 
+      newClients: 2, 
+      monthlySubscriptionPerClient: 2250, 
+      implementationFee: 8500, 
+      expansionRevenue: 0 
+    },
+    smb: { 
+      clients: 60, 
+      newClients: 7, 
+      monthlySubscriptionPerClient: 750, 
+      implementationFee: 5000, 
+      expansionRevenue: 0 
+    },
     otherRevenue: 0
   },
   { 
     month: "Jul", 
-    enterprise: { newClients: 1, subscriptionRevenue: 77500 },
-    midMarket: { newClients: 2, subscriptionRevenue: 43000 },
-    smb: { newClients: 7, subscriptionRevenue: 27500 },
-    implementationRevenue: 15000,
-    otherRevenue: 8000
+    enterprise: { 
+      clients: 16, 
+      newClients: 1, 
+      monthlySubscriptionPerClient: 6250, 
+      implementationFee: 15000, 
+      expansionRevenue: 8000 
+    },
+    midMarket: { 
+      clients: 27, 
+      newClients: 2, 
+      monthlySubscriptionPerClient: 2250, 
+      implementationFee: 8500, 
+      expansionRevenue: 0 
+    },
+    smb: { 
+      clients: 67, 
+      newClients: 7, 
+      monthlySubscriptionPerClient: 750, 
+      implementationFee: 5000, 
+      expansionRevenue: 0 
+    },
+    otherRevenue: 0
   },
   { 
     month: "Aug", 
-    enterprise: { newClients: 1, subscriptionRevenue: 80000 },
-    midMarket: { newClients: 2, subscriptionRevenue: 44000 },
-    smb: { newClients: 7, subscriptionRevenue: 28000 },
-    implementationRevenue: 18000,
+    enterprise: { 
+      clients: 17, 
+      newClients: 1, 
+      monthlySubscriptionPerClient: 6250, 
+      implementationFee: 15000, 
+      expansionRevenue: 0 
+    },
+    midMarket: { 
+      clients: 29, 
+      newClients: 2, 
+      monthlySubscriptionPerClient: 2250, 
+      implementationFee: 8500, 
+      expansionRevenue: 0 
+    },
+    smb: { 
+      clients: 74, 
+      newClients: 7, 
+      monthlySubscriptionPerClient: 750, 
+      implementationFee: 5000, 
+      expansionRevenue: 0 
+    },
     otherRevenue: 0
   },
   { 
     month: "Sep", 
-    enterprise: { newClients: 1, subscriptionRevenue: 82500 },
-    midMarket: { newClients: 3, subscriptionRevenue: 46000 },
-    smb: { newClients: 8, subscriptionRevenue: 29000 },
-    implementationRevenue: 25000,
+    enterprise: { 
+      clients: 18, 
+      newClients: 1, 
+      monthlySubscriptionPerClient: 6250, 
+      implementationFee: 15000, 
+      expansionRevenue: 0 
+    },
+    midMarket: { 
+      clients: 31, 
+      newClients: 3, 
+      monthlySubscriptionPerClient: 2250, 
+      implementationFee: 12500, 
+      expansionRevenue: 0 
+    },
+    smb: { 
+      clients: 81, 
+      newClients: 8, 
+      monthlySubscriptionPerClient: 750, 
+      implementationFee: 5500, 
+      expansionRevenue: 0 
+    },
     otherRevenue: 0
   },
   { 
     month: "Oct", 
-    enterprise: { newClients: 1, subscriptionRevenue: 85000 },
-    midMarket: { newClients: 2, subscriptionRevenue: 47000 },
-    smb: { newClients: 7, subscriptionRevenue: 29500 },
-    implementationRevenue: 15000,
-    otherRevenue: 10000
+    enterprise: { 
+      clients: 19, 
+      newClients: 1, 
+      monthlySubscriptionPerClient: 6250, 
+      implementationFee: 15000, 
+      expansionRevenue: 10000 
+    },
+    midMarket: { 
+      clients: 34, 
+      newClients: 2, 
+      monthlySubscriptionPerClient: 2250, 
+      implementationFee: 8500, 
+      expansionRevenue: 0 
+    },
+    smb: { 
+      clients: 89, 
+      newClients: 7, 
+      monthlySubscriptionPerClient: 750, 
+      implementationFee: 5000, 
+      expansionRevenue: 0 
+    },
+    otherRevenue: 0
   },
   { 
     month: "Nov", 
-    enterprise: { newClients: 1, subscriptionRevenue: 87500 },
-    midMarket: { newClients: 2, subscriptionRevenue: 48000 },
-    smb: { newClients: 7, subscriptionRevenue: 30000 },
-    implementationRevenue: 12000,
+    enterprise: { 
+      clients: 20, 
+      newClients: 1, 
+      monthlySubscriptionPerClient: 6250, 
+      implementationFee: 12000, 
+      expansionRevenue: 0 
+    },
+    midMarket: { 
+      clients: 36, 
+      newClients: 2, 
+      monthlySubscriptionPerClient: 2250, 
+      implementationFee: 8500, 
+      expansionRevenue: 0 
+    },
+    smb: { 
+      clients: 96, 
+      newClients: 7, 
+      monthlySubscriptionPerClient: 750, 
+      implementationFee: 5000, 
+      expansionRevenue: 0 
+    },
     otherRevenue: 0
   },
   { 
     month: "Dec", 
-    enterprise: { newClients: 1, subscriptionRevenue: 90000 },
-    midMarket: { newClients: 2, subscriptionRevenue: 49000 },
-    smb: { newClients: 7, subscriptionRevenue: 30500 },
-    implementationRevenue: 20000,
-    otherRevenue: 5000
+    enterprise: { 
+      clients: 21, 
+      newClients: 1, 
+      monthlySubscriptionPerClient: 6250, 
+      implementationFee: 15000, 
+      expansionRevenue: 5000 
+    },
+    midMarket: { 
+      clients: 38, 
+      newClients: 2, 
+      monthlySubscriptionPerClient: 2250, 
+      implementationFee: 8500, 
+      expansionRevenue: 0 
+    },
+    smb: { 
+      clients: 103, 
+      newClients: 7, 
+      monthlySubscriptionPerClient: 750, 
+      implementationFee: 5000, 
+      expansionRevenue: 0 
+    },
+    otherRevenue: 0
   },
 ];

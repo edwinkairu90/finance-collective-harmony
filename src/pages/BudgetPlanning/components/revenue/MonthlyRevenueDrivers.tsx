@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { MonthlyRevenueTable } from "./MonthlyRevenueTable";
 import { initialMonthlyRevenueDrivers } from "./data/monthlyRevenueData";
-import { MonthlyRevenueData } from "./types/revenueTypes";
 
 export const MonthlyRevenueDrivers: React.FC = () => {
   const [monthlyRevenueDrivers] = useState(initialMonthlyRevenueDrivers);

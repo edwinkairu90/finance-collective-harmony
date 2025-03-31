@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { formatCurrency } from "@/lib/format";
 import { MonthlyRevenueData } from "./types/revenueTypes";
-import { calculateMonthlyTotal } from "./utils/revenueCalculations";
+import { calculateMonthlyTotal, calculateSegmentTotalRevenue, calculateTotalClients, calculateTotalSubscription } from "./utils/revenueCalculations";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Filter } from "lucide-react";
@@ -68,18 +68,66 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell className="font-medium pl-6">New Clients</TableCell>
+                  <TableCell className="font-medium pl-6">Existing Clients</TableCell>
                   {monthlyRevenueDrivers.map(item => (
                     <TableCell key={`enterprise-clients-${item.month}`} className="text-center">
+                      {item.enterprise.clients}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium pl-6">New Clients</TableCell>
+                  {monthlyRevenueDrivers.map(item => (
+                    <TableCell key={`enterprise-new-clients-${item.month}`} className="text-center">
                       {item.enterprise.newClients}
                     </TableCell>
                   ))}
                 </TableRow>
                 <TableRow>
-                  <TableCell className="font-medium pl-6">Revenue</TableCell>
+                  <TableCell className="font-medium pl-6">Total Clients</TableCell>
                   {monthlyRevenueDrivers.map(item => (
-                    <TableCell key={`enterprise-mrr-${item.month}`} className="text-center">
-                      ${formatCurrency(item.enterprise.subscriptionRevenue)}
+                    <TableCell key={`enterprise-total-clients-${item.month}`} className="text-center">
+                      {calculateTotalClients(item.enterprise)}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium pl-6">Monthly Subscription/Client</TableCell>
+                  {monthlyRevenueDrivers.map(item => (
+                    <TableCell key={`enterprise-subscription-per-client-${item.month}`} className="text-center">
+                      ${formatCurrency(item.enterprise.monthlySubscriptionPerClient)}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium pl-6">Total Subscription</TableCell>
+                  {monthlyRevenueDrivers.map(item => (
+                    <TableCell key={`enterprise-total-subscription-${item.month}`} className="text-center">
+                      ${formatCurrency(calculateTotalSubscription(item.enterprise))}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium pl-6">Implementation Fee</TableCell>
+                  {monthlyRevenueDrivers.map(item => (
+                    <TableCell key={`enterprise-implementation-${item.month}`} className="text-center">
+                      ${formatCurrency(item.enterprise.implementationFee)}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium pl-6">Expansion Revenue</TableCell>
+                  {monthlyRevenueDrivers.map(item => (
+                    <TableCell key={`enterprise-expansion-${item.month}`} className="text-center">
+                      ${formatCurrency(item.enterprise.expansionRevenue)}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                <TableRow className="bg-slate-50/70 dark:bg-slate-800/20">
+                  <TableCell className="font-semibold pl-6 text-purple-700 dark:text-purple-400">Total Enterprise Revenue</TableCell>
+                  {monthlyRevenueDrivers.map(item => (
+                    <TableCell key={`enterprise-total-${item.month}`} className="text-center font-semibold text-purple-700 dark:text-purple-400">
+                      ${formatCurrency(calculateSegmentTotalRevenue(item.enterprise))}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -97,18 +145,66 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell className="font-medium pl-6">New Clients</TableCell>
+                  <TableCell className="font-medium pl-6">Existing Clients</TableCell>
                   {monthlyRevenueDrivers.map(item => (
                     <TableCell key={`midmarket-clients-${item.month}`} className="text-center">
+                      {item.midMarket.clients}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium pl-6">New Clients</TableCell>
+                  {monthlyRevenueDrivers.map(item => (
+                    <TableCell key={`midmarket-new-clients-${item.month}`} className="text-center">
                       {item.midMarket.newClients}
                     </TableCell>
                   ))}
                 </TableRow>
                 <TableRow>
-                  <TableCell className="font-medium pl-6">Revenue</TableCell>
+                  <TableCell className="font-medium pl-6">Total Clients</TableCell>
                   {monthlyRevenueDrivers.map(item => (
-                    <TableCell key={`midmarket-mrr-${item.month}`} className="text-center">
-                      ${formatCurrency(item.midMarket.subscriptionRevenue)}
+                    <TableCell key={`midmarket-total-clients-${item.month}`} className="text-center">
+                      {calculateTotalClients(item.midMarket)}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium pl-6">Monthly Subscription/Client</TableCell>
+                  {monthlyRevenueDrivers.map(item => (
+                    <TableCell key={`midmarket-subscription-per-client-${item.month}`} className="text-center">
+                      ${formatCurrency(item.midMarket.monthlySubscriptionPerClient)}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium pl-6">Total Subscription</TableCell>
+                  {monthlyRevenueDrivers.map(item => (
+                    <TableCell key={`midmarket-total-subscription-${item.month}`} className="text-center">
+                      ${formatCurrency(calculateTotalSubscription(item.midMarket))}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium pl-6">Implementation Fee</TableCell>
+                  {monthlyRevenueDrivers.map(item => (
+                    <TableCell key={`midmarket-implementation-${item.month}`} className="text-center">
+                      ${formatCurrency(item.midMarket.implementationFee)}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium pl-6">Expansion Revenue</TableCell>
+                  {monthlyRevenueDrivers.map(item => (
+                    <TableCell key={`midmarket-expansion-${item.month}`} className="text-center">
+                      ${formatCurrency(item.midMarket.expansionRevenue)}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                <TableRow className="bg-slate-50/70 dark:bg-slate-800/20">
+                  <TableCell className="font-semibold pl-6 text-blue-700 dark:text-blue-400">Total Mid-Market Revenue</TableCell>
+                  {monthlyRevenueDrivers.map(item => (
+                    <TableCell key={`midmarket-total-${item.month}`} className="text-center font-semibold text-blue-700 dark:text-blue-400">
+                      ${formatCurrency(calculateSegmentTotalRevenue(item.midMarket))}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -126,25 +222,73 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell className="font-medium pl-6">New Clients</TableCell>
+                  <TableCell className="font-medium pl-6">Existing Clients</TableCell>
                   {monthlyRevenueDrivers.map(item => (
                     <TableCell key={`smb-clients-${item.month}`} className="text-center">
+                      {item.smb.clients}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium pl-6">New Clients</TableCell>
+                  {monthlyRevenueDrivers.map(item => (
+                    <TableCell key={`smb-new-clients-${item.month}`} className="text-center">
                       {item.smb.newClients}
                     </TableCell>
                   ))}
                 </TableRow>
                 <TableRow>
-                  <TableCell className="font-medium pl-6">Revenue</TableCell>
+                  <TableCell className="font-medium pl-6">Total Clients</TableCell>
                   {monthlyRevenueDrivers.map(item => (
-                    <TableCell key={`smb-mrr-${item.month}`} className="text-center">
-                      ${formatCurrency(item.smb.subscriptionRevenue)}
+                    <TableCell key={`smb-total-clients-${item.month}`} className="text-center">
+                      {calculateTotalClients(item.smb)}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium pl-6">Monthly Subscription/Client</TableCell>
+                  {monthlyRevenueDrivers.map(item => (
+                    <TableCell key={`smb-subscription-per-client-${item.month}`} className="text-center">
+                      ${formatCurrency(item.smb.monthlySubscriptionPerClient)}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium pl-6">Total Subscription</TableCell>
+                  {monthlyRevenueDrivers.map(item => (
+                    <TableCell key={`smb-total-subscription-${item.month}`} className="text-center">
+                      ${formatCurrency(calculateTotalSubscription(item.smb))}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium pl-6">Implementation Fee</TableCell>
+                  {monthlyRevenueDrivers.map(item => (
+                    <TableCell key={`smb-implementation-${item.month}`} className="text-center">
+                      ${formatCurrency(item.smb.implementationFee)}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium pl-6">Expansion Revenue</TableCell>
+                  {monthlyRevenueDrivers.map(item => (
+                    <TableCell key={`smb-expansion-${item.month}`} className="text-center">
+                      ${formatCurrency(item.smb.expansionRevenue)}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                <TableRow className="bg-slate-50/70 dark:bg-slate-800/20">
+                  <TableCell className="font-semibold pl-6 text-emerald-700 dark:text-emerald-400">Total SMB Revenue</TableCell>
+                  {monthlyRevenueDrivers.map(item => (
+                    <TableCell key={`smb-total-${item.month}`} className="text-center font-semibold text-emerald-700 dark:text-emerald-400">
+                      ${formatCurrency(calculateSegmentTotalRevenue(item.smb))}
                     </TableCell>
                   ))}
                 </TableRow>
               </>
             )}
             
-            {/* Other Revenue Streams */}
+            {/* Other Revenue - keep a simplified view */}
             {showOther && (
               <>
                 <TableRow className="bg-slate-50/50 dark:bg-slate-800/10">
@@ -155,15 +299,7 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell className="font-medium pl-6">Implementation</TableCell>
-                  {monthlyRevenueDrivers.map(item => (
-                    <TableCell key={`implementation-${item.month}`} className="text-center">
-                      ${formatCurrency(item.implementationRevenue)}
-                    </TableCell>
-                  ))}
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium pl-6">Other</TableCell>
+                  <TableCell className="font-medium pl-6">Miscellaneous Revenue</TableCell>
                   {monthlyRevenueDrivers.map(item => (
                     <TableCell key={`other-${item.month}`} className="text-center">
                       ${formatCurrency(item.otherRevenue)}
@@ -175,7 +311,7 @@ export const MonthlyRevenueTable: React.FC<MonthlyRevenueTableProps> = ({
             
             {/* Total Row - Always show this */}
             <TableRow className="bg-slate-100 dark:bg-slate-800/30 border-t border-slate-300 dark:border-slate-700">
-              <TableCell className="font-bold text-teal-700 dark:text-teal-400">Monthly Total</TableCell>
+              <TableCell className="font-bold text-teal-700 dark:text-teal-400">Monthly Total Revenue</TableCell>
               {monthlyRevenueDrivers.map(item => (
                 <TableCell key={`total-${item.month}`} className="text-center font-bold text-teal-700 dark:text-teal-400">
                   ${formatCurrency(calculateMonthlyTotal(item.month, monthlyRevenueDrivers))}

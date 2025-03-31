@@ -1,19 +1,17 @@
 
+export interface SegmentData {
+  clients: number;
+  newClients: number;
+  monthlySubscriptionPerClient: number;
+  implementationFee: number;
+  expansionRevenue: number;
+}
+
 export interface MonthlyRevenueData {
   month: string;
-  enterprise: { 
-    newClients: number; 
-    subscriptionRevenue: number 
-  };
-  midMarket: { 
-    newClients: number; 
-    subscriptionRevenue: number 
-  };
-  smb: { 
-    newClients: number; 
-    subscriptionRevenue: number 
-  };
-  implementationRevenue: number;
+  enterprise: SegmentData;
+  midMarket: SegmentData;
+  smb: SegmentData;
   otherRevenue: number;
 }
 
