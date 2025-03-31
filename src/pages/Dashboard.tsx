@@ -16,16 +16,34 @@ import { RevenueChart } from "@/components/dashboard/RevenueChart";
 import { OpexBarChart } from "@/components/dashboard/OpexBarChart";
 import { BVASummaryTable } from "@/components/dashboard/BVASummaryTable";
 import { BVAVarianceChart } from "@/components/dashboard/BVAVarianceChart";
-import { TimePeriodSelector } from "@/components/TimePeriodSelector";
-import { availableYears, getDataForYear } from "@/components/dashboard/dashboardDataFiltered";
+import { 
+  availableYears, 
+  getFilteredData, 
+  getFilterOptions,
+  availableScenarios,
+  availableRegions,
+  availableDepartments
+} from "@/components/dashboard/dashboardDataFiltered";
+import { DashboardFilters } from "@/components/dashboard/DashboardFilters";
 
 const Dashboard = () => {
   const { toast } = useToast();
   const [selectedYear, setSelectedYear] = useState<number>(2024);
+  const [selectedScenario, setSelectedScenario] = useState<string>("Base Case");
+  const [selectedRegion, setSelectedRegion] = useState<string>("All values");
+  const [selectedDepartment, setSelectedDepartment] = useState<string>("All values");
   
-  // Get filtered data based on selected year
-  const filteredData = getDataForYear(selectedYear);
+  // Get filter options
+  const filterOptions = getFilterOptions();
   
+  // Get filtered data based on all filters
+  const filteredData = getFilteredData(
+    selectedYear, 
+    selectedScenario, 
+    selectedRegion, 
+    selectedDepartment
+  );
+
   const showNotification = () => {
     toast({
       title: "Budget Reminder",
@@ -38,21 +56,27 @@ const Dashboard = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold tracking-tight">Executive Dashboard</h1>
-        <div className="flex items-center gap-4">
-          <TimePeriodSelector 
-            selectedYear={selectedYear}
-            onYearChange={setSelectedYear}
-            availableYears={availableYears}
-          />
-          <Button 
-            onClick={showNotification}
-            className="bg-[#50C2A0] hover:bg-[#3BA989] text-white text-xs py-1.5 px-3 h-8"
-            size="sm"
-          >
-            Show Sample Notification
-          </Button>
-        </div>
+        <Button 
+          onClick={showNotification}
+          className="bg-[#50C2A0] hover:bg-[#3BA989] text-white text-xs py-1.5 px-3 h-8"
+          size="sm"
+        >
+          Show Sample Notification
+        </Button>
       </div>
+
+      {/* Filters */}
+      <DashboardFilters 
+        selectedScenario={selectedScenario}
+        selectedRegion={selectedRegion}
+        selectedYear={selectedYear}
+        selectedDepartment={selectedDepartment}
+        onScenarioChange={setSelectedScenario}
+        onRegionChange={setSelectedRegion}
+        onYearChange={setSelectedYear}
+        onDepartmentChange={setSelectedDepartment}
+        filterOptions={filterOptions}
+      />
 
       {/* KPI Cards - Top Row */}
       <KPICards 
