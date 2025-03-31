@@ -8,7 +8,7 @@ export const formatCurrency = (amount: number): string => {
     currency: 'USD',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  }).format(amount);
+  }).format(amount).replace(/^\$\s?/, '$'); // Replace any space after $ and ensure single $
 };
 
 /**

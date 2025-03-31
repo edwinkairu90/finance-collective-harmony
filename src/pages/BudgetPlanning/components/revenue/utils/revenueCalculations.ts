@@ -28,3 +28,8 @@ export const calculateMonthlyTotal = (month: string, revenueData: MonthlyRevenue
     data.otherRevenue
   );
 };
+
+// Format currency with a single dollar sign
+export const formatRevenueCurrency = (amount: number): string => {
+  return `$${amount.toLocaleString()}`;
+};

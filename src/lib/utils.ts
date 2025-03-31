@@ -10,8 +10,8 @@ export function cn(...inputs: ClassValue[]) {
  * Format a number as currency with thousands separators
  */
 export function formatCurrency(amount: number): string {
-  return amount.toLocaleString(undefined, {
+  return `$${amount.toLocaleString(undefined, {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0
-  });
+  })}`;
 }
