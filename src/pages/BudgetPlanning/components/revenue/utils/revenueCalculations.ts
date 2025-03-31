@@ -1,5 +1,5 @@
 
-import { MonthlyRevenueData, ProductRevenue } from "../types/revenueTypes";
+import { MonthlyRevenueData, ProductRevenue, SegmentData } from "../types/revenueTypes";
 
 // Calculate total revenue from monthly data
 export const calculateTotalRevenue = (monthlyRevenueDrivers: MonthlyRevenueData[]): number => {
@@ -86,4 +86,11 @@ export const calculateProductTotalRevenue = (
     
     return total + eTotal + mTotal + sTotal;
   }, 0);
+};
+
+// Calculate total revenue for a specific segment within a product
+export const calculateSegmentTotalRevenue = (segmentData: SegmentData): number => {
+  const subscriptionRevenue = segmentData.clients * segmentData.monthlySubscriptionPerClient;
+  const implementationRevenue = segmentData.newClients * segmentData.implementationFee;
+  return subscriptionRevenue + implementationRevenue + segmentData.expansionRevenue;
 };

@@ -8,8 +8,8 @@ interface EditableCellProps {
   value: number;
   isEditing: boolean;
   onStartEdit: () => void;
-  onSave: (newValue: number) => void;
-  formatting?: "currency" | "number";
+  onSaveEdit: (newValue: number) => void;
+  formatter?: (val: number) => string;
   className?: string;
 }
 
@@ -17,8 +17,8 @@ export const EditableCell: React.FC<EditableCellProps> = ({
   value,
   isEditing,
   onStartEdit,
-  onSave,
-  formatting = "number",
+  onSaveEdit,
+  formatter,
   className = ""
 }) => {
   const [editValue, setEditValue] = useState(value);
@@ -36,15 +36,15 @@ export const EditableCell: React.FC<EditableCellProps> = ({
   }, [value]);
 
   const handleBlur = () => {
-    onSave(editValue);
+    onSaveEdit(editValue);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      onSave(editValue);
+      onSaveEdit(editValue);
     } else if (e.key === "Escape") {
       setEditValue(value);
-      onSave(value);
+      onSaveEdit(value);
     }
   };
 
@@ -64,7 +64,7 @@ export const EditableCell: React.FC<EditableCellProps> = ({
           className="text-center h-8"
         />
       ) : (
-        formatting === "currency" ? formatCurrency(value) : value
+        formatter ? formatter(value) : value
       )}
     </TableCell>
   );

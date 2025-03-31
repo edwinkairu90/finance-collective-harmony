@@ -1,5 +1,5 @@
 
-import { MonthlyRevenueData } from "../types/revenueTypes";
+import { MonthlyRevenueData, ProductRevenue } from "../types/revenueTypes";
 import { calculateSegmentTotalRevenue } from "./revenueCalculations";
 
 // Mapping of months to quarters
@@ -49,12 +49,13 @@ export const calculateQuarterlyProjections = (
     const quarter = monthToQuarter[month.month];
     if (!quarter) return;
 
-    const monthTotal = (
-      calculateSegmentTotalRevenue(month.enterprise) +
-      calculateSegmentTotalRevenue(month.midMarket) +
-      calculateSegmentTotalRevenue(month.smb) +
-      month.otherRevenue
-    );
+    // Sum revenues from all products for this month
+    let monthTotal = month.otherRevenue;
+    month.products.forEach(product => {
+      monthTotal += calculateSegmentTotalRevenue(product.enterprise);
+      monthTotal += calculateSegmentTotalRevenue(product.midMarket);
+      monthTotal += calculateSegmentTotalRevenue(product.smb);
+    });
 
     quarterlyTotals[quarter] += monthTotal;
   });
@@ -91,11 +92,13 @@ export const calculateSegmentProjections = (
     SMB: 278800
   };
 
-  // Calculate segment totals
+  // Calculate segment totals across all products
   monthlyData.forEach(month => {
-    segmentTotals.Enterprise += calculateSegmentTotalRevenue(month.enterprise);
-    segmentTotals['Mid-Market'] += calculateSegmentTotalRevenue(month.midMarket);
-    segmentTotals.SMB += calculateSegmentTotalRevenue(month.smb);
+    month.products.forEach(product => {
+      segmentTotals.Enterprise += calculateSegmentTotalRevenue(product.enterprise);
+      segmentTotals['Mid-Market'] += calculateSegmentTotalRevenue(product.midMarket);
+      segmentTotals.SMB += calculateSegmentTotalRevenue(product.smb);
+    });
   });
 
   // Calculate total revenue
