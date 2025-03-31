@@ -21,19 +21,29 @@ export const QuarterlyProjectionsTable: React.FC = () => {
         <Table>
           <TableHeader className="bg-slate-100 dark:bg-slate-800/50">
             <TableRow>
-              <TableHead className="w-[100px]">Quarter</TableHead>
-              <TableHead>Projected Revenue</TableHead>
-              <TableHead className="text-right">Growth</TableHead>
+              <TableHead className="w-[150px]">Category</TableHead>
+              {quarterlyProjections.map((item) => (
+                <TableHead key={item.quarter} className="text-center">{item.quarter}</TableHead>
+              ))}
             </TableRow>
           </TableHeader>
           <TableBody>
-            {quarterlyProjections.map((item) => (
-              <TableRow key={item.quarter} className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
-                <TableCell className="font-medium">{item.quarter}</TableCell>
-                <TableCell>${(item.revenue).toLocaleString()}</TableCell>
-                <TableCell className="text-right text-emerald-600 dark:text-emerald-400">{item.growth}</TableCell>
-              </TableRow>
-            ))}
+            <TableRow className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
+              <TableCell className="font-medium">Projected Revenue</TableCell>
+              {quarterlyProjections.map((item) => (
+                <TableCell key={`revenue-${item.quarter}`} className="text-center">
+                  ${(item.revenue).toLocaleString()}
+                </TableCell>
+              ))}
+            </TableRow>
+            <TableRow className="hover:bg-slate-50 dark:hover:bg-slate-800/20">
+              <TableCell className="font-medium">Growth</TableCell>
+              {quarterlyProjections.map((item) => (
+                <TableCell key={`growth-${item.quarter}`} className="text-center text-emerald-600 dark:text-emerald-400">
+                  {item.growth}
+                </TableCell>
+              ))}
+            </TableRow>
           </TableBody>
         </Table>
       </CardContent>
