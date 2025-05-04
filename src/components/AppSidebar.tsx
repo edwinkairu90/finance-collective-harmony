@@ -10,6 +10,7 @@ import {
   SettingsIcon,
   UsersIcon
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 import {
   Sidebar,
@@ -27,58 +28,58 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Dashboard">
-              <a href="/dashboard">
+              <Link to="/dashboard">
                 <BarChart3Icon className="w-4 h-4 mr-2" />
                 <span>Dashboard</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Actuals vs Budget">
-              <a href="/actuals-vs-budget">
+              <Link to="/actuals-vs-budget">
                 <LineChartIcon className="w-4 h-4 mr-2" />
                 <span>Actuals vs Budget</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Budget Planning">
-              <a href="/budget-planning">
+              <Link to="/budget-planning">
                 <CreditCardIcon className="w-4 h-4 mr-2" />
                 <span>Budget Planning</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Financial Statements">
-              <a href="/financial-statements">
+              <Link to="/financial-statements">
                 <FileTextIcon className="w-4 h-4 mr-2" />
                 <span>Financial Statements</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Collaboration">
-              <a href="/collaboration">
+              <Link to="/collaboration">
                 <MessageSquareIcon className="w-4 h-4 mr-2" />
                 <span>Collaboration</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Approvals">
-              <a href="/approvals">
+              <Link to="/approvals">
                 <CheckIcon className="w-4 h-4 mr-2" />
                 <span>Approvals</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Accounting Integrations">
-              <a href="/accounting-integrations">
+              <Link to="/accounting-integrations">
                 <LinkIcon className="w-4 h-4 mr-2" />
                 <span>Accounting Integrations</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -87,18 +88,18 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="User Management">
-              <a href="/admin/users">
+              <Link to="/admin/users">
                 <UsersIcon className="w-4 h-4 mr-2" />
                 <span>User Management</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Settings">
-              <a href="/settings">
+              <Link to="/settings">
                 <SettingsIcon className="w-4 h-4 mr-2" />
                 <span>Settings</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
