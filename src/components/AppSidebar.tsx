@@ -22,64 +22,67 @@ import {
 } from "@/components/ui/sidebar";
 
 export function AppSidebar() {
+  // Helper function to create links with target="_blank" option
+  const createLink = (to: string, icon: React.ReactNode, text: string, openInNewTab: boolean = false) => {
+    if (openInNewTab) {
+      return (
+        <a 
+          href={to} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="flex items-center"
+        >
+          {icon}
+          <span>{text}</span>
+        </a>
+      );
+    }
+    
+    return (
+      <Link to={to}>
+        {icon}
+        <span>{text}</span>
+      </Link>
+    );
+  };
+
   return (
     <Sidebar className="border-none">
       <SidebarContent>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Dashboard">
-              <Link to="/dashboard">
-                <BarChart3Icon className="w-4 h-4 mr-2" />
-                <span>Dashboard</span>
-              </Link>
+              {createLink("/dashboard", <BarChart3Icon className="w-4 h-4 mr-2" />, "Dashboard")}
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Actuals vs Budget">
-              <Link to="/actuals-vs-budget">
-                <LineChartIcon className="w-4 h-4 mr-2" />
-                <span>Actuals vs Budget</span>
-              </Link>
+              {createLink("/actuals-vs-budget", <LineChartIcon className="w-4 h-4 mr-2" />, "Actuals vs Budget")}
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Budget Planning">
-              <Link to="/budget-planning">
-                <CreditCardIcon className="w-4 h-4 mr-2" />
-                <span>Budget Planning</span>
-              </Link>
+              {createLink("/budget-planning", <CreditCardIcon className="w-4 h-4 mr-2" />, "Budget Planning")}
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Financial Statements">
-              <Link to="/financial-statements">
-                <FileTextIcon className="w-4 h-4 mr-2" />
-                <span>Financial Statements</span>
-              </Link>
+              {createLink("/financial-statements", <FileTextIcon className="w-4 h-4 mr-2" />, "Financial Statements")}
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Collaboration">
-              <Link to="/collaboration">
-                <MessageSquareIcon className="w-4 h-4 mr-2" />
-                <span>Collaboration</span>
-              </Link>
+              {createLink("/collaboration", <MessageSquareIcon className="w-4 h-4 mr-2" />, "Collaboration")}
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Approvals">
-              <Link to="/approvals">
-                <CheckIcon className="w-4 h-4 mr-2" />
-                <span>Approvals</span>
-              </Link>
+              {createLink("/approvals", <CheckIcon className="w-4 h-4 mr-2" />, "Approvals")}
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Accounting Integrations">
-              <Link to="/accounting-integrations">
-                <LinkIcon className="w-4 h-4 mr-2" />
-                <span>Accounting Integrations</span>
-              </Link>
+              {createLink("/accounting-integrations", <LinkIcon className="w-4 h-4 mr-2" />, "Accounting Integrations")}
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -88,18 +91,12 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="User Management">
-              <Link to="/admin/users">
-                <UsersIcon className="w-4 h-4 mr-2" />
-                <span>User Management</span>
-              </Link>
+              {createLink("/admin/users", <UsersIcon className="w-4 h-4 mr-2" />, "User Management")}
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Settings">
-              <Link to="/settings">
-                <SettingsIcon className="w-4 h-4 mr-2" />
-                <span>Settings</span>
-              </Link>
+              {createLink("/settings", <SettingsIcon className="w-4 h-4 mr-2" />, "Settings")}
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
