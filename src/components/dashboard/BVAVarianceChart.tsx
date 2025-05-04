@@ -2,8 +2,37 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { ValueType } from "recharts/types/component/DefaultTooltipContent";
+import { useActualsData } from "@/pages/ActualsVsBudget/hooks/useActualsData";
 
 export const BVAVarianceChart = () => {
+  // Use the consistent data source
+  const { overBudgetItems } = useActualsData();
+  
+  // Calculate totals for variance types based on explanations
+  const planVariance = overBudgetItems
+    .filter(item => item.explanation.includes('growth') || item.explanation.includes('targets'))
+    .reduce((sum, item) => sum + item.variance, 0);
+    
+  const timingVariance = overBudgetItems
+    .filter(item => item.explanation.includes('delayed'))
+    .reduce((sum, item) => sum + item.variance, 0);
+    
+  const permanentVariance = overBudgetItems
+    .filter(item => !item.explanation.includes('growth') && 
+                   !item.explanation.includes('targets') && 
+                   !item.explanation.includes('delayed'))
+    .reduce((sum, item) => sum + item.variance, 0);
+    
+  const totalVariance = planVariance + timingVariance + permanentVariance;
+  
+  // Create chart data with consistent values based on our actual data
+  const chartData = [
+    { name: "Plan", value: planVariance, fill: "#4DC1CB" },
+    { name: "Timing", value: timingVariance, fill: "#4DC1CB" },
+    { name: "Permanent", value: permanentVariance, fill: "#989898" },
+    { name: "Total", value: totalVariance, fill: "#FDC675" },
+  ];
+
   return (
     <Card>
       <CardHeader className="pb-1 pt-3">
@@ -14,12 +43,7 @@ export const BVAVarianceChart = () => {
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               layout="vertical"
-              data={[
-                { name: "Plan", value: -75000, fill: "#4DC1CB" },
-                { name: "Timing", value: -25000, fill: "#4DC1CB" },
-                { name: "Permanent", value: -15000, fill: "#989898" },
-                { name: "Total", value: 90000, fill: "#FDC675" },
-              ]}
+              data={chartData}
               margin={{ top: 20, right: 30, left: 60, bottom: 5 }}
             >
               <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />
@@ -48,14 +72,9 @@ export const BVAVarianceChart = () => {
                 dataKey="value" 
                 radius={[0, 4, 4, 0]}
                 fill="#4DC1CB" // Default color
+                name="Variance"
               >
                 {/* Custom colors for each bar */}
-                {[
-                  <rect key="1" fill="#4DC1CB" />, // Teal color for consistency
-                  <rect key="2" fill="#4DC1CB" />, // Teal color for consistency
-                  <rect key="3" fill="#989898" />, // Gray
-                  <rect key="4" fill="#FDC675" />, // Amber
-                ]}
               </Bar>
             </BarChart>
           </ResponsiveContainer>

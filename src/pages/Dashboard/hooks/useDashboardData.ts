@@ -15,7 +15,8 @@ export const useDashboardData = (
     variance,
     accuracy,
     monthlyData,
-    departmentData
+    departmentData,
+    overBudgetItems
   } = useActualsData();
 
   // Get filtered dashboard data
@@ -31,7 +32,13 @@ export const useDashboardData = (
   
   // Use variance percentage as the revenue growth for now
   const revenueGrowth = parseFloat((accuracy - 100).toFixed(1));
-
+  
+  // Calculate percentage of items with significant variance (>10%)
+  const significantItems = overBudgetItems.filter(item => {
+    const variancePercent = Math.abs(item.variance / item.budget) * 100;
+    return variancePercent >= 10;
+  });
+  
   // Create a merged data object that combines both sets of data
   return {
     // Original filtered data
@@ -50,6 +57,8 @@ export const useDashboardData = (
     totalActual,
     accuracy,
     monthlyData,
-    departmentData
+    departmentData,
+    significantVarianceCount: significantItems.length,
+    significantVariancePercent: parseFloat(((significantItems.length / overBudgetItems.length) * 100).toFixed(1))
   };
 };
