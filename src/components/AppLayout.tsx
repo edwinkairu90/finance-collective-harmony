@@ -10,15 +10,13 @@ import { AuthProvider } from "@/context/AuthContext";
 export function AppLayout() {
   return (
     <AuthProvider>
-      <SidebarProvider>
-        <AuthenticatedLayout />
-      </SidebarProvider>
+      <AuthenticatedLayoutWrapper />
     </AuthProvider>
   );
 }
 
 // Separate the authenticated content to use hooks inside the AuthProvider
-function AuthenticatedLayout() {
+function AuthenticatedLayoutWrapper() {
   const { isAuthenticated, isLoading } = useAuth();
   const navigate = useNavigate();
 
@@ -32,17 +30,23 @@ function AuthenticatedLayout() {
     return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
   }
 
+  if (!isAuthenticated) {
+    return null;
+  }
+
   return (
-    <div className="min-h-screen flex w-full">
-      <AppSidebar />
-      <div className="flex-1 flex flex-col">
-        <header className="border-b py-2 px-4 flex justify-end">
-          <CollaborationHeader />
-        </header>
-        <main className="flex-1 p-5 overflow-auto">
-          <Outlet />
-        </main>
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full">
+        <AppSidebar />
+        <div className="flex-1 flex flex-col">
+          <header className="border-b py-2 px-4 flex justify-end">
+            <CollaborationHeader />
+          </header>
+          <main className="flex-1 p-5 overflow-auto">
+            <Outlet />
+          </main>
+        </div>
       </div>
-    </div>
+    </SidebarProvider>
   );
 }
