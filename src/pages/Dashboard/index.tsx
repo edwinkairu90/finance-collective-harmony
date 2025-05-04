@@ -8,7 +8,7 @@ import { KPICards } from "@/components/dashboard/KPICards";
 import { DashboardCharts } from "./components/DashboardCharts";
 import { DashboardTables } from "./components/DashboardTables";
 import { BudgetInsights } from "@/components/dashboard/BudgetInsights";
-import { getFilteredData } from "@/components/dashboard/dashboardDataFiltered";
+import { useDashboardData } from "./hooks/useDashboardData";
 
 const Dashboard = () => {
   const { toast } = useToast();
@@ -20,8 +20,8 @@ const Dashboard = () => {
   // Get filter options
   const filterOptions = getFilterOptions();
   
-  // Get filtered data based on all filters
-  const filteredData = getFilteredData(
+  // Get dashboard data that now includes actuals data
+  const dashboardData = useDashboardData(
     selectedYear, 
     selectedScenario, 
     selectedRegion, 
@@ -64,14 +64,14 @@ const Dashboard = () => {
 
       {/* KPI Cards - Top Row */}
       <KPICards 
-        annualRevenue={filteredData.annualRevenue}
-        revenueGrowth={filteredData.revenueGrowth}
-        totalOpex={filteredData.totalOpex}
-        opexGrowth={filteredData.opexGrowth}
-        totalVariance={filteredData.totalVariance}
-        variancePercentage={filteredData.variancePercentage}
-        marginPercentage={filteredData.marginPercentage}
-        marginChange={filteredData.marginChange}
+        annualRevenue={dashboardData.annualRevenue}
+        revenueGrowth={dashboardData.revenueGrowth}
+        totalOpex={dashboardData.totalOpex}
+        opexGrowth={dashboardData.opexGrowth}
+        totalVariance={dashboardData.totalVariance}
+        variancePercentage={dashboardData.variancePercentage}
+        marginPercentage={dashboardData.marginPercentage}
+        marginChange={dashboardData.marginChange}
       />
 
       {/* Charts - Middle Row */}
