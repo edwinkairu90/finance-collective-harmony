@@ -27,7 +27,7 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton asChild tooltip="Dashboard">
               <a href="/dashboard">
                 <BarChart3Icon className="w-4 h-4 mr-2" />
                 <span>Dashboard</span>
@@ -35,7 +35,7 @@ export function AppSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton asChild tooltip="Actuals vs Budget">
               <a href="/actuals-vs-budget">
                 <LineChartIcon className="w-4 h-4 mr-2" />
                 <span>Actuals vs Budget</span>
@@ -43,7 +43,7 @@ export function AppSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton asChild tooltip="Budget Planning">
               <a href="/budget-planning">
                 <CreditCardIcon className="w-4 h-4 mr-2" />
                 <span>Budget Planning</span>
@@ -51,7 +51,7 @@ export function AppSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton asChild tooltip="Financial Statements">
               <a href="/financial-statements">
                 <FileTextIcon className="w-4 h-4 mr-2" />
                 <span>Financial Statements</span>
@@ -59,7 +59,7 @@ export function AppSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton asChild tooltip="Collaboration">
               <a href="/collaboration">
                 <MessageSquareIcon className="w-4 h-4 mr-2" />
                 <span>Collaboration</span>
@@ -67,7 +67,7 @@ export function AppSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton asChild tooltip="Approvals">
               <a href="/approvals">
                 <CheckIcon className="w-4 h-4 mr-2" />
                 <span>Approvals</span>
@@ -75,7 +75,7 @@ export function AppSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton asChild tooltip="Accounting Integrations">
               <a href="/accounting-integrations">
                 <LinkIcon className="w-4 h-4 mr-2" />
                 <span>Accounting Integrations</span>
@@ -87,7 +87,7 @@ export function AppSidebar() {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton asChild tooltip="User Management">
               <a href="/admin/users">
                 <UsersIcon className="w-4 h-4 mr-2" />
                 <span>User Management</span>
@@ -95,7 +95,7 @@ export function AppSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton asChild tooltip="Settings">
               <a href="/settings">
                 <SettingsIcon className="w-4 h-4 mr-2" />
                 <span>Settings</span>
