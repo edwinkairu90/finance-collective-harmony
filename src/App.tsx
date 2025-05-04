@@ -16,7 +16,7 @@ import AccountingIntegrations from './pages/AccountingIntegrations';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/">
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<AppLayout />}>
