@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
@@ -9,6 +8,8 @@ import { DashboardCharts } from "./components/DashboardCharts";
 import { DashboardTables } from "./components/DashboardTables";
 import { BudgetInsights } from "@/components/dashboard/BudgetInsights";
 import { useDashboardData } from "./hooks/useDashboardData";
+import { AccountingSourceBadge } from "./components/AccountingSourceBadge";
+import { IntegrationPrompt } from "./components/IntegrationPrompt";
 
 const Dashboard = () => {
   const { toast } = useToast();
@@ -39,7 +40,12 @@ const Dashboard = () => {
   return (
     <div className="space-y-5">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold tracking-tight">Executive Dashboard</h1>
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">Executive Dashboard</h1>
+          <div className="mt-1">
+            <AccountingSourceBadge />
+          </div>
+        </div>
         <Button 
           onClick={showNotification}
           className="bg-[#50C2A0] hover:bg-[#3BA989] text-white text-xs py-1 px-2.5 h-7"
@@ -48,6 +54,9 @@ const Dashboard = () => {
           Show Sample Notification
         </Button>
       </div>
+
+      {/* Integration Prompt */}
+      <IntegrationPrompt />
 
       {/* Filters */}
       <DashboardFilters 
