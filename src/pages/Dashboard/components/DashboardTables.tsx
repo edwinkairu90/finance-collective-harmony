@@ -22,7 +22,7 @@ export const DashboardTables = () => {
       {/* New table showing significant negative variances */}
       <Card>
         <CardHeader className="pb-1 pt-3">
-          <CardTitle className="text-sm">Significant Negative Variances (>10%)</CardTitle>
+          <CardTitle className="text-sm">Significant Negative Variances (&gt;10%)</CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           <Table className="text-xs">
