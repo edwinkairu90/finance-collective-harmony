@@ -25,6 +25,7 @@ import {
   availableDepartments
 } from "@/components/dashboard/dashboardDataFiltered";
 import { DashboardFilters } from "@/components/dashboard/DashboardFilters";
+import { BudgetInsights } from "@/components/dashboard/BudgetInsights";
 
 const Dashboard = () => {
   const { toast } = useToast();
@@ -96,11 +97,14 @@ const Dashboard = () => {
         <OpexBarChart />
       </div>
 
-      {/* Tables - Bottom Row */}
+      {/* Tables and Insights - Bottom Row */}
       <div className="grid grid-cols-2 gap-5">
         <BVASummaryTable />
         <BVAVarianceChart />
       </div>
+      
+      {/* Budget Insights */}
+      <BudgetInsights />
     </div>
   );
 };
