@@ -8,9 +8,10 @@ import {
   LinkIcon,
   MessageSquareIcon,
   SettingsIcon,
-  UsersIcon
+  UsersIcon,
+  ExternalLinkIcon
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import {
   Sidebar,
@@ -22,6 +23,8 @@ import {
 } from "@/components/ui/sidebar";
 
 export function AppSidebar() {
+  const location = useLocation();
+  
   // Helper function to create links with target="_blank" option
   const createLink = (to: string, icon: React.ReactNode, text: string, openInNewTab: boolean = false) => {
     if (openInNewTab) {
@@ -83,6 +86,13 @@ export function AppSidebar() {
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Accounting Integrations">
               {createLink("/accounting-integrations", <LinkIcon className="w-4 h-4 mr-2" />, "Accounting Integrations")}
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          
+          {/* Added new menu item to open current page in new tab */}
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild tooltip="Open in new tab">
+              {createLink(location.pathname, <ExternalLinkIcon className="w-4 h-4 mr-2" />, "Open in new tab", true)}
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
