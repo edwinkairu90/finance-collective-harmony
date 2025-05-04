@@ -9,46 +9,48 @@ export const BudgetInsights = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid md:grid-cols-2 gap-6">
-          <Card className="border-l-4 border-l-blue-500">
+          <Card className="border-l-4 border-l-red-500">
             <CardHeader className="pb-2">
-              <CardTitle className="text-base">Key Observations</CardTitle>
+              <CardTitle className="text-base">Significant Variance Analysis</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="list-disc pl-5 space-y-2 text-sm">
-                <li>Overall budget accuracy is excellent at 99.6%</li>
-                <li>Sales department has the largest positive variance at 4.7%</li>
-                <li>Q2 showed highest budget-to-actual deviation</li>
-                <li>Technology spending consistently trending above budget</li>
+                <li>Cloud Hosting costs exceeded budget by 17.2% due to unplanned customer growth requiring additional infrastructure</li>
+                <li>Sales Compensation overspent by 8.9% as a result of higher-than-expected sales team performance</li>
+                <li>Recruitment costs were 28% above budget due to expanded engineering team hiring initiatives</li>
+                <li>Marketing campaigns were under budget by 15.6% due to delayed content campaigns</li>
               </ul>
             </CardContent>
           </Card>
           
           <Card className="border-l-4 border-l-amber-500">
             <CardHeader className="pb-2">
-              <CardTitle className="text-base">Recommendations</CardTitle>
+              <CardTitle className="text-base">Root Causes</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="list-disc pl-5 space-y-2 text-sm">
-                <li>Review sales compensation structure to better align with performance</li>
-                <li>Optimize cloud hosting costs with reserved instances</li>
-                <li>Evaluate marketing campaign ROI based on spend efficiency</li>
-                <li>Continue remote work policies to maintain cost savings</li>
+                <li>Unexpected 25% increase in enterprise customer sign-ups drove cloud infrastructure needs</li>
+                <li>Sales team exceeded Q2 targets by 15%, triggering higher commission payouts</li>
+                <li>Competitive hiring market required increased recruitment spending</li>
+                <li>Tech infrastructure scaling issues required emergency contractor engagement</li>
               </ul>
             </CardContent>
           </Card>
           
           <Card className="border-l-4 border-l-green-500 md:col-span-2">
             <CardHeader className="pb-2">
-              <CardTitle className="text-base">Forecasted Performance</CardTitle>
+              <CardTitle className="text-base">Corrective Action Plan</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm">
-                Based on current trends, the annual budget is projected to close within 
-                1.2% of target. Engineering department expenses are expected to exceed 
-                budget by approximately 3.5% due to increased cloud infrastructure needs, 
-                while HR and Marketing departments are on track to finish 3-4% under budget. 
-                Overall operating expenses are forecasted to end the year 0.5% below budget.
+              <p className="text-sm mb-2">
+                Based on the identified variances, the following corrective actions are recommended:
               </p>
+              <ul className="list-disc pl-5 space-y-2 text-sm">
+                <li><span className="font-medium">Cloud Infrastructure:</span> Implement reserved instance purchasing strategy to reduce costs by an estimated 30% while accommodating growth</li>
+                <li><span className="font-medium">Sales Compensation:</span> Revise commission structure with tiered thresholds to better account for overperformance</li>
+                <li><span className="font-medium">Hiring Process:</span> Consolidate recruitment efforts with preferred vendors to negotiate volume discounts</li>
+                <li><span className="font-medium">Budget Process:</span> Implement quarterly forecasting reviews for high-variance departments to catch trends earlier</li>
+              </ul>
             </CardContent>
           </Card>
         </div>
