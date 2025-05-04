@@ -33,7 +33,7 @@ export const AccountingSoftwareCard = ({
             </div>
             <CardTitle className="text-lg">{software.name}</CardTitle>
           </div>
-          <Badge variant={software.isConnected ? "success" : "outline"}>
+          <Badge variant={software.isConnected ? "default" : "outline"} className={software.isConnected ? "bg-green-100 text-green-800 hover:bg-green-200" : ""}>
             {software.isConnected ? "Connected" : "Not Connected"}
           </Badge>
         </div>
