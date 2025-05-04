@@ -5,8 +5,18 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { CollaborationHeader } from "./CollaborationHeader";
 import { useAuth } from "@/context/AuthContext";
 import { useEffect } from "react";
+import { AuthProvider } from "@/context/AuthContext";
 
 export function AppLayout() {
+  return (
+    <AuthProvider>
+      <AuthenticatedLayout />
+    </AuthProvider>
+  );
+}
+
+// Separate the authenticated content to use hooks inside the AuthProvider
+function AuthenticatedLayout() {
   const { isAuthenticated, isLoading } = useAuth();
   const navigate = useNavigate();
 
