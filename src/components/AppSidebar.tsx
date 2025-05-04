@@ -1,63 +1,97 @@
 
 import {
-  ArrowLeftIcon,
   BarChart3Icon,
   BuildingIcon,
-  Check2Icon,
+  CheckIcon,
+  CommandIcon,
   ChevronsLeftRightIcon,
   ClockIcon,
-  CommandLineIcon,
   CreditCardIcon,
   FileTextIcon,
   LineChartIcon,
   LinkIcon,
-  MessagesIcon,
+  MessageSquareIcon,
   SettingsIcon,
   ShuffleIcon,
   Users2Icon,
   UsersIcon
 } from "lucide-react";
 
-import { Sidebar } from "@/components/ui/sidebar";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuLink,
+} from "@/components/ui/sidebar";
 
 export function AppSidebar() {
   return (
     <Sidebar className="border-none">
-      <Sidebar.Main>
-        <Sidebar.Nav>
-          <Sidebar.NavItem href="/dashboard" icon={BarChart3Icon}>
-            Dashboard
-          </Sidebar.NavItem>
-          <Sidebar.NavItem href="/actuals-vs-budget" icon={LineChartIcon}>
-            Actuals vs Budget
-          </Sidebar.NavItem>
-          <Sidebar.NavItem href="/budget-planning" icon={CreditCardIcon}>
-            Budget Planning
-          </Sidebar.NavItem>
-          <Sidebar.NavItem href="/financial-statements" icon={FileTextIcon}>
-            Financial Statements
-          </Sidebar.NavItem>
-          <Sidebar.NavItem href="/collaboration" icon={MessagesIcon}>
-            Collaboration
-          </Sidebar.NavItem>
-          <Sidebar.NavItem href="/approvals" icon={Check2Icon}>
-            Approvals
-          </Sidebar.NavItem>
-          <Sidebar.NavItem href="/accounting-integrations" icon={LinkIcon}>
-            Accounting Integrations
-          </Sidebar.NavItem>
-        </Sidebar.Nav>
-      </Sidebar.Main>
-      <Sidebar.Footer>
-        <Sidebar.Nav>
-          <Sidebar.NavItem href="/admin/users" icon={UsersIcon}>
-            User Management
-          </Sidebar.NavItem>
-          <Sidebar.NavItem href="/settings" icon={SettingsIcon}>
-            Settings
-          </Sidebar.NavItem>
-        </Sidebar.Nav>
-      </Sidebar.Footer>
+      <SidebarContent>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuLink href="/dashboard">
+              <BarChart3Icon className="w-4 h-4 mr-2" />
+              <span>Dashboard</span>
+            </SidebarMenuLink>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuLink href="/actuals-vs-budget">
+              <LineChartIcon className="w-4 h-4 mr-2" />
+              <span>Actuals vs Budget</span>
+            </SidebarMenuLink>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuLink href="/budget-planning">
+              <CreditCardIcon className="w-4 h-4 mr-2" />
+              <span>Budget Planning</span>
+            </SidebarMenuLink>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuLink href="/financial-statements">
+              <FileTextIcon className="w-4 h-4 mr-2" />
+              <span>Financial Statements</span>
+            </SidebarMenuLink>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuLink href="/collaboration">
+              <MessageSquareIcon className="w-4 h-4 mr-2" />
+              <span>Collaboration</span>
+            </SidebarMenuLink>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuLink href="/approvals">
+              <CheckIcon className="w-4 h-4 mr-2" />
+              <span>Approvals</span>
+            </SidebarMenuLink>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuLink href="/accounting-integrations">
+              <LinkIcon className="w-4 h-4 mr-2" />
+              <span>Accounting Integrations</span>
+            </SidebarMenuLink>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarContent>
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuLink href="/admin/users">
+              <UsersIcon className="w-4 h-4 mr-2" />
+              <span>User Management</span>
+            </SidebarMenuLink>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuLink href="/settings">
+              <SettingsIcon className="w-4 h-4 mr-2" />
+              <span>Settings</span>
+            </SidebarMenuLink>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   );
 }
