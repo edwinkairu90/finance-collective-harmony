@@ -3,17 +3,12 @@ import {
   BarChart3Icon,
   BuildingIcon,
   CheckIcon,
-  CommandIcon,
-  ChevronsLeftRightIcon,
-  ClockIcon,
   CreditCardIcon,
   FileTextIcon,
   LineChartIcon,
   LinkIcon,
   MessageSquareIcon,
   SettingsIcon,
-  ShuffleIcon,
-  Users2Icon,
   UsersIcon
 } from "lucide-react";
 
@@ -21,7 +16,6 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,

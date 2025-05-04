@@ -24,7 +24,6 @@ export const AccountingSoftwareCard = ({
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
-              {/* Use logo or fallback to first letter of name */}
               {software.logo ? (
                 <img src={software.logo} alt={software.name} className="w-6 h-6 object-contain" />
               ) : (
@@ -33,7 +32,10 @@ export const AccountingSoftwareCard = ({
             </div>
             <CardTitle className="text-lg">{software.name}</CardTitle>
           </div>
-          <Badge variant={software.isConnected ? "default" : "outline"} className={software.isConnected ? "bg-green-100 text-green-800 hover:bg-green-200" : ""}>
+          <Badge 
+            variant={software.isConnected ? "default" : "outline"} 
+            className={software.isConnected ? "bg-green-100 hover:bg-green-100 text-green-800" : ""}
+          >
             {software.isConnected ? "Connected" : "Not Connected"}
           </Badge>
         </div>
