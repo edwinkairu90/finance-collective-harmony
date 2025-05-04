@@ -1,7 +1,17 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useActualsData } from "@/pages/ActualsVsBudget/hooks/useActualsData";
 
 export const BudgetInsights = () => {
+  // Use the same data source as the other components for consistency
+  const { overBudgetItems } = useActualsData();
+  
+  // Filter for items with significant variances (10% or more)
+  const significantItems = overBudgetItems.filter(item => {
+    const variancePercent = Math.abs(item.variance / item.budget) * 100;
+    return variancePercent >= 10;
+  });
+  
   return (
     <Card>
       <CardHeader>
@@ -15,9 +25,15 @@ export const BudgetInsights = () => {
             </CardHeader>
             <CardContent>
               <ul className="list-disc pl-5 space-y-2 text-sm">
-                <li>Cloud Hosting costs exceeded budget by 17.2% due to unplanned customer growth requiring additional infrastructure</li>
-                <li>Sales Compensation overspent by 8.9% as a result of higher-than-expected sales team performance</li>
-                <li>Recruitment costs were 28% above budget due to expanded engineering team hiring initiatives</li>
+                {significantItems.map((item, index) => (
+                  <li key={index}>
+                    {item.item} exceeded budget by {(Math.abs(item.variance / item.budget) * 100).toFixed(1)}% 
+                    due to {item.explanation}
+                  </li>
+                ))}
+                {significantItems.length === 0 && (
+                  <li>No items with significant variance found in the current period.</li>
+                )}
                 <li>Marketing campaigns were under budget by 15.6% due to delayed content campaigns</li>
               </ul>
             </CardContent>

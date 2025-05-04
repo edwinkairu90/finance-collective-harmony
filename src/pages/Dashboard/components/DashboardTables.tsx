@@ -7,13 +7,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const DashboardTables = () => {
   // Get data from the actuals hook to ensure consistency
-  const { departmentData, overBudgetItems, underBudgetItems } = useActualsData();
+  const { departmentData, overBudgetItems } = useActualsData();
   
   // Filter for items with significant negative variance (over 10%)
-  const significantVarianceItems = [...overBudgetItems].filter(item => {
-    const variancePercent = (item.variance / item.budget) * 100;
+  const significantVarianceItems = overBudgetItems.filter(item => {
+    const variancePercent = Math.abs(item.variance / item.budget) * 100;
     return variancePercent >= 10; // 10% or more over budget is considered significant
-  }).sort((a, b) => (b.variance / b.budget) - (a.variance / a.budget)); // Sort by variance percentage
+  }).sort((a, b) => (Math.abs(b.variance / b.budget) - Math.abs(a.variance / a.budget))); // Sort by variance percentage
 
   return (
     <div className="grid grid-cols-2 gap-5">
@@ -37,7 +37,7 @@ export const DashboardTables = () => {
             </TableHeader>
             <TableBody>
               {significantVarianceItems.map((item, index) => {
-                const variancePercent = ((item.variance / item.budget) * 100).toFixed(1);
+                const variancePercent = (Math.abs(item.variance / item.budget) * 100).toFixed(1);
                 return (
                   <TableRow key={index}>
                     <TableCell className="font-medium py-1.5">{item.item}</TableCell>
