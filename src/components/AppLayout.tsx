@@ -10,7 +10,9 @@ import { AuthProvider } from "@/context/AuthContext";
 export function AppLayout() {
   return (
     <AuthProvider>
-      <AuthenticatedLayout />
+      <SidebarProvider>
+        <AuthenticatedLayout />
+      </SidebarProvider>
     </AuthProvider>
   );
 }
@@ -31,18 +33,16 @@ function AuthenticatedLayout() {
   }
 
   return (
-    <SidebarProvider>
-      <div className="min-h-screen flex w-full">
-        <AppSidebar />
-        <div className="flex-1 flex flex-col">
-          <header className="border-b py-2 px-4 flex justify-end">
-            <CollaborationHeader />
-          </header>
-          <main className="flex-1 p-5 overflow-auto">
-            <Outlet />
-          </main>
-        </div>
+    <div className="min-h-screen flex w-full">
+      <AppSidebar />
+      <div className="flex-1 flex flex-col">
+        <header className="border-b py-2 px-4 flex justify-end">
+          <CollaborationHeader />
+        </header>
+        <main className="flex-1 p-5 overflow-auto">
+          <Outlet />
+        </main>
       </div>
-    </SidebarProvider>
+    </div>
   );
 }

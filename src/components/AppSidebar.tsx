@@ -1,7 +1,6 @@
 
 import {
   BarChart3Icon,
-  BuildingIcon,
   CheckIcon,
   CreditCardIcon,
   FileTextIcon,
