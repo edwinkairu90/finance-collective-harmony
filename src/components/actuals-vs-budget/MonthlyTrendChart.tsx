@@ -39,13 +39,13 @@ export const MonthlyTrendChart = ({ data }: MonthlyTrendChartProps) => {
               <YAxis />
               <Tooltip formatter={(value) => [`$${value.toLocaleString()}`, undefined]} />
               <Legend />
-              <Bar dataKey="budget" name="Budget" fill="#94a3b8" />
-              <Bar dataKey="actual" name="Actual" fill="#0ea5e9" />
+              <Bar dataKey="budget" name="Budget" fill="#4DC1CB" />
+              <Bar dataKey="actual" name="Actual" fill="#0EA5E9" />
               <Line 
                 type="monotone" 
                 dataKey="variance" 
                 name="Variance" 
-                stroke="#10b981" 
+                stroke="#FDC675" 
                 dot={{ r: 5 }} 
                 activeDot={{ r: 8 }} 
               />

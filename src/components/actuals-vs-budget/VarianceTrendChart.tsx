@@ -46,7 +46,7 @@ export const VarianceTrendChart = ({ data }: VarianceTrendChartProps) => {
               <Line 
                 type="monotone" 
                 dataKey="variance" 
-                stroke="#8884d8" 
+                stroke="#FDC675" 
                 activeDot={{ r: 8 }}
               />
             </LineChart>

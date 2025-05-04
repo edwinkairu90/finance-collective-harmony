@@ -38,8 +38,8 @@ export const DepartmentBarChart = ({ data }: DepartmentBarChartProps) => {
               <YAxis />
               <Tooltip formatter={(value) => [`$${value.toLocaleString()}`, undefined]} />
               <Legend />
-              <Bar dataKey="budget" name="Budget" fill="#94a3b8" />
-              <Bar dataKey="actual" name="Actual" fill="#0ea5e9" />
+              <Bar dataKey="budget" name="Budget" fill="#4DC1CB" />
+              <Bar dataKey="actual" name="Actual" fill="#0EA5E9" />
             </BarChart>
           </ResponsiveContainer>
         </div>
