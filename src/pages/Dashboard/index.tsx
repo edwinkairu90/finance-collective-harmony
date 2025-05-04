@@ -2,30 +2,13 @@
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
-import { 
-  revenueData, 
-  opexData, 
-  bvaData, 
-  getTotalOpex, 
-  getTotalBudget, 
-  getTotalActual,
-  getAnnualRevenue
-} from "@/components/dashboard/dashboardData";
-import { KPICards } from "@/components/dashboard/KPICards";
-import { RevenueChart } from "@/components/dashboard/RevenueChart";
-import { OpexBarChart } from "@/components/dashboard/OpexBarChart";
-import { BVASummaryTable } from "@/components/dashboard/BVASummaryTable";
-import { BVAVarianceChart } from "@/components/dashboard/BVAVarianceChart";
-import { 
-  availableYears, 
-  getFilteredData, 
-  getFilterOptions,
-  availableScenarios,
-  availableRegions,
-  availableDepartments
-} from "@/components/dashboard/dashboardDataFiltered";
+import { getFilterOptions } from "@/components/dashboard/dashboardDataFiltered";
 import { DashboardFilters } from "@/components/dashboard/DashboardFilters";
+import { KPICards } from "@/components/dashboard/KPICards";
+import { DashboardCharts } from "./components/DashboardCharts";
+import { DashboardTables } from "./components/DashboardTables";
 import { BudgetInsights } from "@/components/dashboard/BudgetInsights";
+import { getFilteredData } from "@/components/dashboard/dashboardDataFiltered";
 
 const Dashboard = () => {
   const { toast } = useToast();
@@ -92,16 +75,10 @@ const Dashboard = () => {
       />
 
       {/* Charts - Middle Row */}
-      <div className="grid grid-cols-2 gap-5">
-        <RevenueChart data={revenueData} />
-        <OpexBarChart />
-      </div>
-
+      <DashboardCharts />
+      
       {/* Tables and Insights - Bottom Row */}
-      <div className="grid grid-cols-2 gap-5">
-        <BVASummaryTable />
-        <BVAVarianceChart />
-      </div>
+      <DashboardTables />
       
       {/* Budget Insights */}
       <BudgetInsights />

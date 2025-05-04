@@ -9,7 +9,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { PermissionGuard } from "./components/auth/PermissionGuard";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/Dashboard/index";
 import BudgetPlanning from "./pages/BudgetPlanning/index";
 import Collaboration from "./pages/Collaboration";
 import ActualsVsBudget from "./pages/ActualsVsBudget/index";
