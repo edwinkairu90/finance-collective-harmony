@@ -12,7 +12,7 @@ import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
 import BudgetPlanning from "./pages/BudgetPlanning/index";
 import Collaboration from "./pages/Collaboration";
-import ActualsVsBudget from "./pages/ActualsVsBudget";
+import ActualsVsBudget from "./pages/ActualsVsBudget/index";
 import FinancialStatements from "./pages/FinancialStatements";
 import Login from "./pages/auth/Login";
 import UserManagement from "./pages/admin/UserManagement";
