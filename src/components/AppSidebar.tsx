@@ -9,9 +9,12 @@ import {
   MessageSquareIcon,
   SettingsIcon,
   UsersIcon,
-  ExternalLinkIcon
+  ExternalLinkIcon,
+  UserIcon
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import {
   Sidebar,
@@ -20,10 +23,12 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
+  SidebarHeader
 } from "@/components/ui/sidebar";
 
 export function AppSidebar() {
   const location = useLocation();
+  const { user } = useAuth();
   
   // Helper function to create links with target="_blank" option
   const createLink = (to: string, icon: React.ReactNode, text: string, openInNewTab: boolean = false) => {
@@ -51,8 +56,27 @@ export function AppSidebar() {
 
   return (
     <Sidebar className="border-none">
+      <SidebarHeader>
+        <div className="px-2 py-3">
+          <div className="flex items-center gap-2 px-2">
+            <Avatar>
+              {user?.avatar && <AvatarImage src={user.avatar} alt={user.name} />}
+              <AvatarFallback>{user?.name.charAt(0) || "U"}</AvatarFallback>
+            </Avatar>
+            <div className="flex flex-col overflow-hidden">
+              <span className="text-sm font-medium truncate">{user?.name || "User"}</span>
+              <span className="text-xs text-muted-foreground truncate capitalize">{user?.role || "Guest"}</span>
+            </div>
+          </div>
+        </div>
+      </SidebarHeader>
       <SidebarContent>
         <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild tooltip="User Profile">
+              {createLink("/profile", <UserIcon className="w-4 h-4 mr-2" />, "Profile")}
+            </SidebarMenuButton>
+          </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Dashboard">
               {createLink("/dashboard", <BarChart3Icon className="w-4 h-4 mr-2" />, "Dashboard")}
