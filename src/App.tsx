@@ -13,6 +13,7 @@ import FinancialStatements from './pages/FinancialStatements';
 import UserManagement from './pages/admin/UserManagement';
 import Login from './pages/auth/Login';
 import AccountingIntegrations from './pages/AccountingIntegrations';
+import Projections from './pages/Projections';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="financial-statements/*" element={<FinancialStatements />} />
           <Route path="admin/users" element={<UserManagement />} />
           <Route path="accounting-integrations" element={<AccountingIntegrations />} />
+          <Route path="projections" element={<Projections />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

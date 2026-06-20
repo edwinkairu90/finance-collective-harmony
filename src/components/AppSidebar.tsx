@@ -10,7 +10,8 @@ import {
   SettingsIcon,
   UsersIcon,
   ExternalLinkIcon,
-  UserIcon
+  UserIcon,
+  SparklesIcon
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
@@ -95,6 +96,11 @@ export function AppSidebar() {
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Financial Statements">
               {createLink("/financial-statements", <FileTextIcon className="w-4 h-4 mr-2" />, "Financial Statements")}
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild tooltip="Projections">
+              {createLink("/projections", <SparklesIcon className="w-4 h-4 mr-2" />, "Projections")}
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
